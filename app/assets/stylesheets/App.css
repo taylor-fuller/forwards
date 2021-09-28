@@ -1,0 +1,91 @@
+body * {
+	font-family: 'Lato', sans-serif;
+	font-size: 14px;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+    box-sizing: border-box;
+	color: var(--fontBlack);
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+ol, ul, li {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+:root {
+	--base0: #F2F2F2;
+    --base1: #23292e;
+	--accent0: #ff6d00;
+    --accent1: #ff5100;
+    --fontBlack: rgb(80,80,80);
+}
+
+body {
+	background-color: var(--base0);
+}
+
+#view {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: flex-start;
+    color: var(--base0);
+}
+
+header {
+	font-style: italic;
+	font-weight: bold;
+	letter-spacing: -1px;
+	font-family: 'Montserrat', sans-serif;
+	min-height: 100px;
+	display: flex;
+	justify-content: center;
+	background-color: var(--accent0);
+	color: white;
+}
+
+header div {
+	font-family: 'Montserrat', sans-serif;
+	color: white;
+	margin: auto;
+	font-size: 3rem;
+	text-align: center;
+	display: inline-block;
+  	vertical-align: middle;
+}
