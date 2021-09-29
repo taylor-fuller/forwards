@@ -1,0 +1,89 @@
+#root {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.action-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    margin: auto;
+    min-width: 400px;
+    min-height: 500px;
+    border-radius: .4rem;
+    overflow: hidden;
+    background-color: white;
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: bold;
+    padding: 1rem;
+    text-align: center;
+}
+
+.bottom-container {
+    text-align: center;
+    margin-top: auto;
+    display: flex;
+    flex-flow: column;
+    align-content: center;
+    padding: 1rem;
+    background-color: white;
+}
+
+.bottom-container a {
+    text-decoration: none;
+    margin: auto;
+}
+
+.bottom-container a:hover {
+    text-decoration: underline;
+}
+
+.bottom-container div {
+    padding: .25rem;
+}
+
+.user-actions {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 2rem;
+}
+
+@media(min-width:600px) {
+    .action-container {
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
+    }
+
+    body {
+        background-image: -webkit-linear-gradient(-135deg,var(--accent0) 0%,var(--accent1) 100%);
+    }
+
+    .bottom-container {
+        background-color: var(--base0);
+        border-top: 1px solid var(--accent1);
+    }
+}
+
+.cancel-container {
+    text-align: center;
+    padding: 2rem;
+    padding-top: 0;
+}
+
+.cancel-container p {
+    padding: 1rem
+}
+
+input.btn {
+    margin: auto;
+    width: 100%;
+}
+
+h6 {
+    text-align: center;
+}

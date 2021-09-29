@@ -1,1 +1,6 @@
-<%= javascript_pack_tag 'index' %>
+<% if user_signed_in? %>
+    <%= javascript_pack_tag 'index' %>         
+<% else %>
+    <%= link_to 'Login', new_user_session_path %>
+<% end %>
+  
