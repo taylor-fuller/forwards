@@ -1,10 +1,11 @@
-class TeamsController < ApplicationController
+class Api::TeamsController < ApplicationController
   before_action :set_team, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[ edit update destroy ]
 
   # GET /teams or /teams.json
   def index
     @teams = Team.all.order("created_at DESC")
+    render json: { teams: @teams }
   end
 
   # GET /teams/new
@@ -63,6 +64,6 @@ class TeamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def team_params
-      params.require(:team).permit(:name, :lead_id, user_attributes: [:id, :name, :_destroy])
+      params.require(:team).permit(:name, :lead_id, users_attributes: [:id, :name, :_destroy])
     end
 end

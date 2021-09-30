@@ -51,9 +51,13 @@ table {
 :root {
 	--base0: #F2F2F2;
     --base1: #23292e;
-	--accent0: #ff7300;
-    --accent1: #ff5100;
+	--accent0: #ff8851;
+    --accent1: #ff3c00;
     --fontBlack: rgb(80,80,80);
+}
+
+a:hover {
+	color: blue;
 }
 
 body {
@@ -64,7 +68,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    justify-content: flex-start;
+    justify-content: space-between;
     color: var(--base0);
 }
 
@@ -88,4 +92,58 @@ header div {
 	text-align: center;
 	display: inline-block;
   	vertical-align: middle;
+}
+
+#view .pro-sidebar {
+	position:absolute;
+	width:100px;
+	height:100%;
+	top:0;
+	left:0;
+}
+
+#view .pro-sidebar-inner {
+	padding-top: 100px;
+}
+
+#view .pro-sidebar * {
+	color: var(--base0);
+}
+
+#view .pro-sidebar, #view .pro-sidebar-inner, #view .pro-sidebar-layout, #view .pro-icon {
+	background-color: var(--base1);
+}
+
+#view .sub-menu {
+	padding: 1rem 0;
+	padding-left: 2rem;
+	background-color: #343D46;
+}
+
+#view .pro-menu-item {
+	border-left: var(--accent1);
+}
+
+h2.sidebar {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 8px 35px 8px 20px;
+	text-align: center;
+}
+
+h2.sidebar span {
+	margin-right: 10px;
+	font-size: 14px;
+	width: 35px;
+	min-width: 35px;
+	height: 35px;
+	line-height: 35px;
+	text-align: center;
+	display: flex;
+}
+
+h2.sidebar svg {
+	display: flex;
+	margin: auto;
 }

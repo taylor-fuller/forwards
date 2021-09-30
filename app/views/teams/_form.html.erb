@@ -11,6 +11,16 @@
     </div>
   <% end %>
 
+  <div>
+    <%= form.label :name, "Team Name" %>
+    <%= form.text_field :name %> 
+  </div>
+  <% if team.errors[:name].present? %>
+    <div class="errors">
+      <%= team.errors[:name][0] %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

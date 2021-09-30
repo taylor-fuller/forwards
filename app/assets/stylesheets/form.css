@@ -1,0 +1,13 @@
+.form-container {
+	width: 100%;
+	background-color: var(--grey);
+	margin: auto;
+	padding: 3rem;
+}
+
+
+form .error {
+	width: 100%;
+	display: flex;
+	flex-flow: column;
+}

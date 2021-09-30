@@ -1,28 +1,32 @@
 <%= stylesheet_link_tag 'user-actions' %>
+
 <div class="action-container">
-<h2>Sign up</h2>
+  <h2>Sign up</h2>
   <div class="user-actions">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
-      <div>
-        <%= f.label :email, for:"email" %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", type:"email", id:"email" %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
       </div>
-      <div>
-        <%= f.label :password, for:"password" %>
-        <% if @minimum_password_length %>
-        <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %>
-        <%= f.password_field :password, autocomplete: "current-password", type:"password", id:"password" %>
+
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: "new-password" %>
       </div>
-      <div>
-        <%= f.label :password_confirmation, for:"new-password" %>
-        <%= f.password_field :password_confirmation, autocomplete: "current-password", type:"password", id:"new-password" %>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       </div>
-      <%= f.submit "Sign up" %>
-    <% end %>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+      <% end %>
+    </div>
+    <div class="bottom-container">
+      <div>Already have an account? <%= link_to "Log in", new_session_path(resource_name) %></div>
+    </div>
   </div>
-  <div class="bottom-container">
-    <div>Already have an account? <%= link_to "Log in", new_session_path(resource_name) %></div>
-  </div>
-</div>

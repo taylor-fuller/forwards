@@ -39,18 +39,18 @@ ActiveRecord::Schema.define(version: 2021_09_28_211618) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.string "description"
-    t.boolean "public", default: true, null: false
-    t.integer "team_id", null: false
-    t.integer "lead_id", null: false
+    t.boolean "public", default: true
+    t.integer "team_id"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "teams", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "lead_id", null: false
+    t.string "name"
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

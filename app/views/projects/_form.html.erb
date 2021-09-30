@@ -11,6 +11,25 @@
     </div>
   <% end %>
 
+  <div>
+    <%= form.label :name, "Project Name" %>
+    <%= form.text_field :name %> 
+  </div>
+  <% if project.errors[:name].present? %>
+    <div class="errors">
+      <%= project.errors[:name][0] %>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :description, "Project Description" %>
+    <%= form.text_field :description %> 
+  </div>
+  <% if project.errors[:description].present? %>
+    <div class="errors">
+      <%= project.errors[:description][0] %>
+    </div>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

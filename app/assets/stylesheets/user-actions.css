@@ -11,7 +11,7 @@
     flex-flow: column;
     justify-content: space-between;
     margin: auto;
-    min-width: 400px;
+    width: 400px;
     min-height: 500px;
     border-radius: .4rem;
     overflow: hidden;
@@ -51,7 +51,7 @@ h2 {
 .user-actions {
     margin-top: auto;
     margin-bottom: auto;
-    padding: 2rem;
+    padding: 1rem;
 }
 
 @media(min-width:600px) {
@@ -86,4 +86,80 @@ input.btn {
 
 h6 {
     text-align: center;
+    padding: 1rem 0;
+}
+
+form label {
+    display:inline-block;
+    margin-bottom: .5rem;
+}
+
+form input {
+    margin-bottom: 1rem;
+}
+
+form input[type="submit"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: 1rem;
+    height: 35px;
+    width: 100%;
+    display: block;
+    padding: .375rem .75rem;
+    background-clip: padding-box;
+    border: 1px solid #f2f2f2b7;
+    border-radius: .3rem;
+    transition: all .1s ease-in-out;
+    background-color: var(--accent1);
+    color: var(--base0);
+}
+
+form input[type="submit"]:hover {
+    transition: all .1s ease-in-out;
+    background-color: var(--accent0);
+}
+
+form input[type="submit"]:active {
+    transition: all 0s ease-in-out;
+    background-color: var(--base0);
+}
+
+form input[name="user[email]"], form input[name="user[password]"], form input[name="user[password_confirmation]"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    padding: .375rem .5rem;
+    margin: auto;
+    font-size: 1rem;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    color: var(--fontBlack);
+    border: 1px solid rgba(80, 80, 80, 0.25);
+    border-radius: .3rem;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+    margin-bottom: 1.5rem;
+}
+
+form input[name="user[email]"]:focus, form input[name="user[password]"]:focus, form input[name="user[password_confirmation]"]:focus {
+    outline: none;
+    box-shadow: 0 0 0px 5px #ff510059;
+    transition: all .2s ease-in-out;
+}
+
+#error_explanation {
+    padding-bottom: 1rem;
+}
+
+#error_explanation h2 {
+    font-size: 1rem;
+    color: red;
+}
+
+#error_explanation li {
+    list-style: disc;
+    font-size: .75rem;
+    color: red;
 }

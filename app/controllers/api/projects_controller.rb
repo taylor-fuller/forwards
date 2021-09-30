@@ -1,4 +1,4 @@
-class ProjectsController < ApplicationController
+class Api::ProjectsController < ApplicationController
   before_action :set_project, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[ edit update destroy ]
 
@@ -64,6 +64,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.require(:project).permit(:name, :description, :team_id, users_attributes: [:id, :name, :_destroy])
+      params.require(:project).permit(:name, :description, :team_id)
     end
 end
