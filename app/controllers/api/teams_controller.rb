@@ -4,8 +4,9 @@ class Api::TeamsController < ApplicationController
 
   # GET /teams or /teams.json
   def index
-    @teams = Team.all.order("created_at DESC")
-    render json: { teams: @teams }
+    @current_user = current_user
+    @teams = @current_user.teams
+    render json: { teams: @teams.reverse[..9] }
   end
 
   # GET /teams/new
@@ -20,16 +21,16 @@ class Api::TeamsController < ApplicationController
 
   # POST /teams or /teams.json
   def create
+    @current_user = current_user
     @team = current_user.teams.build(team_params)
     @team.users << current_user
+    @current_user.teams << @team
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to @team, notice: "Team was successfully created." }
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end

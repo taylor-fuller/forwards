@@ -56,21 +56,7 @@ class TeamsContainer extends Component {
     render () {
         return (
             <div className="teams-container">
-                {/* <button onClick={this.handleModalToggle}>Open Modal</button>
-                <Modal
-                    isOpen={this.state.modalIsOpen}
-                    contentLabel="Example Modal"
-                >
-                    <button onClick={this.handleModalToggle}>close</button>
-                    <div>I am a modal</div>
-                    <form>
-                    <input />
-                    <button>tab navigation</button>
-                    <button>stays</button>
-                    <button>inside</button>
-                    <button>the modal</button>
-                    </form>
-                </Modal> */}
+                
             </div>
         )
     }

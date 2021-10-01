@@ -4,9 +4,9 @@ class CreateProjects < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :description
       t.boolean :public, default: true
-      t.integer :team_id
-      t.integer :user_id
       t.timestamps
     end
+    add_reference :projects, :user, null: false, foreign_key: true
+    add_reference :projects, :team, null: false, foreign_key: true
   end
 end

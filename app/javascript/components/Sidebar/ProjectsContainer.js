@@ -13,7 +13,7 @@ import Modal from 'react-modal';
 const csrfToken = document.querySelector('[name="csrf-token"]').content
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-Modal.setAppElement(document.getElementById('root'));
+
 
 class ProjectsContainer extends Component {
     constructor(props) {

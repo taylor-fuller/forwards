@@ -4,14 +4,18 @@ class Api::ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @projects = Project.all.order("created_at DESC")
-    render json: { projects: @projects }
+    @current_user = current_user
+    @projects = @current_user.projects
+    render json: { projects: @projects.reverse[..9] }
   end
 
   # GET /projects/new
   def new
     @project = current_user.projects.build
     @team = Team.where('id = ?', current_user.team_id)
+
+    response = { :project => @project, :team => @team }
+    render json: { data: response }
   end
 
   # GET /projects/1/edit
@@ -21,14 +25,13 @@ class Api::ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create
+    project_params['team_id'] = Team.where('id = ?', current_user.team_id) || nil
     @project = current_user.projects.build(project_params)
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: "Project was successfully created." }
         format.json { render :show, status: :created, location: @project }
       else
-        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
