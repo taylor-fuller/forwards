@@ -1,0 +1,48 @@
+.body-content {
+    margin-left: 270px;
+    display: flex;
+    justify-content: center;
+    align-content: flex-start;
+    padding: 2rem;
+}
+
+.main-container {
+    min-height: 80vh;
+    min-width: 100%;
+    border: 1px solid var(--grey);
+    border-radius: 1rem;
+    overflow:auto;
+}
+
+.dashboard-container {
+    display: flex;
+}
+
+.dashboard-container .tasks, .dashboard-container .projects-and-teams {
+    flex-basis: 50%;
+}
+
+.dashboard-container .projects-and-teams {
+    display: flex;
+    flex-flow: column;
+    min-height: 80vh;
+}
+
+.dashboard-container .projects-and-teams .projects, .dashboard-container .projects-and-teams .teams {
+    flex-basis: 50%;
+    padding: 1rem;
+}
+
+.dashboard-container .tasks {
+    padding: 1rem;
+    border-right: 1px solid var(--grey);
+}
+
+.dashboard-container .projects {
+    border-bottom: 1px solid var(--grey);
+}
+
+.body-content h2 {
+    text-align: center;
+    font-size: 1.5rem;
+}

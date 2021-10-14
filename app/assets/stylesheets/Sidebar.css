@@ -92,3 +92,9 @@
 .text-item {
     cursor: pointer;
 }
+
+.text-item.active {
+    cursor: default;
+    background-color: var(--base1);
+    transition: .1s all ease-in-out;
+}

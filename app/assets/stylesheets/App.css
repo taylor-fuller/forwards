@@ -55,6 +55,7 @@ table {
 	--accent0: #ff8851;
     --accent1: #ff3c00;
     --fontBlack: rgb(80,80,80);
+    --grey: rgb(200,200,200);
 }
 
 a:hover {
@@ -69,12 +70,13 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    justify-content: space-between;
+    justify-content: flex-start;
     color: var(--base0);
 }
 
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
 	margin-left: 270px;
+	margin-top: 100px;
 }
 
 .header-container {
@@ -83,8 +85,8 @@ body {
 
 .ReactModal__Content.ReactModal__Content--after-open {
 	margin: auto;
-	max-width: 800px;
-	max-height: 800px;
+	max-width: 600px;
+	max-height: 600px;
 }
 
 .button {
