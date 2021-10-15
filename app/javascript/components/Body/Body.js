@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import '../../../assets/stylesheets/Body'
+
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
 
@@ -13,10 +14,6 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const Body = (props) => {
     const [activeSidebarOption, setActiveSidebarOption] = useState(props.activeOption)
-
-    useEffect(() => {
-        
-    }, [])
 
     useEffect(() => {
         setActiveSidebarOption(props.activeOption)
@@ -36,6 +33,7 @@ const Body = (props) => {
                         </div>
                         <div className="teams">
                             <h2>My Teams</h2>
+                            { props.teams }
                         </div>
                     </div>
                 </div>

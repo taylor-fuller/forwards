@@ -6,7 +6,8 @@ import Modal from 'react-modal';
 import ProjectForm from '../Forms/ProjectForm';
 import TeamForm from '../Forms/TeamForm';
 import TaskForm from '../Forms/TaskForm';
-
+import { connect } from 'react-redux';
+import { receiveTeams } from '../../actions';
 import React, { useState, useEffect } from 'react';
 
 // import AOS from 'aos';
@@ -39,19 +40,21 @@ const Sidebar = (props) => {
     const [userTasks, setUserTasks] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/teams', {})
-        .then( (data) => {
-            setUserTeams([...data.data.teams])
-        })
-        .catch( (data) => {
-        })
+        // axios.get('http://localhost:3000/api/teams', {})
+        // .then( (data) => {
+        //     setUserTeams([...data.data.teams])
+        // })
+        // .catch( (data) => {
+        // })
 
-        axios.get('http://localhost:3000/api/projects', {})
-        .then( (data) => {
-            setUserProjects([...data.data.projects])
-        })
-        .catch( (data) => {
-        })
+        // axios.get('http://localhost:3000/api/projects', {})
+        // .then( (data) => {
+        //     setUserProjects([...data.data.projects])
+        // })
+        // .catch( (data) => {
+        // })
+
+        props.receiveTeams()
     }, [])
 
     useEffect(() => {
@@ -120,28 +123,28 @@ const Sidebar = (props) => {
         }
     }
     
-    let teams;
-    let projects;
+    let Teams;
+    let Projects;
     let maxTeams;
     let maxProjects;
     const form = determineForm(activeCreateOption)
 
     if (userTeams.length != 0) {
-        teams = userTeams.map(team => <div className="text-item" key={team.id} id={team.id}><h3>{team.name}</h3></div>)
+        Teams = props.teams.map(team => <div className="text-item" key={team.id} id={team.id}><h3>{team.name}</h3></div>)
         if (userTeams.length == 10) {
             maxTeams = <div className="see-more"><h3><a>See More</a></h3></div>
         }
     } else {
-        teams = <div className="empty-teams">No Teams</div>
+        Teams = <div className="empty-teams">No Teams</div>
     }
 
     if (userProjects.length != 0) {
-        projects = userProjects.map(project => <div className="text-item" key={project.id} id={project.id}><h3>{project.name}</h3></div>)
+        Projects = userProjects.map(project => <div className="text-item" key={project.id} id={project.id}><h3>{project.name}</h3></div>)
         if (userProjects.length == 10) {
             maxTeams = <div className="see-more"><h3><a>See More</a></h3></div>
         }
     } else {
-        projects = <div className="empty-projects">No Projects</div>
+        Projects = <div className="empty-projects">No Projects</div>
     }
 
     return (
@@ -163,14 +166,14 @@ const Sidebar = (props) => {
                 <div className="sidebar-item">
                     <h2>Projects</h2>
                     <div className="sidebar-sub-item">
-                        { projects }
+                        { Projects }
                         { maxProjects }
                     </div>
                 </div>
                 <div className="sidebar-item">
                     <h2>Teams</h2>
                     <div className="sidebar-sub-item">
-                        { teams }
+                        { Teams }
                         { maxTeams }
                     </div>
                 </div>
@@ -189,4 +192,8 @@ const Sidebar = (props) => {
     )
 }
 
-export default Sidebar;
+const mapStateToProps = state => {
+    return { teams: state.teams }
+}
+
+export default connect(mapStateToProps, { receiveTeams })(Sidebar);
