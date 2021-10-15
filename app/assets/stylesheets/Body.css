@@ -1,31 +1,34 @@
 .body-content {
-    margin-left: 270px;
+    position: absolute;
+    top: 100px;
+    bottom: 0px;
+    left: 270px;
+    right: 0px;
     display: flex;
     justify-content: center;
     align-content: flex-start;
-    padding: 2rem;
-}
-
-.main-container {
-    min-height: 80vh;
-    min-width: 100%;
-    border: 1px solid var(--grey);
-    border-radius: 1rem;
-    overflow:auto;
 }
 
 .dashboard-container {
     display: flex;
+    width: 100%;
 }
 
-.dashboard-container .tasks, .dashboard-container .projects-and-teams {
-    flex-basis: 50%;
+.dashboard-container .tasks {
+    flex-basis: 65%;
+}
+
+.dashboard-container .projects-and-teams {
+    flex-basis: 35%;
 }
 
 .dashboard-container .projects-and-teams {
     display: flex;
     flex-flow: column;
-    min-height: 80vh;
+}
+
+.dashboard-container .projects-and-teams {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
 
 .dashboard-container .projects-and-teams .projects, .dashboard-container .projects-and-teams .teams {
@@ -44,5 +47,9 @@
 
 .body-content h2 {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+}
+
+.tasks-container, .projects-container, .teams-container {
+    padding: 1rem;
 }

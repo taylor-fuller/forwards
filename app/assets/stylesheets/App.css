@@ -55,7 +55,7 @@ table {
 	--accent0: #ff8851;
     --accent1: #ff3c00;
     --fontBlack: rgb(80,80,80);
-    --grey: rgb(200,200,200);
+    --grey: rgb(225,225,225);
 }
 
 a:hover {
@@ -68,19 +68,14 @@ body {
 
 #view {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    justify-content: flex-start;
+    flex-direction: row;
+	min-height: 100vh;
     color: var(--base0);
 }
 
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
 	margin-left: 270px;
 	margin-top: 100px;
-}
-
-.header-container {
-	margin-left: 270px;
 }
 
 .ReactModal__Content.ReactModal__Content--after-open {
@@ -92,4 +87,10 @@ body {
 .button {
 	color: var(--base0);
 	cursor: pointer;
+}
+
+.content-container {
+	display: flex;
+	flex-flow: column;
+	width: 100%;
 }

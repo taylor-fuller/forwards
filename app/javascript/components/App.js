@@ -55,9 +55,9 @@ const App = () => {
 
     return (
         <div id="view">
-            <Header />
+            <Sidebar activeOption={activeOption} />
             <div className="content-container">
-                <Sidebar activeOption={activeOption} />
+                <Header />
                 <Body activeOption={activeOption} />
             </div>
         </div>

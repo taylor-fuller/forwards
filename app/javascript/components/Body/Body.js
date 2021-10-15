@@ -28,14 +28,14 @@ const Body = (props) => {
             content = (
                 <div className="dashboard-container">
                     <div className="tasks">
-                        <h2>Tasks</h2>
+                        <h2>My Tasks</h2>
                     </div>
                     <div className="projects-and-teams">
                         <div className="projects">
-                            <h2>Projects</h2>
+                            <h2>My Projects</h2>
                         </div>
                         <div className="teams">
-                            <h2>Teams</h2>
+                            <h2>My Teams</h2>
                         </div>
                     </div>
                 </div>
@@ -72,9 +72,7 @@ const Body = (props) => {
 
     return (
         <div className="body-content">
-            <div className="main-container">
-                { Content }
-            </div>
+            { Content }
         </div>
     )
 }

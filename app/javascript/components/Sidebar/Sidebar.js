@@ -18,9 +18,9 @@ import React, { useState, useEffect } from 'react';
 
 const customStyles = {
     content: {
-      backgroundColor: 'var(--base2)'
+        backgroundColor: 'var(--base2)'
     },
-  };
+};
 
 Modal.setAppElement('#root');
 
