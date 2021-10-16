@@ -7,7 +7,7 @@ import ProjectForm from '../Forms/ProjectForm';
 import TeamForm from '../Forms/TeamForm';
 import TaskForm from '../Forms/TaskForm';
 import { connect } from 'react-redux';
-import { receiveTeams } from '../../actions';
+import { createTeam, createProject } from '../../actions';
 import React, { useState, useEffect } from 'react';
 
 // import AOS from 'aos';
@@ -40,22 +40,9 @@ const Sidebar = (props) => {
     const [userTasks, setUserTasks] = useState([]);
 
     useEffect(() => {
-        // axios.get('http://localhost:3000/api/teams', {})
-        // .then( (data) => {
-        //     setUserTeams([...data.data.teams])
-        // })
-        // .catch( (data) => {
-        // })
-
-        // axios.get('http://localhost:3000/api/projects', {})
-        // .then( (data) => {
-        //     setUserProjects([...data.data.projects])
-        // })
-        // .catch( (data) => {
-        // })
-
-        props.receiveTeams()
-    }, [])
+        setUserTeams(props.teams)
+        setUserProjects(props.projects)
+    }, [props.teams, props.projects])
 
     useEffect(() => {
         setActiveSidebarOption(props.activeOption)
@@ -78,38 +65,17 @@ const Sidebar = (props) => {
         if (type == 'task') {
             console.log('task')
         } else if (type == 'project') {
-            axios.post('http://localhost:3000/api/projects', {
-                name: event.target.title.value,
-                description: event.target.description.value,
-                team_id: 1
-            })
-            .then( (data) => {
-                handleModalClose()
-                axios.get('http://localhost:3000/api/projects', {})
-                .then( (data) => {
-                    setUserProjects([...data.data.projects])
-                })
-                .catch( (data) => {
-                })
-            })
-            .catch( (data) => {
-            })
+            props.createProject(
+                event.target.name.value,
+                event.target.description.value,
+                1
+            )
+            handleModalClose()
         } else if (type == 'team') {
-            axios.post('http://localhost:3000/api/teams', {
-                name: event.target.name.value
-            })
-            .then( (data) => {
-                handleModalClose()
-
-                axios.get('http://localhost:3000/api/teams', {})
-                .then( (data) => {
-                    setUserTeams([...data.data.teams])
-                })
-                .catch( (data) => {
-                })
-            })
-            .catch( (data) => {
-            })
+            props.createTeam(
+                event.target.name.value,
+            )
+            handleModalClose()
         }
     }
 
@@ -130,7 +96,7 @@ const Sidebar = (props) => {
     const form = determineForm(activeCreateOption)
 
     if (userTeams.length != 0) {
-        Teams = props.teams.map(team => <div className="text-item" key={team.id} id={team.id}><h3>{team.name}</h3></div>)
+        Teams = userTeams.map(team => <div className="text-item" key={team.id} id={team.id}><h3>{team.name}</h3></div>)
         if (userTeams.length == 10) {
             maxTeams = <div className="see-more"><h3><a>See More</a></h3></div>
         }
@@ -193,7 +159,10 @@ const Sidebar = (props) => {
 }
 
 const mapStateToProps = state => {
-    return { teams: state.teams }
+    return { 
+        teams: state.teams,
+        projects: state.projects
+    }
 }
 
-export default connect(mapStateToProps, { receiveTeams })(Sidebar);
+export default connect(mapStateToProps, { createTeam, createProject })(Sidebar);

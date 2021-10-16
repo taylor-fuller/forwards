@@ -8,6 +8,34 @@ export const fetchTeams = () => async (dispatch) => {
     dispatch({ type: 'FETCH_TEAMS', payload: response.data })
 }
 
-export const receiveTeams = () => async (dispatch) => {
-    dispatch({ type: 'RECEIVE_TEAMS' })
+export const createTeam = (name) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    axios.post('http://localhost:3000/api/teams', { name: name })
+    .then( () => {
+        dispatch(fetchTeams())
+    })
+}
+
+export const fetchProjects = () => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    const response = await axios.get('http://localhost:3000/api/projects')
+    dispatch({ type: 'FETCH_PROJECTS', payload: response.data })
+}
+
+export const createProject = (name, description, team_id) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    axios.post('http://localhost:3000/api/projects', { 
+        name: name,
+        description: description,
+        team_id: team_id
+    })
+    .then( () => {
+        dispatch(fetchProjects())
+    })
 }

@@ -6,7 +6,7 @@ import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { fetchTeams } from '../actions';
+import { fetchTeams, fetchProjects } from '../actions';
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
 
@@ -19,13 +19,11 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const App = (props) => {
     const [activeOption, setActiveOption] = useState('dashboard')
-
-    useEffect(() => {
-        // console.log(props.teams)
-    })
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         props.fetchTeams()
+        props.fetchProjects()
 
         dashboard = document.getElementById('dashboard')
         tasks = document.getElementById('tasks')
@@ -73,7 +71,10 @@ const App = (props) => {
 }
 
 const mapStateToProps = state => {
-    return { teams: state.teams }
+    return { 
+        teams: state.teams,
+        projects: state.projects
+    }
 }
 
-export default connect(mapStateToProps, { fetchTeams })(App);
+export default connect(mapStateToProps, { fetchTeams, fetchProjects })(App);

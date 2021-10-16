@@ -5,8 +5,18 @@ import { applyMiddleware, createStore } from 'redux'
 import reducers from '../reducers'
 import App from '../components/App'
 import thunk from 'redux-thunk'
+import { loadState, saveState } from './localStorage'
+import throttle from 'lodash/throttle'
 
-const store = createStore(reducers, applyMiddleware(thunk))
+const persistedState = loadState()
+const store = createStore(reducers, persistedState, applyMiddleware(thunk))
+
+store.subscribe(throttle(() => {
+  saveState({
+    teams: store.getState().teams,
+    projects: store.getState().projects
+  })
+}, 1000))
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(

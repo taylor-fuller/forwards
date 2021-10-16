@@ -4,12 +4,12 @@ const ProjectForm = (props) => {
     return (
         <form onSubmit={props.onSubmit}>
             <div className="form-group">
-                <label htmlFor="title"></label>
+                <label htmlFor="name"></label>
                 <input 
                     type="text" 
-                    id="title"
-                    name="title"
-                    placeholder="Project Title"
+                    id="name"
+                    name="name"
+                    placeholder="Project Name"
                     autoComplete="off"
                 />
             </div>
