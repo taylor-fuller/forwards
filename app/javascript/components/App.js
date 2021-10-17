@@ -18,7 +18,7 @@ const csrfToken = document.querySelector('[name="csrf-token"]').content
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const App = (props) => {
-    const [activeOption, setActiveOption] = useState('dashboard')
+    const [activeOption, setActiveOption] = useState('tasks')
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {

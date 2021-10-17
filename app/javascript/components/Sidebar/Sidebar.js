@@ -81,29 +81,7 @@ const Sidebar = (props) => {
         }
     }
     
-    let Teams;
-    let Projects;
-    let maxTeams;
-    let maxProjects;
     const form = determineForm(activeCreateOption)
-
-    if (props.teams.length != 0) {
-        Teams = props.teams.map(team => <div className="text-item" key={team.id} id={team.id}><h3>{team.name}</h3></div>)
-        if (props.teams.length == 10) {
-            maxTeams = <div className="see-more"><h3><a>See More</a></h3></div>
-        }
-    } else {
-        Teams = <div className="empty-teams">No Teams</div>
-    }
-
-    if (props.projects.length != 0) {
-        Projects = props.projects.map(project => <div className="text-item" key={project.id} id={project.id}><h3>{project.name}</h3></div>)
-        if (props.projects.length == 10) {
-            maxProjects = <div className="see-more"><h3><a>See More</a></h3></div>
-        }
-    } else {
-        Projects = <div className="empty-projects">No Projects</div>
-    }
 
     return (
         <ProSidebar>
@@ -122,17 +100,9 @@ const Sidebar = (props) => {
                     <div className="text-item" onClick={() => handleModalOpen('team')}><h3>Create Team</h3><span>{addIcon}</span></div>
                 </div>
                 <div className="sidebar-item">
-                    <h2>Projects</h2>
+                    <h2>Favorites</h2>
                     <div className="sidebar-sub-item">
-                        { Projects }
-                        { maxProjects }
-                    </div>
-                </div>
-                <div className="sidebar-item">
-                    <h2>Teams</h2>
-                    <div className="sidebar-sub-item">
-                        { Teams }
-                        { maxTeams }
+                        
                     </div>
                 </div>
             </div>
