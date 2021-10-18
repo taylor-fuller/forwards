@@ -1,3 +1,15 @@
+h1 {
+    font-family: 'Montserrat', sans-serif;
+	color: white;
+	margin: auto;
+	font-size: 3rem;
+    font-style: italic;
+	font-weight: bold;
+	letter-spacing: -1px;
+    text-align: center;
+    padding: 1rem 0;
+}
+
 #view .pro-sidebar {
     background-color: var(--base2);
 	position: -webkit-sticky;
@@ -20,8 +32,8 @@
 	color: var(--base0);
 }
 
-.sidebar-header {
-    padding-top: 100px;
+.sidebar-home, .sidebar-workspace {
+    padding-top: 25px;
     padding-bottom: 25px;
     border-bottom: 1px solid #4f5d6b;
 }
@@ -39,10 +51,12 @@
     color: #708396;
     font-size: 1.1rem;
     padding: 0 2rem;
-    min-height: 50px;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+    align-content: center;
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .text-item {
@@ -55,7 +69,7 @@
     align-content: center;
 }
 
-.sidebar-header .text-item {
+.sidebar-home .text-item {
     text-align: center;
     padding: 0 3rem;
     min-height: 50px;
@@ -69,7 +83,7 @@
     background-color: #4f5d6b;
 }
 
-.sidebar-header .text-item span {
+.sidebar-home .text-item span {
     padding-right: 2rem;
 }
 
@@ -80,7 +94,9 @@
 
 .sidebar-container .text-item h3 {
     font-size: 1rem;
-    
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
 }
 
 .sidebar-container .text-item span {
@@ -96,4 +112,27 @@
     cursor: default;
     background-color: var(--base1);
     transition: .1s all ease-in-out;
+}
+
+.sidebar-workspace form {
+    margin: 0 2rem;
+}
+
+#view select, #view select option {
+    width: 100%;
+    color: var(--base2);
+}
+
+.icon svg {
+   fill: #708396;
+   transition: .1s all ease-in-out;
+}
+
+.icon svg:hover {
+    fill: var(--base0);
+    transform: scale(1.15);
+}
+
+.empty {
+    padding: 0 3rem;
 }

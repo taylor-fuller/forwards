@@ -1,1 +1,1 @@
-json.partial! "teams/team", team: @team
+json.extract! @team, :id, :name, :user_id

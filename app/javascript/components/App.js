@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import "../../assets/stylesheets/App.css"
-import Header from './Header/Header';
-import Footer from './Footer/Footer';
 import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { fetchTeams, fetchProjects } from '../actions';
+import { fetchTeams, fetchProjects, fetchSettings, amendActiveSidebar } from '../actions';
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
 
@@ -18,53 +16,34 @@ const csrfToken = document.querySelector('[name="csrf-token"]').content
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const App = (props) => {
-    const [activeOption, setActiveOption] = useState('tasks')
-    const [isLoading, setIsLoading] = useState(true)
-
     useEffect(() => {
         props.fetchTeams()
         props.fetchProjects()
+        props.fetchSettings()
 
         dashboard = document.getElementById('dashboard')
-        tasks = document.getElementById('tasks')
-        projects = document.getElementById('projects')
         tasks = document.getElementById('tasks')
 
         dashboard.addEventListener('click', function(event) {
             event.stopPropagation();
             if (dashboard.contains(event.target)) {
-                setActiveOption('dashboard')
+                props.amendActiveSidebar('dashboard')
             }
         })
 
         tasks.addEventListener('click', function(event) {
             event.stopPropagation();
             if (tasks.contains(event.target)) {
-                setActiveOption('tasks')
-            }
-        })
-
-        projects.addEventListener('click', function(event) {
-            event.stopPropagation();
-            if (projects.contains(event.target)) {
-                setActiveOption('projects')
-            }
-        })
-
-        teams.addEventListener('click', function(event) {
-            event.stopPropagation();
-            if (teams.contains(event.target)) {
-                setActiveOption('teams')
+                props.amendActiveSidebar('tasks')
             }
         })
     }, [])
 
     return (
         <div id="view">
-            <Sidebar activeOption={activeOption}/>
+            <Sidebar/>
             <div className="content-container">
-                <Header />
-                <Body activeOption={activeOption} />
+                <Body/>
             </div>
         </div>
     )
@@ -73,8 +52,9 @@ const App = (props) => {
 const mapStateToProps = state => {
     return { 
         teams: state.teams,
-        projects: state.projects
+        projects: state.projects,
+        settings: state.settings
     }
 }
 
-export default connect(mapStateToProps, { fetchTeams, fetchProjects })(App);
+export default connect(mapStateToProps, { fetchTeams, fetchProjects, fetchSettings, amendActiveSidebar })(App);

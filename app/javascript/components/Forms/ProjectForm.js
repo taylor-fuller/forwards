@@ -11,6 +11,7 @@ const ProjectForm = (props) => {
                     name="name"
                     placeholder="Project Name"
                     autoComplete="off"
+                    autoFocus="autofocus"
                 />
             </div>
             <div className="form-group">

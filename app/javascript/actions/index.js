@@ -13,7 +13,8 @@ export const createTeam = (name) => async (dispatch) => {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
     axios.post('http://localhost:3000/api/teams', { name: name })
-    .then( () => {
+    .then( (data) => {
+        dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
         dispatch(fetchTeams())
     })
 }
@@ -38,4 +39,16 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     .then( () => {
         dispatch(fetchProjects())
     })
+}
+
+export const fetchSettings = () => async (dispatch) => {
+    dispatch({ type: 'FETCH_SETTINGS' })
+}
+
+export const amendActiveWorkspace = (workspace) => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
+}
+
+export const amendActiveSidebar = (sidebarOption) => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: sidebarOption })
 }

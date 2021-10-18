@@ -9,8 +9,9 @@ const TeamForm = (props) => {
                     type="text" 
                     id="name"
                     name="name"
-                    placeholder="Team Name"
+                    placeholder="Workspace Name"
                     autoComplete="off"
+                    autoFocus="autofocus"
                 />
             </div>
             <div className="button">

@@ -14,7 +14,8 @@ const store = createStore(reducers, persistedState, applyMiddleware(thunk))
 store.subscribe(throttle(() => {
   saveState({
     teams: store.getState().teams,
-    projects: store.getState().projects
+    projects: store.getState().projects,
+    settings: store.getState().settings
   })
 }, 1000))
 

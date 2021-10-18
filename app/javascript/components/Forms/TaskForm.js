@@ -11,6 +11,7 @@ const TaskForm = (props) => {
                     name="title"
                     placeholder="Project Title"
                     autoComplete="off"
+                    autoFocus="autofocus"
                 />
             </div>
             <div className="form-group">
