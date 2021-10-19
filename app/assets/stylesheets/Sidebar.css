@@ -16,7 +16,6 @@ h1 {
     position: sticky;
     top: 0px;
     min-height: 100vh;
-    overflow: hidden;
 }
 
 #view .pro-sidebar-inner, .pro-sidebar-layout {
@@ -92,11 +91,23 @@ h1 {
     line-height: 50px;
 }
 
-.sidebar-container .text-item h3 {
+.sidebar-container .text-item h4 {
+    background-color: var(--base2);
     font-size: 1rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow-x: hidden;
+}
+
+.sidebar-container .text-item:hover h4 {
+    background-color: #4f5d6b;
+    position: fixed;
+    overflow-x: visible; 
+    white-space: nowrap; 
+    width: auto;
+    padding-right: 3rem;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
 }
 
 .sidebar-container .text-item span {
@@ -126,6 +137,7 @@ h1 {
 .icon svg {
    fill: #708396;
    transition: .1s all ease-in-out;
+   cursor: pointer;
 }
 
 .icon svg:hover {

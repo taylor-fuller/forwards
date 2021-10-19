@@ -7,7 +7,7 @@ import ProjectForm from '../Forms/ProjectForm';
 import TeamForm from '../Forms/TeamForm';
 import TaskForm from '../Forms/TaskForm';
 import { connect } from 'react-redux';
-import { createTeam, createProject, amendActiveWorkspace } from '../../actions';
+import { createTeam, createProject, amendActiveSidebar, amendActiveWorkspace } from '../../actions';
 import React, { useState, useEffect } from 'react';
 
 // import AOS from 'aos';
@@ -74,18 +74,23 @@ const Sidebar = (props) => {
         }
     }
 
-    function handleWorkspaceSelect(event) {
-        props.amendActiveWorkspace({workspace_id: Number(event.target.selectedOptions[0].id), workspace_name: event.target.selectedOptions[0].textContent})
+    function handleWorkspaceSelect(team_id, team_name) {
+        props.amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name})
+        props.amendActiveSidebar('dashboard')
+    }
+
+    function handleProjectSelect(project_id) {
+        console.log(project_id)
     }
 
     function determineSelects() {
         let Teams
 
         if (props.teams.length != 0) {
-            Teams = props.teams.map(team => <option key={team.id} value={team.name} id={team.id}>{team.name}</option>)
+            Teams = props.teams.map(team => <option key={team.id} value={team.name} id={team.id} onClick={() => handleWorkspaceSelect(team.id, team.name)}>{team.name}</option>)
             return (
                 <form>
-                    <select name="workspace" value={props.settings.activeWorkspace.workspace_name ? props.settings.activeWorkspace.workspace_name : ''} id="workspace" onChange={(event) => handleWorkspaceSelect(event)}>
+                    <select name="workspace" value={props.settings.activeWorkspace.workspace_name ? props.settings.activeWorkspace.workspace_name : ''} id="workspace" readOnly>
                         <option value='' disabled hidden>Select a Workspace</option>
                         {Teams}
                     </select>
@@ -96,12 +101,13 @@ const Sidebar = (props) => {
         }
     }
     
-    let Projects
+    let Projects 
+    let Favorites = <div className="empty">No Favorites</div>
     const form = determineForm(activeCreateOption)
 
     let userProjects = props.projects.filter((project) => project.team_id === Number(props.settings.activeWorkspace.workspace_id))
     if (userProjects.length != 0) {
-        Projects = userProjects.map(project => <div key={project.id} id={project.id} className="text-item" title={project.name}><h3>{project.name}</h3></div>)
+        Projects = userProjects.map(project => <div key={project.id} id={project.id} className="text-item" onClick={() => handleProjectSelect(project.id)}><h4 id={project.id}>{project.name}</h4></div>)
     } else {
         Projects = <div className="empty">No Projects</div>
     }
@@ -126,10 +132,8 @@ const Sidebar = (props) => {
                     <div className="text-item" onClick={() => handleModalOpen('task')}><h3>Create Task</h3><span>{addIcon}</span></div>
                 </div>
                 <div className="sidebar-item">
-                    <h2>Favorites</h2>
-                    <div className="text-item">
-                        
-                    </div>
+                    <h2>Favorites <span className='icon'>{addIcon}</span></h2>
+                        { Favorites }
                 </div>
                 <div className="sidebar-item">
                     <h2>Projects <span className='icon' onClick={() => handleModalOpen('project')}>{addIcon}</span></h2>
@@ -158,4 +162,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { createTeam, createProject, amendActiveWorkspace })(Sidebar);
+export default connect(mapStateToProps, { createTeam, createProject, amendActiveSidebar, amendActiveWorkspace })(Sidebar);

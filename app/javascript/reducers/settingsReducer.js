@@ -1,6 +1,9 @@
-export default (state = {activeWorkspace: {'': null}, activeSidebarOption: 'dashboard'}, action) => {
+export default (state = {activeWorkspace: '', activeSidebarOption: 'dashboard'}, action) => {
     switch(action.type) {
         case 'FETCH_SETTINGS':
+            if (state.activeWorkspace === '') {
+                state = {...state, activeSidebarOption: 'tasks'}
+            }
             return state
         case 'AMEND_ACTIVE_WORKSPACE':
             state = {...state, activeWorkspace: action.payload}
