@@ -24,26 +24,47 @@ const Body = (props) => {
         }
 
         let content;
-        if (active === 'dashboard') {
+        if (active === 'Dashboard') {
             content = (
                 <div className="dashboard-container">
-                    
-                </div>
-            )
-        } else if (active === 'tasks') {
-            content = (
-                <div className="task-container">
-                    <div className="tasks">
-                        <h2>My Tasks</h2>
-                        <div className="today">
-                            <h3>Due Today</h3>
-                        </div>
-                        <div className="upcoming">
-                            <h3>Upcoming</h3>
+                    <div className="dashboard-tasks">
+                        <h2>Tasks Due Soon</h2>
+                        <div className="tasks-due-soon">
+                            
                         </div>
                     </div>
-                    <div className="task-detail">
+                    <div className="dashboard-favorites">
+                        <h2>Favorites</h2>
+                        <div className="favorites">
+                            
+                        </div>
+                    </div>
+                </div>
+            )
+        } else if (active === 'My Tasks') {
+            content = (
+                <div className="task-container">
+                    <div className="task-list">   
+                        <div className="tasks">
+                            <h2>Recently Assigned</h2>
+                            <div className="recently-assigned">
+                                
+                            </div>
+                            <h2>Due Today</h2>
+                            <div className="today">
+                                
+                            </div>
+                            <h2>Upcoming</h2>
+                            <div className="upcoming">
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div className="task-detail-container">
                         <h2>Details</h2>
+                        <div className="task-detail">
+                        
+                        </div>
                     </div>
                 </div>
             )
@@ -51,10 +72,27 @@ const Body = (props) => {
         return content
     }
 
+    function determineHeader(props) {
+        let header
+        if (props.activeSidebarOption === 'Dashboard' || props.activeSidebarOption === 'My Tasks') {
+            header = props.activeSidebarOption
+        } else {
+            header = props.activeWorkspace.workspace_name
+            if (props.activeProject) {
+                header = header + ' > ' + props.activeProject.project_name
+            } else if (props.activeTask) {
+                header = header + ' > ' + props.activeTask
+            }
+        }
+        return header
+    }
+
     const Content = determineRender(props.settings.activeSidebarOption)
+    const Header = determineHeader(props.settings)
 
     return (
         <div className="body-content">
+            <div className="header"><h2>{ Header }</h2></div>
             { Content ? Content : null }
         </div>
     )

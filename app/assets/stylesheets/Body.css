@@ -5,46 +5,79 @@
     left: 270px;
     right: 0px;
     display: flex;
-    justify-content: center;
     align-content: flex-start;
+    flex-flow: column nowrap;
+    background-color: var(--grey);
+    overflow:auto;
+    overflow-x: hidden;
 }
 
-.task-container, .dashboard-container {
+.header {
+    box-sizing: border-box;
+    padding-left: 2rem;
+    min-height: 91px;
+    background-color: var(--base0);
     display: flex;
+}
+
+.header h2 {
+    margin: auto 0;
+    font-size: 1.5rem;
+}
+
+.dashboard-container, .task-container {
+    margin: auto;
+    margin-top: 7rem;
     width: 100%;
 }
 
-.task-container .tasks, .dashboard-container .dashboard-my-tasks {
-    flex-basis: 60%;
+.dashboard-tasks, .dashboard-favorites {
+    max-width: 1200px;
+    margin: auto;
 }
 
-.task-container .task-detail, .dashboard-container .recent-activity {
-    flex-basis: 40%;
+.dashboard-favorites {
+    margin: 3rem auto;
 }
 
-.task-container .task-detail, .dashboard-container .dashboard-my-tasks {
-    display: flex;
-    flex-flow: column;
-}
-
-.task-container .task-detail, .dashboard-container .recent-activity {
+.tasks-due-soon, .favorites {
+    margin: auto;
+    min-height: 300px;
+    background-color: var(--base0);
+    border-radius: 1rem;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
 
-.task-container .tasks, .task-container .task-detail {
-    padding: 1rem;
-    border-right: 1px solid var(--grey);
-}
-
-.task-container .projects {
-    border-bottom: 1px solid var(--grey);
-}
-
-.body-content h2 {
-    text-align: center;
+.dashboard-tasks h2, .dashboard-favorites h2 {
+    padding: 2rem 0;
     font-size: 1.2rem;
 }
 
-.tasks-container, .projects-container, .teams-container, .recent-activity, .dashboard-my-tasks {
-    padding: 1rem;
+.task-container {
+    margin-top: 7rem;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    margin: 2rem;
+}
+
+.task-container .task-list {
+    flex-basis: 60%;
+}
+
+.task-container .task-detail-container {
+    flex-basis: 40%;
+}
+
+.task-container h2 {
+    padding: 2rem 0;
+    font-size: 1.2rem;
+}
+
+.tasks > .recently-assigned, .today, .upcoming {
+    min-height: 200px;
+    background-color: var(--base0);
+    margin-right: 5rem;
+    border-radius: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }

@@ -99,6 +99,11 @@ h1 {
     overflow-x: hidden;
 }
 
+
+.sidebar-container .text-item.active, .sidebar-container .text-item.active h4, .sidebar-container .text-item.active:hover h4 {
+    background-color: var(--base1);
+}
+
 .sidebar-container .text-item:hover h4 {
     background-color: #4f5d6b;
     position: fixed;
@@ -122,7 +127,6 @@ h1 {
 .text-item.active {
     cursor: default;
     background-color: var(--base1);
-    transition: .1s all ease-in-out;
 }
 
 .sidebar-workspace form {

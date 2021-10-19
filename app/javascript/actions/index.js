@@ -46,9 +46,17 @@ export const fetchSettings = () => async (dispatch) => {
 }
 
 export const amendActiveWorkspace = (workspace) => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
     dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
 }
 
 export const amendActiveSidebar = (sidebarOption) => async (dispatch) => {
+    if (sidebarOption === 'Dashboard' || 'My Tasks') {
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
+    }
     dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: sidebarOption })
+}
+
+export const amendActiveProject = (project_id, project_name) => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
 }

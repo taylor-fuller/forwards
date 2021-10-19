@@ -20,23 +20,6 @@ const App = (props) => {
         props.fetchTeams()
         props.fetchProjects()
         props.fetchSettings()
-
-        dashboard = document.getElementById('dashboard')
-        tasks = document.getElementById('tasks')
-
-        dashboard.addEventListener('click', function(event) {
-            event.stopPropagation();
-            if (dashboard.contains(event.target)) {
-                props.amendActiveSidebar('dashboard')
-            }
-        })
-
-        tasks.addEventListener('click', function(event) {
-            event.stopPropagation();
-            if (tasks.contains(event.target)) {
-                props.amendActiveSidebar('tasks')
-            }
-        })
     }, [])
 
     return (

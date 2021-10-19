@@ -7,7 +7,7 @@ import ProjectForm from '../Forms/ProjectForm';
 import TeamForm from '../Forms/TeamForm';
 import TaskForm from '../Forms/TaskForm';
 import { connect } from 'react-redux';
-import { createTeam, createProject, amendActiveSidebar, amendActiveWorkspace } from '../../actions';
+import { createTeam, createProject, amendActiveSidebar, amendActiveWorkspace, amendActiveProject } from '../../actions';
 import React, { useState, useEffect } from 'react';
 
 // import AOS from 'aos';
@@ -76,11 +76,7 @@ const Sidebar = (props) => {
 
     function handleWorkspaceSelect(team_id, team_name) {
         props.amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name})
-        props.amendActiveSidebar('dashboard')
-    }
-
-    function handleProjectSelect(project_id) {
-        console.log(project_id)
+        props.amendActiveSidebar('Dashboard')
     }
 
     function determineSelects() {
@@ -100,14 +96,22 @@ const Sidebar = (props) => {
             return(<div className="empty">No Workspaces</div>)
         }
     }
+
+    function handleSidebarSelect(option) {
+        props.amendActiveSidebar(option)
+    }
+
+    function handleProjectSelect(project_id, project_name) {
+        props.amendActiveSidebar(project_id)
+        props.amendActiveProject(project_id, project_name)
+    }
     
-    let Projects 
-    let Favorites = <div className="empty">No Favorites</div>
+    let Projects
     const form = determineForm(activeCreateOption)
 
     let userProjects = props.projects.filter((project) => project.team_id === Number(props.settings.activeWorkspace.workspace_id))
     if (userProjects.length != 0) {
-        Projects = userProjects.map(project => <div key={project.id} id={project.id} className="text-item" onClick={() => handleProjectSelect(project.id)}><h4 id={project.id}>{project.name}</h4></div>)
+        Projects = userProjects.map(project => <div key={project.id} id={project.id} className={props.settings.activeProject.project_id === project.id ? 'text-item active' : 'text-item'} onClick={() => handleProjectSelect(project.id, project.name)}><h4 id={project.id}>{project.name}</h4></div>)
     } else {
         Projects = <div className="empty">No Projects</div>
     }
@@ -124,16 +128,12 @@ const Sidebar = (props) => {
                 </div>
                 <div className="sidebar-home">
                     <h2>Home</h2>
-                    <div className={props.settings.activeSidebarOption === 'dashboard' ? 'text-item active' : 'text-item'} id='dashboard'><span>{homeIcon}</span><h3>Dashboard</h3></div>
-                    <div className={props.settings.activeSidebarOption === 'tasks' ? 'text-item active' : 'text-item'} id='tasks'><span>{taskIcon}</span><h3>My Tasks</h3></div>
+                    <div className={props.settings.activeSidebarOption === 'Dashboard' ? 'text-item active' : 'text-item'} id='dashboard' onClick={() => handleSidebarSelect('Dashboard')}><span>{homeIcon}</span><h3>Dashboard</h3></div>
+                    <div className={props.settings.activeSidebarOption === 'My Tasks' ? 'text-item active' : 'text-item'} id='tasks' onClick={() => handleSidebarSelect('My Tasks')}><span>{taskIcon}</span><h3>My Tasks</h3></div>
                 </div>
                 <div className="sidebar-item">
                     <h2>Create</h2>
                     <div className="text-item" onClick={() => handleModalOpen('task')}><h3>Create Task</h3><span>{addIcon}</span></div>
-                </div>
-                <div className="sidebar-item">
-                    <h2>Favorites <span className='icon'>{addIcon}</span></h2>
-                        { Favorites }
                 </div>
                 <div className="sidebar-item">
                     <h2>Projects <span className='icon' onClick={() => handleModalOpen('project')}>{addIcon}</span></h2>
@@ -162,4 +162,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { createTeam, createProject, amendActiveSidebar, amendActiveWorkspace })(Sidebar);
+export default connect(mapStateToProps, { createTeam, createProject, amendActiveSidebar, amendActiveWorkspace, amendActiveProject })(Sidebar);
