@@ -15,5 +15,6 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :projects
     resources :teams
+    post 'add_user_to_team', to: 'teams#add_user_to_team'
   end
 end

@@ -7,7 +7,7 @@
     display: flex;
     align-content: flex-start;
     flex-flow: column nowrap;
-    background-color: var(--grey);
+    background-color: var(--base0);
     overflow:auto;
     overflow-x: hidden;
 }
@@ -16,11 +16,13 @@
     box-sizing: border-box;
     padding-left: 2rem;
     min-height: 91px;
-    background-color: var(--base0);
+    background-color: var(--base2);
     display: flex;
+    border-left: 1px solid var(--accent1);
 }
 
 .header h2 {
+    color: var(--base0);
     margin: auto 0;
     font-size: 1.5rem;
 }
@@ -40,12 +42,19 @@
     margin: 3rem auto;
 }
 
-.tasks-due-soon, .favorites {
+.tasks-due-soon {
     margin: auto;
     min-height: 300px;
     background-color: var(--base0);
     border-radius: 1rem;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+}
+
+.favorites {
+    margin: auto;
+    min-height: 300px;
+    border-top: 1px solid var(--grey);
+    padding-top: 3rem;
 }
 
 .dashboard-tasks h2, .dashboard-favorites h2 {
@@ -62,22 +71,35 @@
 }
 
 .task-container .task-list {
-    flex-basis: 60%;
+    flex-basis: 50%;
 }
 
 .task-container .task-detail-container {
-    flex-basis: 40%;
+    flex-basis: 50%;
 }
 
 .task-container h2 {
-    padding: 2rem 0;
+    padding: 1rem 0;
     font-size: 1.2rem;
+}
+
+.tasks {
+    margin-right: 5rem;
 }
 
 .tasks > .recently-assigned, .today, .upcoming {
     min-height: 200px;
-    background-color: var(--base0);
-    margin-right: 5rem;
+    border-top: 1px solid var(--grey);
+    padding-top: 3rem;
+    /* background-color: var(--base0);
     border-radius: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px; */
+}
+
+.task-detail-container h2 {
+    text-align: center;
+}
+
+.task-detail {
+    border-top: 1px solid var(--grey);
 }

@@ -14,7 +14,9 @@ export const createTeam = (name) => async (dispatch) => {
 
     axios.post('http://localhost:3000/api/teams', { name: name })
     .then( (data) => {
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
         dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: 'Dashboard' })
         dispatch(fetchTeams())
     })
 }
@@ -36,7 +38,9 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
         description: description,
         team_id: team_id
     })
-    .then( () => {
+    .then( (data) => {
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: data.data.id })
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
         dispatch(fetchProjects())
     })
 }

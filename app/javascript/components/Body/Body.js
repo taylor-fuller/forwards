@@ -79,9 +79,9 @@ const Body = (props) => {
         } else {
             header = props.activeWorkspace.workspace_name
             if (props.activeProject) {
-                header = header + ' > ' + props.activeProject.project_name
+                header = header + '  >  ' + props.activeProject.project_name
             } else if (props.activeTask) {
-                header = header + ' > ' + props.activeTask
+                header = header + '  >  ' + props.activeTask
             }
         }
         return header

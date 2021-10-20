@@ -1,12 +1,23 @@
 class Api::TeamsController < ApplicationController
-  before_action :set_team, only: %i[ show edit update destroy ]
+  before_action :set_team, only: %i[ show edit update destroy add_user_to_team ]
   before_action :authenticate_user!, only: %i[ edit update destroy ]
 
   # GET /teams or /teams.json
   def index
     @current_user = current_user
     @teams = @current_user.teams
-    render json: { teams: @teams.reverse[..9] }
+
+    @teams_array = []
+
+    @teams.each do |team|
+      members = {}
+      team.users.each_with_index do |member, index|
+        members[index] = {user_id: member.id, user_first_name: member.first_name, user_last_name: member.last_name, user_email: member.email}
+      end
+      @teams_array << team.attributes.merge!('members' => members)
+    end
+
+    render json: { teams: @teams_array.reverse }
   end
 
   # GET /teams/new
@@ -19,11 +30,18 @@ class Api::TeamsController < ApplicationController
   def edit
   end
 
+  def add_user_to_team
+    # @current_user = User.where('id = ?', params[:user_id])
+    # @current_user.teams << @team
+    # @team.users << @user
+    # render json: { team_members: @team.users }
+  end
+
   # POST /teams or /teams.json
   def create
     @current_user = current_user
     @team = current_user.teams.build(team_params)
-    @team.users << current_user
+    @team.users << @current_user
     @current_user.teams << @team
 
     respond_to do |format|

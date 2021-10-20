@@ -6,7 +6,7 @@ class Api::ProjectsController < ApplicationController
   def index
     @current_user = current_user
     @projects = @current_user.projects
-    render json: { projects: @projects.reverse[..9] }
+    render json: { projects: @projects.reverse }
   end
 
   # GET /projects/new
