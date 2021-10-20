@@ -49,8 +49,8 @@ const Sidebar = (props) => {
 
         if (type == 'task') {
             axios.post('http://localhost:3000/api/add_user_to_team', { 
-                id: 1,
-                user_id: 2
+                id: 3,
+                user_id: 4
             })
             .then( (data) => {
                 console.log(data)

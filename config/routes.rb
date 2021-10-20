@@ -9,12 +9,10 @@ Rails.application.routes.draw do
     get "/users" => "devise/registrations#new"
   end
 
-  resources :projects
-  resources :teams
-
   namespace :api, defaults: { format: :json } do
     resources :projects
     resources :teams
+    resources :tasks
     post 'add_user_to_team', to: 'teams#add_user_to_team'
   end
 end

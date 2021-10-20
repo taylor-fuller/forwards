@@ -14,6 +14,9 @@ export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', 
         case 'AMEND_ACTIVE_PROJECT':
             state = {...state, activeProject: action.payload}
             return state
+        case 'RESET_SETTINGS':
+            state = {...state, activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: 'Task'}
+            return state
         default:
             return state
     }

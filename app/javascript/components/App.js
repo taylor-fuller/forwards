@@ -4,7 +4,7 @@ import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { fetchTeams, fetchProjects, fetchSettings, amendActiveSidebar } from '../actions';
+import { fetchTeams, fetchProjects, fetchTasks, fetchSettings, amendActiveSidebar } from '../actions';
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
 
@@ -19,6 +19,7 @@ const App = (props) => {
     useEffect(() => {
         props.fetchTeams()
         props.fetchProjects()
+        props.fetchTasks()
         props.fetchSettings()
     }, [])
 
@@ -36,8 +37,9 @@ const mapStateToProps = state => {
     return { 
         teams: state.teams,
         projects: state.projects,
+        tasks: state.tasks,
         settings: state.settings
     }
 }
 
-export default connect(mapStateToProps, { fetchTeams, fetchProjects, fetchSettings, amendActiveSidebar })(App);
+export default connect(mapStateToProps, { fetchTeams, fetchProjects, fetchTasks, fetchSettings, amendActiveSidebar })(App);

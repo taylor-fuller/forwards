@@ -4,26 +4,17 @@ class Api::TeamsController < ApplicationController
 
   # GET /teams or /teams.json
   def index
-    @current_user = current_user
-    @teams = @current_user.teams
+    @teams = current_user.teams
 
     @teams_array = []
 
     @teams.each do |team|
-      members = {}
-      team.users.each_with_index do |member, index|
-        members[index] = {user_id: member.id, user_first_name: member.first_name, user_last_name: member.last_name, user_email: member.email}
-      end
-      @teams_array << team.attributes.merge!('members' => members)
+      members = team.members
+      projects = team.projects
+      @teams_array << team.attributes.merge!('members' => members, 'projects' => projects)
     end
 
     render json: { teams: @teams_array.reverse }
-  end
-
-  # GET /teams/new
-  def new
-    @team = current_user.teams.build
-    @user = current_user
   end
 
   # GET /teams/1/edit
@@ -31,21 +22,27 @@ class Api::TeamsController < ApplicationController
   end
 
   def add_user_to_team
-    # @current_user = User.where('id = ?', params[:user_id])
-    # @current_user.teams << @team
-    # @team.users << @user
-    # render json: { team_members: @team.users }
+    @user = User.find(params[:user_id])
+    @team.members << @user
+
+    # @user_team = UserTeam.create!(member_id: @user.id, team_id: @team.id)
+    @team.projects.each do |project|
+      @user.projects << project
+      # @user_project = UserProject.create(member_id: @user.id, project_id: project.id)
+    end
+
+    render json: { team_members: @team.members }
   end
 
   # POST /teams or /teams.json
   def create
-    @current_user = current_user
-    @team = current_user.teams.build(team_params)
-    @team.users << @current_user
-    @current_user.teams << @team
+    @team = Team.new(team_params)
+    @team.lead_id = current_user.id
 
     respond_to do |format|
       if @team.save
+        @team.members << current_user
+        # @user_team = UserTeam.create!(member_id: current_user.id, team_id: @team.id)
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -83,6 +80,6 @@ class Api::TeamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def team_params
-      params.require(:team).permit(:name, :lead_id, users_attributes: [:id, :name, :_destroy])
+      params.require(:team).permit(:id, :name)
     end
 end

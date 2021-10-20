@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
+import { resetSettings } from '../../actions';
 
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
@@ -15,12 +16,13 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const Body = (props) => {
     function determineRender(active) {
-        let Projects
-    
-        if (props.projects.length != 0) {
-            Projects = props.projects.map(project => <div key={project.id} id={project.id}><h3>{project.name}</h3></div>)
+        let Tasks
+        let recentTasks
+
+        if (props.tasks.length != 0) {
+            Tasks = props.tasks.map(task => <div key={task.id} id={task.id}><h3>{task.title}</h3></div>)
         } else {
-            Projects = <div className="empty">No Projects</div>
+            Tasks = <div className="empty">No Tasks</div>
         }
 
         let content;
@@ -30,7 +32,7 @@ const Body = (props) => {
                     <div className="dashboard-tasks">
                         <h2>Tasks Due Soon</h2>
                         <div className="tasks-due-soon">
-                            
+                            { Tasks }
                         </div>
                     </div>
                     <div className="dashboard-favorites">
@@ -87,12 +89,16 @@ const Body = (props) => {
         return header
     }
 
+    function resetState() {
+        props.resetSettings()
+    }
+
     const Content = determineRender(props.settings.activeSidebarOption)
     const Header = determineHeader(props.settings)
 
     return (
         <div className="body-content">
-            <div className="header"><h2>{ Header }</h2></div>
+            <div className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => resetState()}>Logout</a> </div>
             { Content ? Content : null }
         </div>
     )
@@ -102,8 +108,9 @@ const mapStateToProps = state => {
     return { 
         teams: state.teams,
         projects: state.projects,
+        tasks: state.tasks,
         settings: state.settings
     }
 }
 
-export default connect(mapStateToProps)(Body);
+export default connect(mapStateToProps, { resetSettings })(Body);

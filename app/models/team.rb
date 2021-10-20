@@ -1,6 +1,10 @@
 class Team < ApplicationRecord
-    has_many :projects, dependent: :destroy
-    has_many :users
+    validates :name, :lead_id, presence: true
+    validates :name, uniqueness: { scope: :lead_id }
 
-    accepts_nested_attributes_for :users, allow_destroy: true
+    belongs_to :lead, class_name: :User
+    has_many :user_teams, class_name: :UserTeam
+    has_many :projects
+    has_many :members, through: :user_teams, source: :member
+    has_many :tasks
 end

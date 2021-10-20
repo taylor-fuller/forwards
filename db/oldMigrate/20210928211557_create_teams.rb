@@ -1,11 +1,9 @@
 class CreateTeams < ActiveRecord::Migration[6.1]
   def change
     create_table :teams do |t|
-      t.string :name, null: false
-      t.integer :lead_id, null: false
+      t.string :name
       t.timestamps
     end
-
-    add_index :teams, [:name, :lead_id], unique: true
+    add_reference :teams, :user, null: false, foreign_key: true
   end
 end

@@ -14,9 +14,9 @@ export const createTeam = (name) => async (dispatch) => {
 
     axios.post('http://localhost:3000/api/teams', { name: name })
     .then( (data) => {
-        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
         dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
         dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: 'Dashboard' })
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
         dispatch(fetchTeams())
     })
 }
@@ -63,4 +63,16 @@ export const amendActiveSidebar = (sidebarOption) => async (dispatch) => {
 
 export const amendActiveProject = (project_id, project_name) => async (dispatch) => {
     dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+}
+
+export const resetSettings = () => async (dispatch) => {
+    dispatch({ type: 'RESET_SETTINGS' })
+}
+
+export const fetchTasks = () => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    const response = await axios.get('http://localhost:3000/api/tasks')
+    dispatch({ type: 'FETCH_TASKS', payload: response.data })
 }

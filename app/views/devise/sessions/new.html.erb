@@ -10,6 +10,38 @@
     <% end %>
     </div>
 
+    <div class="test-user">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.hidden_field :email, autofocus: true, autocomplete: "email", value:"test2@example.com" %>
+      <%= f.hidden_field :password, autocomplete: "current-password", value:"password" %>
+      <%= f.submit "Login As Test User 2" %>
+    <% end %>
+    </div>
+
+    <div class="test-user">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.hidden_field :email, autofocus: true, autocomplete: "email", value:"test3@example.com" %>
+      <%= f.hidden_field :password, autocomplete: "current-password", value:"password" %>
+      <%= f.submit "Login As Test User 3" %>
+    <% end %>
+    </div>
+
+    <div class="test-user">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.hidden_field :email, autofocus: true, autocomplete: "email", value:"test4@example.com" %>
+      <%= f.hidden_field :password, autocomplete: "current-password", value:"password" %>
+      <%= f.submit "Login As Test User 4" %>
+    <% end %>
+    </div>
+
+    <div class="test-user">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%= f.hidden_field :email, autofocus: true, autocomplete: "email", value:"test5@example.com" %>
+      <%= f.hidden_field :password, autocomplete: "current-password", value:"password" %>
+      <%= f.submit "Login As Test User 5" %>
+    <% end %>
+    </div>
+
     <h6>Or</h6>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>

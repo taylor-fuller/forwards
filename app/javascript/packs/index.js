@@ -15,6 +15,7 @@ store.subscribe(throttle(() => {
   saveState({
     teams: store.getState().teams,
     projects: store.getState().projects,
+    tasks: store.getState().tasks,
     settings: store.getState().settings
   })
 }, 1000))

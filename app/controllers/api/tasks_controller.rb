@@ -1,27 +1,20 @@
-class Api::ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+class Api::TasksController < ApplicationController
+  before_action :set_task, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[ edit update destroy ]
 
-  # GET /projects or /projects.json
+  # GET /tasks or /tasks.json
   def index
-    @projects = current_user.projects
-    
-    @projects_array = []
+    @tasks = current_user.tasks
 
-    @projects.each do |project|
-      tasks = project.tasks
-      @projects_array << project.attributes.merge!('tasks' => tasks)
-    end
-
-    render json: { projects: @projects_array.reverse }
+    render json: { tasks: @tasks }
   end
 
-  # GET /projects/1/edit
+  # GET /tasks/1/edit
   def edit
     
   end
 
-  # POST /projects or /projects.json
+  # POST /tasks or /tasks.json
   def create
     @project = Project.new(project_params)
     @project.lead_id = current_user.id
@@ -40,7 +33,7 @@ class Api::ProjectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /projects/1 or /projects/1.json
+  # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
       if @project.update(project_params)
@@ -53,7 +46,7 @@ class Api::ProjectsController < ApplicationController
     end
   end
 
-  # DELETE /projects/1 or /projects/1.json
+  # DELETE /tasks/1 or /tasks/1.json
   def destroy
     @project.destroy
     respond_to do |format|
@@ -64,12 +57,12 @@ class Api::ProjectsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = Project.find(params[:id])
+    def set_task
+      @task = Task.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-    def project_params
-      params.require(:project).permit(:name, :description, :public, :lead_id, :team_id)
+    def task_params
+      params.require(:task).permit(:title, :description, :public, :completed, :due_date, :creator_id, :assignee_id, :project_id, :parent_task_id, :team_id)
     end
 end
