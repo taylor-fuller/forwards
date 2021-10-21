@@ -4,9 +4,34 @@ class Api::TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = current_user.tasks
+    @tasks = current_user.tasks.order('due_date DESC')
+    # @tasks = current_user.tasks.order('CASE WHEN due_date IS NULL THEN 2 ELSE 1 END, created_at DESC') FOR PRODUCTION
+    due_soon = []
+    due_today = []
+    recently_assigned = []
+    overdue = []
+    upcoming = []
 
-    render json: { tasks: @tasks }
+
+    @tasks.each do |task|
+      if task.due_date
+        if Time.now.to_date == task.due_date.to_date
+          due_today << task
+        elsif Time.now.to_date > task.due_date.to_date
+          overdue << task
+        elsif (task.due_date.to_date - Time.now.to_date).to_i <= 7
+          due_soon << task
+        else 
+          upcoming << task
+        end
+        if (task.created_at.to_date - Time.now.to_date).to_i <= 3
+          recently_assigned << task
+        end
+      else
+        upcoming << task
+      end
+    end
+    render json: { all_tasks: @tasks, overdue: overdue, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming }
   end
 
   # GET /tasks/1/edit

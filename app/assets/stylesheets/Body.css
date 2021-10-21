@@ -42,7 +42,7 @@
     margin: 3rem auto;
 }
 
-.tasks-due-soon {
+.today, .overdue {
     margin: auto;
     min-height: 300px;
     background-color: var(--base0);
@@ -87,7 +87,7 @@
     margin-right: 5rem;
 }
 
-.tasks > .recently-assigned, .today, .upcoming {
+.tasks > .recently-assigned, .due-soon, .upcoming {
     min-height: 200px;
     border-top: 1px solid var(--grey);
     padding-top: 3rem;

@@ -16,13 +16,30 @@ axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const Body = (props) => {
     function determineRender(active) {
-        let Tasks
-        let recentTasks
+        let recentlyAssigned
+        let dueToday
+        let allTasks
+        let upcoming
+        let dueSoon
+        let overdue
 
-        if (props.tasks.length != 0) {
-            Tasks = props.tasks.map(task => <div key={task.id} id={task.id}><h3>{task.title}</h3></div>)
+        if (props.tasks.all_tasks.length !== 0) {
+            if (props.settings.activeSidebarOption === 'Dashboard') {
+                if (props.tasks.overdue.length >= 1) {
+                    overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id}><h3>{task.title}</h3></div>)
+                }
+                dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id}><h3>{task.title}</h3></div>)
+            } else if (props.settings.activeSidebarOption === 'My Tasks') {
+                recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id}><h3>{task.title}</h3></div>)
+                dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id}><h3>{task.title}</h3></div>)
+                upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id}><h3>{task.title}</h3></div>)
+            }
+            
         } else {
-            Tasks = <div className="empty">No Tasks</div>
+            recentlyAssigned = <div className="empty">No Tasks</div>
+            dueToday = <div className="empty">No Tasks</div>
+            allTasks = <div className="empty">No Tasks</div>
+            dueSoon = <div className="empty">No Tasks</div>
         }
 
         let content;
@@ -30,13 +47,15 @@ const Body = (props) => {
             content = (
                 <div className="dashboard-container">
                     <div className="dashboard-tasks">
-                        <h2>Tasks Due Soon</h2>
-                        <div className="tasks-due-soon">
-                            { Tasks }
+                        { overdue ? <h2>Overdue</h2> : null}
+                        { overdue ? <div className="overdue">{ overdue }</div> : null }
+                        <h2>Tasks Due Today</h2>
+                        <div className="today">
+                            { dueToday }
                         </div>
                     </div>
                     <div className="dashboard-favorites">
-                        <h2>Favorites</h2>
+                        <h2>Favorite Projects</h2>
                         <div className="favorites">
                             
                         </div>
@@ -50,15 +69,15 @@ const Body = (props) => {
                         <div className="tasks">
                             <h2>Recently Assigned</h2>
                             <div className="recently-assigned">
-                                
+                                { recentlyAssigned }
                             </div>
-                            <h2>Due Today</h2>
-                            <div className="today">
-                                
+                            <h2>Within the Week</h2>
+                            <div className="due-soon">
+                                { dueSoon }
                             </div>
                             <h2>Upcoming</h2>
                             <div className="upcoming">
-                                
+                                { upcoming }
                             </div>
                         </div>
                     </div>
