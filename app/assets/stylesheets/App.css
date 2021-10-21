@@ -55,7 +55,9 @@ table {
 	--accent0: #ff8851;
     --accent1: #ff3c00;
     --fontBlack: rgb(80,80,80);
-    --grey: rgb(225,225,225);
+    --grey: rgb(230,230,230);
+    --darkGrey: rgb(200,200,200);
+    --lightGrey: rgb(240,240,240);
 }
 
 a:hover {
@@ -92,4 +94,17 @@ body {
 	display: flex;
 	flex-flow: column;
 	width: 100%;
+}
+
+img.emojione {
+	margin: 0px !important;
+	display: inline !important;
+	height: auto;
+	width: 50px;
+}
+
+span.emoji {
+	font-size: 30px;
+	vertical-align: middle;
+	line-height: 2;
 }

@@ -8,5 +8,5 @@ export default combineReducers({
     teams: teamsReducer,
     projects: projectsReducer,
     tasks: tasksReducer,
-    settings: settingsReducer
+    settings: settingsReducer,
 })
