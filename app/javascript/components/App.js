@@ -4,7 +4,7 @@ import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { fetchTeams, fetchProjects, fetchTasks, fetchUI, createTeam, createProject, amendActiveSidebar, toggleModal } from '../actions';
+import { fetchTeams, fetchProjects, fetchTasks, fetchUI, createTeam, createProject, createTask, amendActiveSidebar, toggleModal } from '../actions';
 import Modal from 'react-modal';
 import ProjectForm from '../components/Forms/ProjectForm';
 import TeamForm from '../components/Forms/TeamForm';
@@ -53,20 +53,30 @@ const App = (props) => {
         event.preventDefault();
 
         if (type == 'task') {
-            console.log(event.target.title.value)
+            props.createTask(
+                event.target.title.value,
+                event.target.description.value,
+                props.UI.activeWorkspace.workspace_id,
+                props.UI.activeProject.project_id,
+                true,
+                event.target.due_date.value, 
+                // event.target.assignee_id.value,
+                // event.target.parent_task_id.value
+                1,
+                null
+            )
         } else if (type == 'project') {
             props.createProject(
                 event.target.name.value,
                 event.target.description.value,
                 props.UI.activeWorkspace.workspace_id
             )
-            props.toggleModal(false, null)
         } else if (type == 'team') {
             props.createTeam(
                 event.target.name.value,
             )
-            props.toggleModal(false, null)
         }
+        props.toggleModal(false, null)
     }
 
     const form = determineForm(props.UI.modalOption)
@@ -100,4 +110,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchTeams, fetchProjects, fetchTasks, fetchUI, createTeam, createProject, amendActiveSidebar, toggleModal })(App);
+export default connect(mapStateToProps, { fetchTeams, fetchProjects, fetchTasks, fetchUI, createTeam, createProject, createTask, amendActiveSidebar, toggleModal })(App);

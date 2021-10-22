@@ -3,7 +3,6 @@ class CreateProjects < ActiveRecord::Migration[6.1]
     create_table :projects do |t|
       t.string :name, null: false
       t.string :description
-      t.boolean :public, null: false, default: true
       t.integer :lead_id, null: false
       t.integer :team_id, null: false
       t.timestamps

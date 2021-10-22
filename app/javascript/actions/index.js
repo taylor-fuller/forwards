@@ -44,6 +44,7 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
         return batch(() => {
             dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: data.data.id })
             dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
+            dispatch(fetchTeams())
             dispatch(fetchProjects())
         })
     })
@@ -83,6 +84,30 @@ export const fetchTasks = () => async (dispatch) => {
 
     const response = await axios.get('http://localhost:3000/api/tasks')
     dispatch({ type: 'FETCH_TASKS', payload: response.data })
+}
+
+export const createTask = (title, description, team_id, project_id, completed, due_date, assignee_id, parent_task_id) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    console.log(title, description, team_id, project_id, completed, due_date, assignee_id, parent_task_id)
+    axios.post('http://localhost:3000/api/tasks', { 
+        title: title,
+        description: description,
+        team_id: team_id,
+        project_id: project_id,
+        completed: completed,
+        due_date: due_date, 
+        assignee_id: assignee_id,
+        parent_task_id: parent_task_id
+    })
+    .then( (data) => {
+        return batch(() => {
+            console.log(data)
+            dispatch(fetchProjects())
+            dispatch(fetchTasks())
+        })
+    })
 }
 
 export const toggleModal = (bool, option) => async (dispatch) => {

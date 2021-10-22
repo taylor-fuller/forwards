@@ -3,7 +3,6 @@ class CreateTasks < ActiveRecord::Migration[6.1]
     create_table :tasks do |t|
       t.string :title, null: true
       t.string :description
-      t.boolean :public, default: true
       t.boolean :completed, default: false
       t.datetime :due_date
       t.integer :creator_id, null: false

@@ -1,6 +1,5 @@
 class Task < ApplicationRecord
     validates :creator_id, :team_id, presence: true
-    validates :public, inclusion: { in: [true, false] }
     validates :completed, inclusion: { in: [true, false] }
 
     belongs_to :creator, class_name: :User

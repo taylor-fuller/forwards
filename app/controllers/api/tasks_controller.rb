@@ -1,6 +1,7 @@
 class Api::TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[ edit update destroy ]
+  before_action :set_task, only: %i[ show update destroy ]
+  before_action :authenticate_user!, only: %i[ index update destroy ]
+  before_action :verify_permissions!, only: %i[ update destroy ]
 
   # GET /tasks or /tasks.json
   def index
@@ -19,7 +20,7 @@ class Api::TasksController < ApplicationController
           due_today << task
         elsif Time.now.to_date > task.due_date.to_date
           overdue << task
-        elsif (task.due_date.to_date - Time.now.to_date).to_i <= 7
+        elsif (task.due_date.to_date - Time.now.to_date).to_i <= 3
           due_soon << task
         else 
           upcoming << task
@@ -34,26 +35,26 @@ class Api::TasksController < ApplicationController
     render json: { all_tasks: @tasks, overdue: overdue.reverse, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming }
   end
 
-  # GET /tasks/1/edit
-  def edit
-    
-  end
-
   # POST /tasks or /tasks.json
   def create
-    @project = Project.new(project_params)
-    @project.lead_id = current_user.id
+    @task = Task.new(task_params)
+    @task.creator_id = current_user.id
+
+    puts params[:due_date]
     
     respond_to do |format|
-      if @project.save
+      if @task.save
         @team = Team.find(params[:team_id])
-        @team.projects << @project
-        @team.members.each do |user|
-          user.projects << @project
+        @project = @team.projects.find(params[:project_id])
+        @project.tasks << @task
+        
+        if params[:assignee_id]
+          @user = User.find(params[:assignee_id])
+          @user.tasks << @task
         end
-        format.json { render :show, status: :created }
+        format.json { render json: @task, status: :created }
       else
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,10 +63,8 @@ class Api::TasksController < ApplicationController
   def update
     respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to @project, notice: "Project was successfully updated." }
         format.json { render :show, status: :ok }
       else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
@@ -75,7 +74,6 @@ class Api::TasksController < ApplicationController
   def destroy
     @project.destroy
     respond_to do |format|
-      format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -86,6 +84,9 @@ class Api::TasksController < ApplicationController
       @task = Task.find(params[:id])
     end
 
+    def verify_permissions!
+      
+    end
     # Only allow a list of trusted parameters through.
     def task_params
       params.require(:task).permit(:title, :description, :public, :completed, :due_date, :creator_id, :assignee_id, :project_id, :parent_task_id, :team_id)

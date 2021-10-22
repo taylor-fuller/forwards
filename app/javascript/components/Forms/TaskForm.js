@@ -3,9 +3,6 @@ import "flatpickr/dist/themes/material_orange.css";
 import Flatpickr from "react-flatpickr";
 
 const TaskForm = (props) => {
-    useEffect(() => {
-        console.log(props)
-    }, [])
     return (
         <div className="form">
             <h2>Create A Task</h2>
@@ -46,6 +43,7 @@ const TaskForm = (props) => {
                             inline: true
                         }}
                         placeholder="Select a Due Date"
+                        id="due_date"
                     />
                 </div>
                 

@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 2021_10_20_224124) do
   create_table "projects", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
-    t.boolean "public", default: true, null: false
     t.integer "lead_id", null: false
     t.integer "team_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -54,7 +53,6 @@ ActiveRecord::Schema.define(version: 2021_10_20_224124) do
   create_table "tasks", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.boolean "public", default: true
     t.boolean "completed", default: false
     t.datetime "due_date"
     t.integer "creator_id", null: false

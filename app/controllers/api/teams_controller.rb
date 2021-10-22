@@ -1,6 +1,6 @@
 class Api::TeamsController < ApplicationController
-  before_action :set_team, only: %i[ show edit update destroy add_user_to_team ]
-  before_action :authenticate_user!, only: %i[ edit update destroy ]
+  before_action :set_team, only: %i[ show update destroy add_user_to_team ]
+  before_action :authenticate_user!, only: %i[ index update destroy add_user_to_team ]
 
   # GET /teams or /teams.json
   def index
@@ -15,10 +15,6 @@ class Api::TeamsController < ApplicationController
     end
 
     render json: { teams: @teams_array.reverse }
-  end
-
-  # GET /teams/1/edit
-  def edit
   end
 
   def add_user_to_team
@@ -43,9 +39,9 @@ class Api::TeamsController < ApplicationController
       if @team.save
         @team.members << current_user
         # @user_team = UserTeam.create!(member_id: current_user.id, team_id: @team.id)
-        format.json { render :show, status: :created }
+        format.json { render json: @team, status: :created }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,10 +50,8 @@ class Api::TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html { redirect_to @team, notice: "Team was successfully updated." }
         format.json { render :show, status: :ok, location: @team }
       else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end
     end
@@ -67,7 +61,6 @@ class Api::TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to teams_url, notice: "Team was successfully destroyed." }
       format.json { head :no_content }
     end
   end

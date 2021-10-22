@@ -54,19 +54,18 @@ const Body = (props) => {
             return checkbox
         }
         
-
         if (props.tasks.all_tasks) {
             if (props.UI.activeSidebarOption === 'Dashboard') {
                 if (props.tasks.overdue.length >= 1) {
-                    overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className='task-item'><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                    overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' }><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
                 }
                 if (props.tasks.due_today.length >= 1) {
-                    dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
+                    dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' }><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
                 }
             } else if (props.UI.activeSidebarOption === 'My Tasks') {
-                recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
-                dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
-                upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
+                recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' }><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' }><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' }><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
             }
             
         } else {
@@ -106,7 +105,7 @@ const Body = (props) => {
                             <div className="recently-assigned">
                                 { recentlyAssigned }
                             </div>
-                            <h2>Within the Week</h2>
+                            <h2>Due Soon</h2>
                             <div className="due-soon">
                                 { dueSoon }
                             </div>
