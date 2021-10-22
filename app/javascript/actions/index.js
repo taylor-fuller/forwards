@@ -14,9 +14,8 @@ export const createTeam = (name) => async (dispatch) => {
 
     axios.post('http://localhost:3000/api/teams', { name: name })
     .then( (data) => {
+        dispatch({ type: 'RESET_SETTINGS' })
         dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
-        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: 'Dashboard' })
-        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
         dispatch(fetchTeams())
     })
 }

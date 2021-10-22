@@ -5,6 +5,7 @@ import Body from './Body/Body'
 import axios from 'axios'
 import { connect } from 'react-redux';
 import { fetchTeams, fetchProjects, fetchTasks, fetchSettings, amendActiveSidebar } from '../actions';
+
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
 
@@ -22,6 +23,7 @@ const App = (props) => {
         props.fetchTasks()
         props.fetchSettings()
     }, [])
+
 
     return (
         <div id="view">

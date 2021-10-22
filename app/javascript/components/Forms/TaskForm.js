@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import "flatpickr/dist/themes/material_orange.css";
+import Flatpickr from "react-flatpickr";
 
 const TaskForm = (props) => {
+    useEffect(() => {
+        console.log(props)
+    }, [])
     return (
         <div className="form">
             <h2>Create A Task</h2>
@@ -11,21 +16,39 @@ const TaskForm = (props) => {
                         type="text" 
                         id="title"
                         name="title"
-                        placeholder="Project Title"
+                        placeholder="Task Title"
                         autoComplete="off"
                         autoFocus="autofocus"
                     />
                 </div>
                 <div className="form-group">
                     <label htmlFor="description"></label>
-                    <input 
-                        type="textarea" 
+                    <textarea
                         id="description"
                         name="description"
-                        placeholder="Project Description"
+                        placeholder="Task Description"
                         autoComplete="off"
+                        row="10"
+                        cols="70"
                     />
                 </div>
+                <div className="form-group">
+                    <label htmlFor="due_date"></label>
+                    <Flatpickr
+                        options={{
+                            enableTime: true,
+                            altInput: true,
+                            altFormat: "F j, Y h:i K",
+                            minDate: "today",
+                            defaultHour: 17,
+                            defaultMinute: 0,
+                            dateFormat: "Z",
+                            inline: true
+                        }}
+                        placeholder="Select a Due Date"
+                    />
+                </div>
+                
                 <div className="button">
                     <button type="submit">Submit</button>
                 </div>

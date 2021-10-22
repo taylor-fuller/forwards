@@ -43,7 +43,7 @@ class Api::TeamsController < ApplicationController
       if @team.save
         @team.members << current_user
         # @user_team = UserTeam.create!(member_id: current_user.id, team_id: @team.id)
-        format.json { render :show, status: :created, location: @team }
+        format.json { render :show, status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
       end

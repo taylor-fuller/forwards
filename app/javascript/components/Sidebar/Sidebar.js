@@ -19,7 +19,8 @@ import React, { useState, useEffect } from 'react';
 
 const customStyles = {
     content: {
-        backgroundColor: 'var(--base2)'
+        backgroundColor: 'var(--base2)',
+        borderRadius: '.5rem'
     },
 };
 
@@ -48,14 +49,7 @@ const Sidebar = (props) => {
         event.preventDefault();
 
         if (type == 'task') {
-            axios.post('http://localhost:3000/api/add_user_to_team', { 
-                id: 3,
-                user_id: 4
-            })
-            .then( (data) => {
-                console.log(data)
-            })
-            console.log('task')
+            console.log(event.target.title.value)
         } else if (type == 'project') {
             props.createProject(
                 event.target.name.value,
@@ -73,7 +67,7 @@ const Sidebar = (props) => {
 
     function determineForm(type) {
         if (type == 'task') {
-            return <TaskForm onSubmit={(event) => {handleCreate(event, type)}}/>
+            return <TaskForm onSubmit={(event) => {handleCreate(event, type)}} state={props.projects, props.teams}/>
         } else if (type == 'project') {
             return <ProjectForm onSubmit={(event) => {handleCreate(event, type)}}/>
         } else if (type == 'team') {
@@ -111,6 +105,11 @@ const Sidebar = (props) => {
     function handleProjectSelect(project_id, project_name) {
         props.amendActiveSidebar(project_id)
         props.amendActiveProject(project_id, project_name)
+    }
+
+    function handleTaskSelect(task_id) {
+        // props.amendActiveSidebar(task.project_id)
+        // props.amendActiveProject(project_id, project_name)
     }
     
     let Projects

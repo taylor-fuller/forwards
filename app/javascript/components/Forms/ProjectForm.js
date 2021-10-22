@@ -18,12 +18,13 @@ const ProjectForm = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="description"></label>
-                    <input 
-                        type="textarea" 
+                    <textarea 
                         id="description"
                         name="description"
                         placeholder="Project Description"
                         autoComplete="off"
+                        row="10"
+                        cols="70"
                     />
                 </div>
                 <div className="button">
