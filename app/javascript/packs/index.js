@@ -16,7 +16,12 @@ store.subscribe(throttle(() => {
     teams: store.getState().teams,
     projects: store.getState().projects,
     tasks: store.getState().tasks,
-    settings: store.getState().settings
+    UI: {
+      activeWorkspace: store.getState().UI.activeWorkspace,
+      activeSidebarOption: store.getState().UI.activeSidebarOption,
+      activeProject: store.getState().UI.activeProject,
+      activeTask: store.getState().UI.activeTask
+    }
   })
 }, 1000))
 

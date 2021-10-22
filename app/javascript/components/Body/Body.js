@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
-import { resetSettings } from '../../actions';
+import { resetUI } from '../../actions';
 import Emoji from '../Emoji/Emoji';
 
 // import AOS from 'aos';
@@ -27,7 +27,9 @@ const Body = (props) => {
         function returnProjectName(project_id) {
             let project
             project = props.projects.filter((project) => project.id === project_id)
-            return project[0].name
+            if (project[0]) {
+                return project[0].name
+            }
         }
 
         function returnTaskAuthorName(team_id, creator_id) {
@@ -54,14 +56,14 @@ const Body = (props) => {
         
 
         if (props.tasks.all_tasks) {
-            if (props.settings.activeSidebarOption === 'Dashboard') {
+            if (props.UI.activeSidebarOption === 'Dashboard') {
                 if (props.tasks.overdue.length >= 1) {
                     overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className='task-item'><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
                 }
                 if (props.tasks.due_today.length >= 1) {
                     dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
                 }
-            } else if (props.settings.activeSidebarOption === 'My Tasks') {
+            } else if (props.UI.activeSidebarOption === 'My Tasks') {
                 recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
                 dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
                 upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className='task-item'><h3>{task.title}</h3></div>)
@@ -141,16 +143,16 @@ const Body = (props) => {
         return header
     }
 
-    function resetState() {
-        props.resetSettings()
+    function resetUI() {
+        props.resetUI()
     }
 
-    const Content = determineRender(props.settings.activeSidebarOption)
-    const Header = determineHeader(props.settings)
+    const Content = determineRender(props.UI.activeSidebarOption)
+    const Header = determineHeader(props.UI)
 
     return (
         <div className="body-content">
-            <div className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => resetState()}>Logout</a> </div>
+            <div className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => resetUI()}>Logout</a> </div>
             { Content ? Content : null }
         </div>
     )
@@ -161,8 +163,8 @@ const mapStateToProps = state => {
         teams: state.teams,
         projects: state.projects,
         tasks: state.tasks,
-        settings: state.settings
+        UI: state.UI
     }
 }
 
-export default connect(mapStateToProps, { resetSettings })(Body);
+export default connect(mapStateToProps, { resetUI })(Body);

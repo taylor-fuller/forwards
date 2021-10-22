@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { batch } from 'react-redux'
 
 export const fetchTeams = () => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
@@ -14,9 +15,11 @@ export const createTeam = (name) => async (dispatch) => {
 
     axios.post('http://localhost:3000/api/teams', { name: name })
     .then( (data) => {
-        dispatch({ type: 'RESET_SETTINGS' })
-        dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
-        dispatch(fetchTeams())
+        return batch(() => {
+            dispatch({ type: 'RESET_UI' })
+            dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
+            dispatch(fetchTeams())
+        })
     })
 }
 
@@ -38,34 +41,40 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
         team_id: team_id
     })
     .then( (data) => {
-        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: data.data.id })
-        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
-        dispatch(fetchProjects())
+        return batch(() => {
+            dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: data.data.id })
+            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
+            dispatch(fetchProjects())
+        })
     })
 }
 
-export const fetchSettings = () => async (dispatch) => {
-    dispatch({ type: 'FETCH_SETTINGS' })
+export const fetchUI = () => async (dispatch) => {
+    dispatch({ type: 'FETCH_UI' })
 }
 
 export const amendActiveWorkspace = (workspace) => async (dispatch) => {
-    dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
-    dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
+    return batch(() => {
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
+        dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
+    })
 }
 
 export const amendActiveSidebar = (sidebarOption) => async (dispatch) => {
-    if (sidebarOption === 'Dashboard' || 'My Tasks') {
-        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
-    }
-    dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: sidebarOption })
+    return batch(() => {
+        if (sidebarOption === 'Dashboard' || 'My Tasks') {
+            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
+        }
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: sidebarOption })
+    })
 }
 
 export const amendActiveProject = (project_id, project_name) => async (dispatch) => {
     dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
 }
 
-export const resetSettings = () => async (dispatch) => {
-    dispatch({ type: 'RESET_SETTINGS' })
+export const resetUI = () => async (dispatch) => {
+    dispatch({ type: 'RESET_UI' })
 }
 
 export const fetchTasks = () => async (dispatch) => {
@@ -74,4 +83,14 @@ export const fetchTasks = () => async (dispatch) => {
 
     const response = await axios.get('http://localhost:3000/api/tasks')
     dispatch({ type: 'FETCH_TASKS', payload: response.data })
+}
+
+export const toggleModal = (bool, option) => async (dispatch) => {
+    return batch(() => {
+        if (bool === false) {
+            dispatch({ type: 'TOGGLE_MODAL', payload: {isModalOpen: false, modalOption: null} })
+        } else {
+            dispatch({ type: 'TOGGLE_MODAL', payload: {isModalOpen: true, modalOption: option} })
+        }
+    })
 }
