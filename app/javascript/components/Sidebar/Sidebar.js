@@ -30,8 +30,8 @@ const Sidebar = (props) => {
     function determineSelects() {
         let Teams
 
-        if (props.teams.length != 0) {
-            Teams = props.teams.map(team => <option key={team.id} value={team.name} id={team.id} onClick={() => handleWorkspaceSelect(team.id, team.name)}>{team.name}</option>)
+        if (props.teams.all_teams) {
+            Teams = props.teams.all_teams.map(team => <option key={team.id} value={team.name} id={team.id} onClick={() => handleWorkspaceSelect(team.id, team.name)}>{team.name}</option>)
             return (
                 <form>
                     <select name="workspace" value={props.UI.activeWorkspace.workspace_name ? props.UI.activeWorkspace.workspace_name : ''} id="workspace" readOnly>
@@ -54,11 +54,13 @@ const Sidebar = (props) => {
     }
     
     let Projects
-    let userProjects = props.projects.filter((project) => project.team_id === Number(props.UI.activeWorkspace.workspace_id))
-    if (userProjects.length != 0) {
-        Projects = userProjects.map(project => <div key={project.id} id={project.id} className={props.UI.activeProject.project_id === project.id ? 'text-item active' : 'text-item'} onClick={() => handleProjectSelect(project.id, project.name)}><h4 id={project.id}>{project.name}</h4></div>)
-    } else {
-        Projects = <div className="empty">No Projects</div>
+    if (props.projects.all_projects) {
+        let userProjects = props.projects.all_projects.filter((project) => project.team_id === Number(props.UI.activeWorkspace.workspace_id))
+        if (userProjects.length != 0) {
+            Projects = userProjects.map(project => <div key={project.id} id={project.id} className={props.UI.activeProject.project_id === project.id ? 'text-item active' : 'text-item'} onClick={() => handleProjectSelect(project.id, project.name)}><h4 id={project.id}>{project.name}</h4></div>)
+        } else {
+            Projects = <div className="empty">No Projects</div>
+        }
     }
 
     return (

@@ -25,15 +25,15 @@
     font-size: 1.5rem;
 }
 
-.task-container, .projects-container {
+.task-container, .projects-container, .teams-container {
     margin: auto;
     margin-top: 0;
     padding: 5rem;
     width: 100%;
-    overflow: auto;
+    overflow-y: auto;
 }
 
-.tasks, .dashboard-favorites, .task-list, .projects {
+.tasks, .dashboard-favorites, .task-list, .projects, .teams {
     max-width: 1200px;
     box-sizing: border-box;
     margin: auto;
@@ -43,7 +43,7 @@
     margin: 3rem auto;
 }
 
-.due-today, .overdue, .recently-assigned, .due-soon, .upcoming, .completed-tasks, .projects-led, .all-projects, .teams-led, .teams {
+.due-today, .overdue, .recently-assigned, .due-soon, .upcoming, .completed-tasks, .projects-led, .all-projects, .teams-led, .all-teams {
     margin: auto;
     min-height: 200px;
     background-color: var(--base0);
@@ -61,18 +61,18 @@
     padding-top: 3rem;
 }
 
-.tasks h2, .dashboard-favorites h2, .projects h2 {
+.tasks h2, .dashboard-favorites h2, .projects h2, .teams h2 {
     padding: 2rem 0;
     font-size: 1.2rem;
     box-sizing: border-box;
 }
 
-.task-container h2, .projects-container h2 {
+.task-container h2, .projects-container h2, .teams-container h2 {
     padding-top: 4rem;
     font-size: 1.2rem;
 }
 
-.task-container h2:first-of-type, .projects-container h2:first-of-type {
+.task-container h2:first-of-type, .projects-container h2:first-of-type, .teams-container h2:first-of-type {
     padding-top: 0;
 }
 
@@ -86,7 +86,7 @@
     text-align: center;
 }
 
-.task-item, .task-header, .project-item {
+.task-item, .task-header {
     text-align: center;
     padding-left: 1rem;
     padding-right: 3rem;
@@ -100,36 +100,51 @@
     box-sizing: border-box;
 }
 
-.tasks .task-item:last-of-type  {
+.project-item, .project-header, .team-item, .team-header {
+    text-align: center;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    min-height: 50px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+    border-bottom: 1px solid var(--darkGrey);
+    box-sizing: border-box;
+}
+
+.due-today .task-item:last-of-type, .overdue .task-item:last-of-type, .recently-assigned .task-item:last-of-type, .due-soon .task-item:last-of-type, .upcoming .task-item:last-of-type, .completed-tasks .task-item:last-of-type, .projects-led  .project-item:last-of-type, .all-projects .project-item:last-of-type, .teams-led .team-item:last-of-type, .all-teams .team-item:last-of-type  {
     border-bottom: 1px solid var(--base0);
 }
 
-.recently-assigned > .task-item:last-of-type {
-    border-bottom: 1px solid var(--base0);
+.due-today .task-item:nth-child(2), .overdue .task-item:nth-child(2), .recently-assigned .task-item:nth-child(2), .due-soon .task-item:nth-child(2), .upcoming .task-item:nth-child(2), .completed-tasks .task-item:nth-child(2), .projects-led  .project-item:nth-child(2), .all-projects .project-item:nth-child(2), .teams-led .team-item:nth-child(2), .all-teams .team-item:nth-child(2)  {
+    border-bottom: 1px solid var(--darkGrey);
 }
-.tasks .task-item:hover {
+
+.task-item:hover, .project-item:hover, .team-item:hover {
     background-color: var(--grey);
 }
 
-.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects .project-header h3:first-of-type {
+.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects-led .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-teams .team-header h3:first-of-type, .teams-led .team-header h3:first-of-type {
     text-align: left;
 }
 
-.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects .project-header h3:last-of-type {
+.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects-led .project-header h3:last-of-type, .all-projects .project-header h3:last-of-type, .all-teams .team-header h3:last-of-type, .teams-led .team-header h3:last-of-type {
     text-align: right;
 }
 
-.tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3 {
+.tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3, .teams .team-header h3, .teams .team-item h3 {
     width: 200px;
     margin: auto 0;
     font-weight: bold;
 }
 
-.tasks .task-header, .projects .project-header {
+.tasks .task-header, .projects .project-header, .teams .team-header {
     border-bottom-color: var(--fontBlack);
 }
 
-.tasks .task-header h3, .projects .project-header h3 {
+.tasks .task-header h3, .projects .project-header h3, .teams .team-header h3 {
     font-size: 1rem;
     font-weight: bold;
 }
@@ -151,10 +166,24 @@
     transition: .1s all ease-in-out;
 }
 
-.tasks .empty {
+.tasks .empty, .projects .empty, .teams .empty {
     font-size: 1.5rem;
     min-height: 140px;
     width: 100%;
     text-align: center;
     line-height: 200px;
+}
+
+.projects .grey {
+    color: var(--darkGrey);
+}
+
+.projects .red {
+    font-size: 1.1rem;
+    color: red;
+}
+
+.projects .orange {
+    font-size: 1.1rem;
+    color: var(--accent0);
 }

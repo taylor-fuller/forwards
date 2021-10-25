@@ -109,3 +109,8 @@ span.emoji {
 	vertical-align: middle;
 	line-height: 2;
 }
+
+.auto-scroll {
+	overflow-y: overlay;
+	overflow-x: overlay;
+ }

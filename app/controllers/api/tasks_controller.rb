@@ -35,7 +35,7 @@ class Api::TasksController < ApplicationController
         upcoming << task
       end
     end
-    render json: { all_tasks: @tasks, overdue: overdue.reverse, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming, completed: completed }
+    render json: { all_tasks: @tasks.reverse, overdue: overdue.reverse, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming, completed: completed }
   end
 
   # POST /tasks or /tasks.json

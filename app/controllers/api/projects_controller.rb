@@ -6,16 +6,61 @@ class Api::ProjectsController < ApplicationController
   def index
     @projects = current_user.projects
     
-    @projects_array = []
+    @others_projects_array = []
+    @projects_led_array = []
+    project_tasks = {}
+    project_tasks_due_soon = []
+    project_tasks_due_today = []
+    project_tasks_recently_assigned = []
+    project_tasks_overdue = []
+    project_tasks_upcoming = []
+    project_tasks_completed = []
 
     @projects.each do |project|
-      tasks = project.tasks
-      @projects_array << project.attributes.merge!('tasks' => tasks)
+      @project_tasks = project.tasks
+      @project_tasks.each do |task|
+        if task.due_date && !task.completed
+          if Time.now.to_date == task.due_date.to_date
+            project_tasks_due_today << task
+          elsif (Time.now.to_date > task.due_date.to_date)
+            project_tasks_overdue << task
+          elsif (task.due_date.to_date - Time.now.to_date).to_i <= 3
+            project_tasks_due_soon << task
+          else 
+            project_tasks_upcoming << task
+          end
+          if (task.created_at.to_date - Time.now.to_date).to_i <= 3
+            project_tasks_recently_assigned << task
+          end
+        elsif task.completed
+          project_tasks_completed << task
+        else
+          project_tasks_upcoming << task
+        end
+      end
+      project_tasks['all_tasks'] = @project_tasks
+      project_tasks['due_today'] = project_tasks_due_today
+      project_tasks['due_soon'] = project_tasks_due_soon
+      project_tasks['recently_assigned'] = project_tasks_recently_assigned
+      project_tasks['overdue'] = project_tasks_overdue
+      project_tasks['upcoming'] = project_tasks_upcoming
+      project_tasks['completed'] = project_tasks_completed
+      if project.lead_id == current_user.id
+        @projects_led_array << project.attributes.merge!('tasks' => project_tasks)
+      else
+        @others_projects_array << project.attributes.merge!('tasks' => project_tasks)
+      end
+
+      project_tasks = {}
+      project_tasks_due_soon = []
+      project_tasks_due_today = []
+      project_tasks_recently_assigned = []
+      project_tasks_overdue = []
+      project_tasks_upcoming = []
+      project_tasks_completed = []
     end
 
-    @projects_led = current_user.projects_led
-
-    render json: { projects: @projects_array.reverse, projects_led: @projects_led }
+    render json: { all_projects: @projects.reverse, others_projects: @others_projects_array.reverse, projects_led: @projects_led_array.reverse }
   end
 
   # POST /projects or /projects.json

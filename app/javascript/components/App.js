@@ -58,7 +58,7 @@ const App = (props) => {
                 event.target.description.value,
                 props.UI.activeWorkspace.workspace_id,
                 props.UI.activeProject.project_id,
-                true,
+                false,
                 event.target.due_date.value, 
                 // event.target.assignee_id.value,
                 // event.target.parent_task_id.value

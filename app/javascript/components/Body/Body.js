@@ -28,6 +28,10 @@ const Body = (props) => {
         props.amendActiveProject(project_id, project_name)
     }
 
+    function handleTeamSelect(team_id, team_name) {
+        props.amendActiveProject(team_id, team_name)
+    }
+
     function determineRender(active) {
         let recentlyAssigned
         let dueToday
@@ -37,19 +41,29 @@ const Body = (props) => {
         let completed
         let projects
         let projectsLed
+        let teams
+        let teamsLed
 
         function returnProjectName(project_id) {
             let project
-            project = props.projects.filter((project) => project.id === project_id)
+            project = props.projects.all_projects.filter((project) => project.id === project_id)
             if (project[0]) {
                 return project[0].name
+            }
+        }
+
+        function returnTeamName(team_id) {
+            let team
+            team = props.teams.all_teams.filter((team) => team.id === team_id)
+            if (team[0]) {
+                return team[0].name
             }
         }
 
         function returnTaskAuthorName(team_id, creator_id) {
             let team
             let task_creator
-            team = props.teams.filter((team) => team.id === team_id)
+            team = props.teams.all_teams.filter((team) => team.id === team_id)
             if (team[0]) {
                 task_creator = team[0].members.filter((creator) => creator.id === creator_id)
                 if (task_creator[0]) {
@@ -78,35 +92,58 @@ const Body = (props) => {
             event.stopPropagation()
             console.log('patch task')
         }
-        
-        if (props.UI.activeSidebarOption === 'Dashboard') {
-            if (props.tasks.overdue.length >= 1) {
-                overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            }
-            if (props.tasks.due_today.length >= 1) {
-                dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            }
-        } else if (props.UI.activeSidebarOption === 'My Tasks') {
-            if (props.tasks.recently_assigned.length >= 1) {
-                recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            }
-            if (props.tasks.due_soon.length >= 1) {
-                dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            } 
-            if (props.tasks.upcoming.length >= 1) {
-                upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            }
-            if (props.tasks.completed.length >= 1) {
-                completed = props.tasks.completed.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            }
-        } else if (props.UI.activeSidebarOption === 'My Projects') {
-            if (props.projects_led.length >= 1) {
-                projectsLed = props.projects_led.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name)}><h3>{project.name}</h3></div>)
-            }
-            if (props.projects_led.length >= 1) {
-                projects = props.projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name)}><h3>{project.name}</h3></div>)
+
+        function returnProjectLeadName(team_id, project_lead_id) {
+            let team
+            let project_lead
+            team = props.teams.all_teams.filter((team) => team.id === team_id)
+            if (team[0]) {
+                project_lead = team[0].members.filter((member) => member.id === project_lead_id)
+                if (project_lead[0]) {
+                    return (project_lead[0].first_name + ' ' + project_lead[0].last_name)
+                }
             }
         }
+
+
+        if (props.tasks.all_tasks && props.projects.all_projects && props.teams.all_teams) {
+            if (props.UI.activeSidebarOption === 'Dashboard') {
+                if (props.tasks.overdue.length >= 1) {
+                    overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                }
+                if (props.tasks.due_today.length >= 1) {
+                    dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                }
+            } else if (props.UI.activeSidebarOption === 'My Tasks') {
+                if (props.tasks.recently_assigned.length >= 1) {
+                    recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                }
+                if (props.tasks.due_soon.length >= 1) {
+                    dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                } 
+                if (props.tasks.upcoming.length >= 1) {
+                    upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                }
+                if (props.tasks.completed.length >= 1) {
+                    completed = props.tasks.completed.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                }
+            } else if (props.UI.activeSidebarOption === 'My Projects') {
+                if (props.projects_led.length >= 1) {
+                    projectsLed = props.projects_led.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name)}><h3>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 className={project.tasks.all_tasks.length === 0 ? "grey" : null}>{project.tasks.all_tasks.length}</h3> <h3 className={project.tasks.completed.length === 0 ? "grey" : null}>{project.tasks.completed.length}</h3> <h3 className={isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'grey' : null}>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'N/A' : (Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100) + '%')}</h3> <h3>{returnTeamName(project.team_id)}</h3></div>)
+                }
+                if (props.projects.others_projects.length >= 1) {
+                    projects = props.projects.others_projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name)}><h3>{project.name}</h3> <h3>{project.tasks.due_today.length}</h3> <h3>{project.tasks.due_soon.length}</h3> <h3>{returnTeamName(project.team_id)}</h3> <h3>{returnProjectLeadName(project.team_id, project.lead_id)}</h3> </div>)
+                }
+            } else if (props.UI.activeSidebarOption === 'My Teams') {
+                if (props.teams_led.length >= 1) {
+                    teamsLed = props.teams_led.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleTeamSelect(team.id, team.name)}><h3>{team.name}</h3> </div>)
+                }
+                if (props.teams.others_teams.length >= 1) {
+                    teams = props.teams.others_teams.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleTeamSelect(team.id, team.name)}><h3>{team.name}</h3> </div>)
+                }
+            }
+        }
+        
 
         let content;
         if (active === 'Dashboard') {
@@ -158,11 +195,25 @@ const Body = (props) => {
                 <div className="projects-container" ref={bodyRef}> 
                     <div className="projects">
                         { projectsLed ? <h2>Projects Led</h2> : null }
-                        { projectsLed ? <div className="projects-led"><div className="project-header"></div> { projectsLed }</div> : null }
-                        <h2>All Projects</h2>
+                        { projectsLed ? <div className="projects-led"><div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Total Tasks</h3> <h3>Completed Tasks</h3> <h3>Complete %</h3> <h3>Team</h3></div> { projectsLed }</div> : null }
+                        <h2>Projects</h2>
                         <div className="all-projects">
-                            { projects ? <div className="project-header"></div> : null }
-                            { projects ? projects : <div className="empty">No Projects &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🎉'/><Emoji symbol='🎈'/><Emoji symbol='🥳'/></div> }
+                            { projects ? <div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Team</h3> <h3>Project Lead</h3></div> : null }
+                            { projects ? projects : <div className="empty">No Projects &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤔'/></div> }
+                        </div>
+                    </div>
+                </div>
+            )
+        } else if (active === 'My Teams') {
+            content = (
+                <div className="teams-container" ref={bodyRef}> 
+                    <div className="teams">
+                        { teamsLed ? <h2>Teams Led</h2> : null }
+                        { teamsLed ? <div className="teams-led"><div className="team-header"><h3>Team</h3> </div> { teamsLed }</div> : null }
+                        <h2>Teams</h2>
+                        <div className="all-teams">
+                            { teams ? <div className="team-header"><h3>Team</h3> </div> : null }
+                            { teams ? teams : <div className="empty">No Teams &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤔'/></div> }
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ export const fetchTeams = () => async (dispatch) => {
 
     const response = await axios.get('http://localhost:3000/api/teams')
     return batch(() => {
-        dispatch({ type: 'FETCH_TEAMS', payload: response.data })
+        dispatch({ type: 'FETCH_TEAMS', payload: {all_teams: response.data.all_teams, others_teams: response.data.others_teams} })
         dispatch({ type: 'FETCH_LED_TEAMS', payload: response.data })
     })
 }
@@ -32,7 +32,7 @@ export const fetchProjects = () => async (dispatch) => {
 
     const response = await axios.get('http://localhost:3000/api/projects')
     return batch(() => {
-        dispatch({ type: 'FETCH_PROJECTS', payload: response.data })
+        dispatch({ type: 'FETCH_PROJECTS', payload: {all_projects: response.data.all_projects, others_projects: response.data.others_projects} })
         dispatch({ type: 'FETCH_LED_PROJECTS', payload: response.data })
     })
 }

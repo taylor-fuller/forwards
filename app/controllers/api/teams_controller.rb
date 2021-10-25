@@ -7,16 +7,21 @@ class Api::TeamsController < ApplicationController
     @teams = current_user.teams
 
     @teams_array = []
+    @others_teams_array = []
+    @teams_led_array = []
 
     @teams.each do |team|
       members = team.members
       projects = team.projects
+      if team.lead_id == current_user.id
+        @teams_led_array << team.attributes.merge!('members' => members, 'projects' => projects)
+      else
+        @others_teams_array << team.attributes.merge!('members' => members, 'projects' => projects)
+      end
       @teams_array << team.attributes.merge!('members' => members, 'projects' => projects)
     end
 
-    @teams_led = current_user.teams_led
-
-    render json: { teams: @teams_array.reverse, teams_led: @teams_led }
+    render json: { all_teams: @teams_array.reverse, teams_led: @teams_led_array.reverse, others_teams: @others_teams_array.reverse }
   end
 
   def add_user_to_team
