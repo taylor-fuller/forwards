@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
-import { resetUI, amendActiveTask, amendActiveProject } from '../../actions';
+import { resetUI, amendActiveSidebar, amendActiveTask, amendActiveProject, amendActiveWorkspace } from '../../actions';
 import Emoji from '../Emoji/Emoji';
 
 // import AOS from 'aos';
@@ -28,8 +28,9 @@ const Body = (props) => {
         props.amendActiveProject(project_id, project_name)
     }
 
-    function handleTeamSelect(team_id, team_name) {
-        props.amendActiveProject(team_id, team_name)
+    function handleWorkspaceSelect(team_id, team_name) {
+        props.amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name})
+        props.amendActiveSidebar('Dashboard')
     }
 
     function determineRender(active) {
@@ -105,6 +106,18 @@ const Body = (props) => {
             }
         }
 
+        function returnTeamLeadName(team_id) {
+            let team
+            let team_lead
+            team = props.teams.all_teams.filter((team) => team.id === team_id)
+            if (team[0]) {
+                team_lead = team[0].members.filter((member) => member.id === project_lead_id)
+                if (team_lead[0]) {
+                    return (team_lead[0].first_name + ' ' + team_lead[0].last_name)
+                }
+            }
+        }
+
 
         if (props.tasks.all_tasks && props.projects.all_projects && props.teams.all_teams) {
             if (props.UI.activeSidebarOption === 'Dashboard') {
@@ -136,10 +149,10 @@ const Body = (props) => {
                 }
             } else if (props.UI.activeSidebarOption === 'My Teams') {
                 if (props.teams_led.length >= 1) {
-                    teamsLed = props.teams_led.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleTeamSelect(team.id, team.name)}><h3>{team.name}</h3> </div>)
+                    teamsLed = props.teams_led.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleWorkspaceSelect(team.id, team.name)}><h3>{team.name}</h3> <h3>{team.projects.length}</h3> <h3>{team.members.length}</h3></div>)
                 }
                 if (props.teams.others_teams.length >= 1) {
-                    teams = props.teams.others_teams.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleTeamSelect(team.id, team.name)}><h3>{team.name}</h3> </div>)
+                    teams = props.teams.others_teams.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleWorkspaceSelect(team.id, team.name)}><h3>{team.name}</h3> </div>)
                 }
             }
         }
@@ -209,7 +222,7 @@ const Body = (props) => {
                 <div className="teams-container" ref={bodyRef}> 
                     <div className="teams">
                         { teamsLed ? <h2>Teams Led</h2> : null }
-                        { teamsLed ? <div className="teams-led"><div className="team-header"><h3>Team</h3> </div> { teamsLed }</div> : null }
+                        { teamsLed ? <div className="teams-led"><div className="team-header"><h3>Team</h3> <h3>Active Projects</h3> <h3>Members</h3></div> { teamsLed }</div> : null }
                         <h2>Teams</h2>
                         <div className="all-teams">
                             { teams ? <div className="team-header"><h3>Team</h3> </div> : null }
@@ -264,4 +277,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { resetUI, amendActiveTask, amendActiveProject })(Body);
+export default connect(mapStateToProps, { resetUI, amendActiveSidebar, amendActiveTask, amendActiveProject, amendActiveWorkspace })(Body);

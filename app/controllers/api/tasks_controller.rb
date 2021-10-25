@@ -5,7 +5,7 @@ class Api::TasksController < ApplicationController
 
   # GET /tasks or /tasks.json
   def index
-    @tasks = current_user.tasks.order('due_date DESC')
+    @tasks = current_user.tasks.order('due_date ASC')
     # @tasks = current_user.tasks.order('CASE WHEN due_date IS NULL THEN 2 ELSE 1 END, created_at DESC') FOR PRODUCTION
     due_soon = []
     due_today = []
@@ -35,7 +35,7 @@ class Api::TasksController < ApplicationController
         upcoming << task
       end
     end
-    render json: { all_tasks: @tasks.reverse, overdue: overdue.reverse, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming, completed: completed }
+    render json: { all_tasks: @tasks, overdue: overdue, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming, completed: completed }
   end
 
   # POST /tasks or /tasks.json

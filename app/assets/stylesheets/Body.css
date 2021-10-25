@@ -126,11 +126,11 @@
     background-color: var(--grey);
 }
 
-.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects-led .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-teams .team-header h3:first-of-type, .teams-led .team-header h3:first-of-type {
+.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects-led .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-teams .team-item h3:first-of-type, .teams-led .team-item h3:first-of-type, .all-teams .team-header h3:first-of-type, .teams-led .team-header h3:first-of-type {
     text-align: left;
 }
 
-.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects-led .project-header h3:last-of-type, .all-projects .project-header h3:last-of-type, .all-teams .team-header h3:last-of-type, .teams-led .team-header h3:last-of-type {
+.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects-led .project-header h3:last-of-type, .all-projects .project-header h3:last-of-type, .all-teams .team-item h3:last-of-type, .teams-led .team-item h3:last-of-type, .all-teams .team-header h3:last-of-type, .teams-led .team-header h3:last-of-type {
     text-align: right;
 }
 

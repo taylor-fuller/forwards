@@ -60,7 +60,7 @@ class Api::ProjectsController < ApplicationController
       project_tasks_completed = []
     end
 
-    render json: { all_projects: @projects.reverse, others_projects: @others_projects_array.reverse, projects_led: @projects_led_array.reverse }
+    render json: { all_projects: @projects, others_projects: @others_projects_array, projects_led: @projects_led_array }
   end
 
   # POST /projects or /projects.json

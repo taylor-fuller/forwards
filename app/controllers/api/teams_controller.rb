@@ -4,7 +4,7 @@ class Api::TeamsController < ApplicationController
 
   # GET /teams or /teams.json
   def index
-    @teams = current_user.teams
+    @teams = current_user.teams.order('created_at ASC')
 
     @teams_array = []
     @others_teams_array = []
@@ -21,7 +21,7 @@ class Api::TeamsController < ApplicationController
       @teams_array << team.attributes.merge!('members' => members, 'projects' => projects)
     end
 
-    render json: { all_teams: @teams_array.reverse, teams_led: @teams_led_array.reverse, others_teams: @others_teams_array.reverse }
+    render json: { all_teams: @teams_array, teams_led: @teams_led_array, others_teams: @others_teams_array }
   end
 
   def add_user_to_team
