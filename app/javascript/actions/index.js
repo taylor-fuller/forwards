@@ -6,7 +6,10 @@ export const fetchTeams = () => async (dispatch) => {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
     const response = await axios.get('http://localhost:3000/api/teams')
-    dispatch({ type: 'FETCH_TEAMS', payload: response.data })
+    return batch(() => {
+        dispatch({ type: 'FETCH_TEAMS', payload: response.data })
+        dispatch({ type: 'FETCH_LED_TEAMS', payload: response.data })
+    })
 }
 
 export const createTeam = (name) => async (dispatch) => {
@@ -57,6 +60,7 @@ export const fetchUI = () => async (dispatch) => {
 export const amendActiveWorkspace = (workspace) => async (dispatch) => {
     return batch(() => {
         dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
+        dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
         dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
     })
 }
@@ -71,6 +75,8 @@ export const amendActiveSidebar = (sidebarOption) => async (dispatch) => {
 }
 
 export const amendActiveProject = (project_id, project_name) => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
+    dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: project_name })
     dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
 }
 
@@ -90,7 +96,6 @@ export const createTask = (title, description, team_id, project_id, completed, d
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    console.log(title, description, team_id, project_id, completed, due_date, assignee_id, parent_task_id)
     axios.post('http://localhost:3000/api/tasks', { 
         title: title,
         description: description,
@@ -103,11 +108,16 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
     .then( (data) => {
         return batch(() => {
-            console.log(data)
             dispatch(fetchProjects())
             dispatch(fetchTasks())
         })
     })
+}
+
+export const amendActiveTask = (task_id, task_name, project_id, project_name) => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: project_name })
+    dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+    dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
 }
 
 export const toggleModal = (bool, option) => async (dispatch) => {

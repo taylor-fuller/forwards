@@ -7,6 +7,7 @@ import App from '../components/App'
 import thunk from 'redux-thunk'
 import { loadState, saveState } from './localStorage'
 import throttle from 'lodash/throttle'
+import { sortedIndex } from 'lodash'
 
 const persistedState = loadState()
 const store = createStore(reducers, persistedState, applyMiddleware(thunk))
@@ -14,6 +15,7 @@ const store = createStore(reducers, persistedState, applyMiddleware(thunk))
 store.subscribe(throttle(() => {
   saveState({
     teams: store.getState().teams,
+    teams_led: store.getState().teams_led,
     projects: store.getState().projects,
     tasks: store.getState().tasks,
     UI: {

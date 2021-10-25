@@ -14,7 +14,9 @@ class Api::TeamsController < ApplicationController
       @teams_array << team.attributes.merge!('members' => members, 'projects' => projects)
     end
 
-    render json: { teams: @teams_array.reverse }
+    @teams_led = current_user.teams_led
+
+    render json: { teams: @teams_array.reverse, teams_led: @teams_led }
   end
 
   def add_user_to_team

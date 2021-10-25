@@ -12,13 +12,14 @@ class Api::TasksController < ApplicationController
     recently_assigned = []
     overdue = []
     upcoming = []
+    completed = []
 
 
     @tasks.each do |task|
-      if task.due_date
+      if task.due_date && !task.completed
         if Time.now.to_date == task.due_date.to_date
           due_today << task
-        elsif Time.now.to_date > task.due_date.to_date
+        elsif (Time.now.to_date > task.due_date.to_date)
           overdue << task
         elsif (task.due_date.to_date - Time.now.to_date).to_i <= 3
           due_soon << task
@@ -28,19 +29,19 @@ class Api::TasksController < ApplicationController
         if (task.created_at.to_date - Time.now.to_date).to_i <= 3
           recently_assigned << task
         end
+      elsif task.completed
+        completed << task
       else
         upcoming << task
       end
     end
-    render json: { all_tasks: @tasks, overdue: overdue.reverse, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming }
+    render json: { all_tasks: @tasks, overdue: overdue.reverse, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming, completed: completed }
   end
 
   # POST /tasks or /tasks.json
   def create
     @task = Task.new(task_params)
     @task.creator_id = current_user.id
-
-    puts params[:due_date]
     
     respond_to do |format|
       if @task.save

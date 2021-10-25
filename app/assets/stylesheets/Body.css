@@ -8,7 +8,6 @@
     align-content: flex-start;
     flex-flow: column nowrap;
     background-image: linear-gradient(135deg, var(--lightGrey), var(--grey));
-    overflow: hidden;
 }
 
 .header {
@@ -26,13 +25,16 @@
     font-size: 1.5rem;
 }
 
-.dashboard-container, .task-container {
+.task-container {
     margin: auto;
-    margin-top: 7rem;
+    margin-top: 0;
+    padding: 5rem 0;
     width: 100%;
+    overflow: auto;
+    
 }
 
-.dashboard-tasks, .dashboard-favorites {
+.tasks, .dashboard-favorites, .task-list {
     max-width: 1200px;
     box-sizing: border-box;
     margin: auto;
@@ -42,7 +44,7 @@
     margin: 3rem auto;
 }
 
-.due-today, .overdue {
+.due-today, .overdue, .recently-assigned, .due-soon, .upcoming, .completed-tasks {
     margin: auto;
     min-height: 200px;
     background-color: var(--base0);
@@ -60,57 +62,19 @@
     padding-top: 3rem;
 }
 
-.dashboard-tasks h2, .dashboard-favorites h2 {
+.tasks h2, .dashboard-favorites h2 {
     padding: 2rem 0;
     font-size: 1.2rem;
     box-sizing: border-box;
 }
 
-.task-container {
-    height: 100vh;
-    margin-top: 7rem;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    margin: 2rem;
-}
-
-.task-container .task-list {
-    flex-basis: 50%;
-}
-
-.task-container .task-list {
-    overflow: auto;
-    max-height: 85vh;
-}
-
-.task-container .task-detail-container {
-    flex-basis: 50%;
-}
-
 .task-container h2 {
-    padding: 1rem 0;
+    padding-top: 4rem;
     font-size: 1.2rem;
 }
 
-.tasks {
-    margin-right: 5rem;
-}
-
-.tasks > .recently-assigned, .due-soon, .upcoming {
-    min-height: 200px;
-    border-top: 1px solid var(--darkGrey);
-    /* background-color: var(--base0);
-    border-radius: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px; */
-}
-
-.task-detail-container h2 {
-    text-align: center;
-}
-
-.task-detail {
-    border-top: 1px solid var(--grey);
+.task-container h2:first-of-type {
+    padding-top: 0;
 }
 
 .task-item {
@@ -123,24 +87,7 @@
     text-align: center;
 }
 
-/* .task-item.completed h3 {
-    position: relative;
-    white-space: nowrap;
-    font-style: italic;
-    color: rgba(80, 80, 80, 0.5);
-}
-
-.task-item.completed .task-fields:after {
-    border-top: 1px solid green;
-    position: absolute;
-    content: "";
-    right: 0;
-    top:50%;
-    left: 0;
-    width: 100%;
-} */
-
-.task-item, .dashboard-tasks .task-header {
+.task-item, .task-header {
     text-align: center;
     padding-left: 1rem;
     padding-right: 3rem;
@@ -154,36 +101,36 @@
     box-sizing: border-box;
 }
 
-.dashboard-tasks > .task-item:last-of-type  {
+.tasks .task-item:last-of-type  {
     border-bottom: 1px solid var(--base0);
 }
 
 .recently-assigned > .task-item:last-of-type {
     border-bottom: 1px solid var(--darkGrey);
 }
-.dashboard-tasks .task-item:hover {
+.tasks .task-item:hover {
     background-color: var(--grey);
 }
 
-.dashboard-tasks .task-item h3:first-of-type, .dashboard-tasks .task-header h3:first-of-type {
+.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type {
     text-align: left;
 }
 
-.dashboard-tasks .task-item h3:last-of-type, .dashboard-tasks .task-header h3:last-of-type {
+.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type {
     text-align: right;
 }
 
-.dashboard-tasks .task-item h3, .dashboard-tasks .task-header h3 {
+.tasks .task-item h3, .tasks .task-header h3 {
     width: 200px;
     margin: auto 0;
     font-weight: bold;
 }
 
-.dashboard-tasks .task-header {
+.tasks .task-header {
     border-bottom-color: var(--fontBlack);
 }
 
-.dashboard-tasks .task-header h3 {
+.tasks .task-header h3 {
     font-size: 1rem;
     font-weight: bold;
 }
@@ -195,7 +142,17 @@
     justify-content: center;
 }
 
-.dashboard-tasks .empty {
+.complete-checkbox svg {
+    margin: auto;
+    transition: .1s all ease-in-out;
+}
+
+.complete-checkbox:hover svg {
+    transform: scale(1.2);
+    transition: .1s all ease-in-out;
+}
+
+.tasks .empty {
     font-size: 1.5rem;
     min-height: 140px;
     width: 100%;
