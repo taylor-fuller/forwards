@@ -31,7 +31,10 @@ export const fetchProjects = () => async (dispatch) => {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
     const response = await axios.get('http://localhost:3000/api/projects')
-    dispatch({ type: 'FETCH_PROJECTS', payload: response.data })
+    return batch(() => {
+        dispatch({ type: 'FETCH_PROJECTS', payload: response.data })
+        dispatch({ type: 'FETCH_LED_PROJECTS', payload: response.data })
+    })
 }
 
 export const createProject = (name, description, team_id) => async (dispatch) => {

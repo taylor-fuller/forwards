@@ -13,7 +13,9 @@ class Api::ProjectsController < ApplicationController
       @projects_array << project.attributes.merge!('tasks' => tasks)
     end
 
-    render json: { projects: @projects_array.reverse }
+    @projects_led = current_user.projects_led
+
+    render json: { projects: @projects_array.reverse, projects_led: @projects_led }
   end
 
   # POST /projects or /projects.json

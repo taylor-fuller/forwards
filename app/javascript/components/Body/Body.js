@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios'
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
-import { resetUI, amendActiveTask } from '../../actions';
+import { resetUI, amendActiveTask, amendActiveProject } from '../../actions';
 import Emoji from '../Emoji/Emoji';
 
 // import AOS from 'aos';
@@ -16,6 +16,18 @@ const csrfToken = document.querySelector('[name="csrf-token"]').content
 axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const Body = (props) => {
+    let bodyRef = useRef()
+
+    useEffect(() => {
+        if (bodyRef.current) {
+            bodyRef.current.scrollTo(0, 0)
+        }
+    })
+
+    function handleProjectSelect(project_id, project_name) {
+        props.amendActiveProject(project_id, project_name)
+    }
+
     function determineRender(active) {
         let recentlyAssigned
         let dueToday
@@ -23,6 +35,8 @@ const Body = (props) => {
         let dueSoon
         let overdue
         let completed
+        let projects
+        let projectsLed
 
         function returnProjectName(project_id) {
             let project
@@ -65,37 +79,39 @@ const Body = (props) => {
             console.log('patch task')
         }
         
-        if (props.tasks.all_tasks) {
-            if (props.UI.activeSidebarOption === 'Dashboard') {
-                if (props.tasks.overdue.length >= 1) {
-                    overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-                }
-                if (props.tasks.due_today.length >= 1) {
-                    dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-                }
-            } else if (props.UI.activeSidebarOption === 'My Tasks') {
-                if (props.tasks.recently_assigned.length >= 1) {
-                    recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-                }
-                if (props.tasks.due_soon.length >= 1) {
-                    dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-                } 
-                if (props.tasks.upcoming.length >= 1) {
-                    upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-                }
-                if (props.tasks.completed.length >= 1) {
-                    completed = props.tasks.completed.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-                }
+        if (props.UI.activeSidebarOption === 'Dashboard') {
+            if (props.tasks.overdue.length >= 1) {
+                overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
             }
-        } else {
-            recentlyAssigned = <div className="empty">No Tasks</div>
-            dueToday = <div className="empty">No Tasks</div>
+            if (props.tasks.due_today.length >= 1) {
+                dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            }
+        } else if (props.UI.activeSidebarOption === 'My Tasks') {
+            if (props.tasks.recently_assigned.length >= 1) {
+                recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            }
+            if (props.tasks.due_soon.length >= 1) {
+                dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            } 
+            if (props.tasks.upcoming.length >= 1) {
+                upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            }
+            if (props.tasks.completed.length >= 1) {
+                completed = props.tasks.completed.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id))}><h4 className="complete-checkbox">{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            }
+        } else if (props.UI.activeSidebarOption === 'My Projects') {
+            if (props.projects_led.length >= 1) {
+                projectsLed = props.projects_led.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name)}><h3>{project.name}</h3></div>)
+            }
+            if (props.projects_led.length >= 1) {
+                projects = props.projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name)}><h3>{project.name}</h3></div>)
+            }
         }
 
         let content;
         if (active === 'Dashboard') {
             content = (
-                <div className="task-container">
+                <div className="task-container" ref={bodyRef}>
                     <div className="tasks">
                         { overdue ? <h2>Overdue</h2> : null}
                         { overdue ? <div className="overdue"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> { overdue }</div> : null }
@@ -115,7 +131,7 @@ const Body = (props) => {
             )
         } else if (active === 'My Tasks') {
             content = (
-                <div className="task-container"> 
+                <div className="task-container" ref={bodyRef}> 
                     <div className="tasks">
                         { recentlyAssigned ? <h2>Recently Assigned</h2> : null }
                         { recentlyAssigned ? <div className="recently-assigned"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> { recentlyAssigned }</div> : null }
@@ -133,6 +149,20 @@ const Body = (props) => {
                         <div className="completed-tasks">
                             { completed ? <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> : null }
                             { completed ? completed : <div className="empty">No Completed Tasks, Better Get to Work &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤡'/></div> }
+                        </div>
+                    </div>
+                </div>
+            )
+        } else if (active === 'My Projects') {
+            content = (
+                <div className="projects-container" ref={bodyRef}> 
+                    <div className="projects">
+                        { projectsLed ? <h2>Projects Led</h2> : null }
+                        { projectsLed ? <div className="projects-led"><div className="project-header"></div> { projectsLed }</div> : null }
+                        <h2>All Projects</h2>
+                        <div className="all-projects">
+                            { projects ? <div className="project-header"></div> : null }
+                            { projects ? projects : <div className="empty">No Projects &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🎉'/><Emoji symbol='🎈'/><Emoji symbol='🥳'/></div> }
                         </div>
                     </div>
                 </div>
@@ -175,10 +205,12 @@ const Body = (props) => {
 const mapStateToProps = state => {
     return { 
         teams: state.teams,
+        teams_led: state.teams_led,
         projects: state.projects,
+        projects_led: state.projects_led,
         tasks: state.tasks,
         UI: state.UI
     }
 }
 
-export default connect(mapStateToProps, { resetUI, amendActiveTask })(Body);
+export default connect(mapStateToProps, { resetUI, amendActiveTask, amendActiveProject })(Body);

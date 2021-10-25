@@ -25,16 +25,15 @@
     font-size: 1.5rem;
 }
 
-.task-container {
+.task-container, .projects-container {
     margin: auto;
     margin-top: 0;
-    padding: 5rem 0;
+    padding: 5rem;
     width: 100%;
     overflow: auto;
-    
 }
 
-.tasks, .dashboard-favorites, .task-list {
+.tasks, .dashboard-favorites, .task-list, .projects {
     max-width: 1200px;
     box-sizing: border-box;
     margin: auto;
@@ -44,7 +43,7 @@
     margin: 3rem auto;
 }
 
-.due-today, .overdue, .recently-assigned, .due-soon, .upcoming, .completed-tasks {
+.due-today, .overdue, .recently-assigned, .due-soon, .upcoming, .completed-tasks, .projects-led, .all-projects, .teams-led, .teams {
     margin: auto;
     min-height: 200px;
     background-color: var(--base0);
@@ -62,18 +61,18 @@
     padding-top: 3rem;
 }
 
-.tasks h2, .dashboard-favorites h2 {
+.tasks h2, .dashboard-favorites h2, .projects h2 {
     padding: 2rem 0;
     font-size: 1.2rem;
     box-sizing: border-box;
 }
 
-.task-container h2 {
+.task-container h2, .projects-container h2 {
     padding-top: 4rem;
     font-size: 1.2rem;
 }
 
-.task-container h2:first-of-type {
+.task-container h2:first-of-type, .projects-container h2:first-of-type {
     padding-top: 0;
 }
 
@@ -87,7 +86,7 @@
     text-align: center;
 }
 
-.task-item, .task-header {
+.task-item, .task-header, .project-item {
     text-align: center;
     padding-left: 1rem;
     padding-right: 3rem;
@@ -106,31 +105,31 @@
 }
 
 .recently-assigned > .task-item:last-of-type {
-    border-bottom: 1px solid var(--darkGrey);
+    border-bottom: 1px solid var(--base0);
 }
 .tasks .task-item:hover {
     background-color: var(--grey);
 }
 
-.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type {
+.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects .project-header h3:first-of-type {
     text-align: left;
 }
 
-.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type {
+.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects .project-header h3:last-of-type {
     text-align: right;
 }
 
-.tasks .task-item h3, .tasks .task-header h3 {
+.tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3 {
     width: 200px;
     margin: auto 0;
     font-weight: bold;
 }
 
-.tasks .task-header {
+.tasks .task-header, .projects .project-header {
     border-bottom-color: var(--fontBlack);
 }
 
-.tasks .task-header h3 {
+.tasks .task-header h3, .projects .project-header h3 {
     font-size: 1rem;
     font-weight: bold;
 }
