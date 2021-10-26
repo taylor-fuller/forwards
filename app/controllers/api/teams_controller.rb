@@ -10,15 +10,65 @@ class Api::TeamsController < ApplicationController
     @others_teams_array = []
     @teams_led_array = []
 
+    team_tasks = {}
+    all_team_tasks = []
+    team_due_soon = []
+    team_due_today = []
+    team_recently_assigned = []
+    team_overdue = []
+    team_upcoming = []
+    team_completed = []
+
     @teams.each do |team|
-      members = team.members
-      projects = team.projects
-      if team.lead_id == current_user.id
-        @teams_led_array << team.attributes.merge!('members' => members, 'projects' => projects)
-      else
-        @others_teams_array << team.attributes.merge!('members' => members, 'projects' => projects)
+      team_members = team.members
+      team_projects = team.projects
+
+      team_projects.each do |project|
+        all_team_tasks = project.tasks
+        all_team_tasks.each do |task|
+          if task.due_date && !task.completed
+            if Time.now.to_date == task.due_date.to_date
+              team_due_today << task
+            elsif (Time.now.to_date > task.due_date.to_date)
+              team_overdue << task
+            elsif (task.due_date.to_date - Time.now.to_date).to_i <= 3
+              team_due_soon << task
+            else 
+              team_upcoming << task
+            end
+            if (task.created_at.to_date - Time.now.to_date).to_i <= 3
+              team_recently_assigned << task
+            end
+          elsif task.completed
+            team_completed << task
+          else
+            team_upcoming << task
+          end
+        end
       end
-      @teams_array << team.attributes.merge!('members' => members, 'projects' => projects)
+
+      team_tasks['all_tasks'] = all_team_tasks
+      team_tasks['due_today'] = team_due_today
+      team_tasks['due_soon'] = team_due_soon
+      team_tasks['recently_assigned'] = team_recently_assigned
+      team_tasks['overdue'] = team_overdue
+      team_tasks['upcoming'] = team_upcoming
+      team_tasks['completed'] = team_completed
+
+      if team.lead_id == current_user.id
+        @teams_led_array << team.attributes.merge!('members' => team_members, 'projects' => team_projects, 'tasks' => team_tasks)
+      else
+        @others_teams_array << team.attributes.merge!('members' => team_members, 'projects' => team_projects, 'tasks' => team_tasks)
+      end
+      @teams_array << team.attributes.merge!('members' => team_members, 'projects' => team_projects, 'tasks' => team_tasks)
+
+      team_tasks = {}
+      team_due_soon = []
+      team_due_today = []
+      team_recently_assigned = []
+      team_overdue = []
+      team_upcoming = []
+      team_completed = []
     end
 
     render json: { all_teams: @teams_array, teams_led: @teams_led_array, others_teams: @others_teams_array }

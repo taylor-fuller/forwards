@@ -117,7 +117,8 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
 }
 
-export const amendActiveTask = (task_id, task_name, project_id, project_name) => async (dispatch) => {
+export const amendActiveTask = (task_id, task_name, project_id, project_name, workspace) => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
     dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: project_name })
     dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
     dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })

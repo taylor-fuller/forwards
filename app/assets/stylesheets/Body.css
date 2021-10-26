@@ -122,6 +122,10 @@
     border-bottom: 1px solid var(--darkGrey);
 }
 
+.due-today .task-item:nth-child(3), .overdue .task-item:nth-child(3), .recently-assigned .task-item:nth-child(3), .due-soon .task-item:nth-child(3), .upcoming .task-item:nth-child(3), .completed-tasks .task-item:nth-child(3), .projects-led  .project-item:nth-child(3), .all-projects .project-item:nth-child(3), .teams-led .team-item:nth-child(3), .all-teams .team-item:nth-child(3)  {
+    border-bottom: 1px solid var(--darkGrey);
+}
+
 .task-item:hover, .project-item:hover, .team-item:hover {
     background-color: var(--grey);
 }
@@ -174,16 +178,16 @@
     line-height: 200px;
 }
 
-.projects .grey {
+.grey {
     color: var(--darkGrey);
 }
 
-.projects .red {
+.red {
     font-size: 1.1rem;
     color: red;
 }
 
-.projects .orange {
+.orange {
     font-size: 1.1rem;
     color: var(--accent0);
 }

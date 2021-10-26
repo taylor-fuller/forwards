@@ -3,7 +3,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 import '../../../assets/stylesheets/Sidebar';
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { createTeam, createProject, amendActiveSidebar, amendActiveWorkspace, amendActiveProject, toggleModal } from '../../actions';
+import { amendActiveSidebar, amendActiveWorkspace, amendActiveProject, toggleModal } from '../../actions';
 import React, { useState, useEffect } from 'react';
 
 // import AOS from 'aos';
