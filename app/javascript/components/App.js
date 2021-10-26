@@ -2,23 +2,15 @@ import React, { useState, useEffect } from 'react';
 import "../../assets/stylesheets/App.css"
 import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
-import axios from 'axios'
 import { connect } from 'react-redux';
 import { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask } from '../actions';
 import Modal from 'react-modal';
-import ProjectForm from './Forms/CreateProjectForm';
-import TeamForm from './Forms/CreateTeamForm';
-import TaskForm from './Forms/CreateTaskForm';
-
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
-
-// AOS.init({
-//   duration: 500,
-// })
-
-const csrfToken = document.querySelector('[name="csrf-token"]').content
-axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+import CreateProjectForm from './Forms/CreateProjectForm';
+import CreateTeamForm from './Forms/CreateTeamForm';
+import CreateTaskForm from './Forms/CreateTaskForm';
+import PatchProjectForm from './Forms/PatchProjectForm';
+import PatchTeamForm from './Forms/PatchTeamForm';
+import PatchTaskForm from './Forms/PatchTaskForm';
 
 const customStyles = {
     content: {
@@ -33,23 +25,29 @@ const App = (props) => {
     useEffect(() => {
         props.fetchAll()
     }, [])
-
+    
     function determineForm(type) {
         if (type === null) {
             return
-        } else if (type === 'task') {
-            return <TaskForm onSubmit={(event) => {handleCreate(event, type)}}/>
-        } else if (type === 'project') {
-            return <ProjectForm onSubmit={(event) => {handleCreate(event, type)}}/>
-        } else if (type === 'team') {
-            return <TeamForm onSubmit={(event) => {handleCreate(event, type)}}/>
+        } else if (type === 'createTask') {
+            return <CreateTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+        } else if (type === 'createProject') {
+            return <CreateProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+        } else if (type === 'createTeam') {
+            return <CreateTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+        } else if (type === 'patchTask') {
+            return <PatchTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+        } else if (type === 'patchProject') {
+            return <PatchProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+        } else if (type === 'patchTeam') {
+            return <PatchTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
         }
     }
 
-    function handleCreate(event, type) {
+    function handleFormSubmit(event, type) {
         event.preventDefault();
 
-        if (type == 'task') {
+        if (type == 'createTask') {
             props.createTask(
                 event.target.title.value,
                 event.target.description.value,
@@ -61,24 +59,18 @@ const App = (props) => {
                 // event.target.parent_task_id.value
                 null
             )
-        } else if (type == 'project') {
+        } else if (type == 'createProject') {
             props.createProject(
                 event.target.name.value,
                 event.target.description.value,
                 props.UI.activeWorkspace.workspace_id
             )
-        } else if (type == 'team') {
+        } else if (type == 'createTeam') {
             props.createTeam(
                 event.target.name.value,
             )
-        }
-        props.toggleModal(false, null)
-    }
-
-    function handleEdit(event, type) {
-        event.preventDefault();
-
-        if (type == 'task') {
+        } else if (type == 'patchTask') {
+            console.log('patch task')
             // props.patchTask(
             //     event.target.title.value,
             //     event.target.description.value,
@@ -90,13 +82,15 @@ const App = (props) => {
             //     // event.target.parent_task_id.value
             //     null
             // )
-        } else if (type == 'project') {
+        } else if (type == 'patchProject') {
+            console.log('patch project')
             // props.patchProject(
             //     event.target.name.value,
             //     event.target.description.value,
             //     props.UI.activeWorkspace.workspace_id
             // )
-        } else if (type == 'team') {
+        } else if (type == 'patchTeam') {
+            console.log('patch team')
             // props.patchTeam(
             //     event.target.name.value,
             // )
@@ -128,9 +122,6 @@ const App = (props) => {
 
 const mapStateToProps = state => {
     return { 
-        teams: state.teams,
-        projects: state.projects,
-        tasks: state.tasks,
         UI: state.UI
     }
 }

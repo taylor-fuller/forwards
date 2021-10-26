@@ -57,7 +57,6 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     })
     .then( (data) => {
         return batch(() => {
-            dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: data.data.id })
             dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
             dispatch(fetchTeams())
             dispatch(fetchProjects())
@@ -124,6 +123,7 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
     .then( (data) => {
         return batch(() => {
+            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: data.data.id, task_name: data.data.name} })
             dispatch(fetchProjects())
             dispatch(fetchTasks())
         })

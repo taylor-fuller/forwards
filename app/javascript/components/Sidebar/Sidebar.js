@@ -34,16 +34,16 @@ const Sidebar = (props) => {
                     <div className={props.UI.activeSidebarOption === 'My Projects' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('My Projects')}><span>{projectIcon}</span><h3>My Projects</h3></div>
                     <div className={props.UI.activeSidebarOption === 'My Teams' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('My Teams')}><span>{teamIcon}</span><h3>My Teams</h3></div>
                 </div>
-                <div className="sidebar-item">
+                {/* <div className="sidebar-item">
                     <h2>Create</h2>
-                    <div className="text-item" onClick={() => props.toggleModal(true, 'task')}><h3>Create Task</h3><span>{addIcon}</span></div>
-                </div>
+                    <div className="text-item" onClick={() => props.toggleModal(true, 'createTask')}><h3>Create Task</h3><span>{addIcon}</span></div>
+                </div> */}
                 <div className="sidebar-workspace">
-                    <h2>Workspace <span className='icon' onClick={() => props.toggleModal(true, 'team')}>{addIcon}</span></h2>
+                    <h2>Workspace <span className='icon' onClick={() => props.toggleModal(true, 'createTeam')}>{addIcon}</span></h2>
                     { teams }
                 </div>
                 {/* <div className="sidebar-item">
-                    <h2>Projects <span className='icon' onClick={() => props.toggleModal(true, 'project')}>{addIcon}</span></h2>
+                    <h2>Projects <span className='icon' onClick={() => props.toggleModal(true, 'createProject')}>{addIcon}</span></h2>
                     { props.UI.activeWorkspace ? Projects : <div className="empty">Select a Workspace</div> }
                 </div> */}
             </div>

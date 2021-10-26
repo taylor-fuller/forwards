@@ -2,9 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
 import { resetUI } from '../../actions';
-import HomeContainer from './HomeContainer';
+import MyTeamsContainer from './TeamsContainer/MyTeamsContainer';
+import MyProjectsContainer from './ProjectsContainer/MyProjectsContainer';
+import MyTasksContainer from './TasksContainer/MyTasksContainer';
+import DashboardContainer from './DashboardContainer/DashboardContainer';
 
 const Body = (props) => {
+    let homeRef = useRef()
+
+    useEffect(() => {
+        if (homeRef.current) {
+            homeRef.current.scrollTo(0, 0)
+        }
+    }, [props.activeSidebarOption])
+
     function determineHeader(props) {
         let header
         if (props.activeSidebarOption === 'Dashboard' || props.activeSidebarOption === 'My Tasks' || props.activeSidebarOption === 'My Teams' || props.activeSidebarOption === 'My Projects') {
@@ -25,16 +36,27 @@ const Body = (props) => {
         props.resetUI()
     }
 
-    function determineRender(active) {
-        if (active === 'Dashboard' || active === 'My Tasks' || active === 'My Projects' || active === 'My Teams') {
-            return <HomeContainer />
+    function determineRender() {
+        if (props.UI.activeSidebarOption === 'Dashboard') {
+            return <DashboardContainer />
+        } else if (props.UI.activeSidebarOption === 'My Tasks') {
+            return <MyTasksContainer />
+        } else if (props.UI.activeSidebarOption === 'My Projects') {
+            return <MyProjectsContainer />
+        } else if (props.UI.activeSidebarOption === 'My Teams') {
+            return <MyTeamsContainer />
         } else {
-            return null
+            if (props.UI.activeProject) {
+                return 'project page'
+            } else {
+                return 'team page'
+            }
+            
         }
     }
 
     const Header = determineHeader(props.UI)
-    const Body = determineRender(props.UI.activeSidebarOption)
+    const Body = determineRender()
 
     return (
         <div className="body-content">
