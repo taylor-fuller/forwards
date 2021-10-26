@@ -141,8 +141,18 @@
 
 .tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3, .teams .team-header h3, .teams .team-item h3 {
     width: 200px;
+    max-width: 200px;
     margin: auto 0;
     font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .tasks .task-header, .projects .project-header, .teams .team-header {
