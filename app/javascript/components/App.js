@@ -4,11 +4,11 @@ import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import axios from 'axios'
 import { connect } from 'react-redux';
-import { fetchTeams, fetchProjects, fetchTasks, fetchUI, createTeam, createProject, createTask, amendActiveSidebar, toggleModal } from '../actions';
+import { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask } from '../actions';
 import Modal from 'react-modal';
-import ProjectForm from '../components/Forms/ProjectForm';
-import TeamForm from '../components/Forms/TeamForm';
-import TaskForm from '../components/Forms/TaskForm';
+import ProjectForm from './Forms/CreateProjectForm';
+import TeamForm from './Forms/CreateTeamForm';
+import TaskForm from './Forms/CreateTaskForm';
 
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
@@ -31,17 +31,14 @@ Modal.setAppElement('#root');
 
 const App = (props) => {
     useEffect(() => {
-        props.fetchTeams()
-        props.fetchProjects()
-        props.fetchTasks()
-        props.fetchUI()
+        props.fetchAll()
     }, [])
 
     function determineForm(type) {
         if (type === null) {
             return
         } else if (type === 'task') {
-            return <TaskForm onSubmit={(event) => {handleCreate(event, type)}} state={props.projects, props.teams}/>
+            return <TaskForm onSubmit={(event) => {handleCreate(event, type)}}/>
         } else if (type === 'project') {
             return <ProjectForm onSubmit={(event) => {handleCreate(event, type)}}/>
         } else if (type === 'team') {
@@ -59,10 +56,9 @@ const App = (props) => {
                 props.UI.activeWorkspace.workspace_id,
                 props.UI.activeProject.project_id,
                 false,
-                event.target.due_date.value, 
-                // event.target.assignee_id.value,
+                event.target.due_date.value,
+                Number(event.target.assignee_id.value),
                 // event.target.parent_task_id.value
-                1,
                 null
             )
         } else if (type == 'project') {
@@ -75,6 +71,35 @@ const App = (props) => {
             props.createTeam(
                 event.target.name.value,
             )
+        }
+        props.toggleModal(false, null)
+    }
+
+    function handleEdit(event, type) {
+        event.preventDefault();
+
+        if (type == 'task') {
+            // props.patchTask(
+            //     event.target.title.value,
+            //     event.target.description.value,
+            //     props.UI.activeWorkspace.workspace_id,
+            //     props.UI.activeProject.project_id,
+            //     false,
+            //     event.target.due_date.value,
+            //     Number(event.target.assignee_id.value),
+            //     // event.target.parent_task_id.value
+            //     null
+            // )
+        } else if (type == 'project') {
+            // props.patchProject(
+            //     event.target.name.value,
+            //     event.target.description.value,
+            //     props.UI.activeWorkspace.workspace_id
+            // )
+        } else if (type == 'team') {
+            // props.patchTeam(
+            //     event.target.name.value,
+            // )
         }
         props.toggleModal(false, null)
     }
@@ -110,4 +135,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchTeams, fetchProjects, fetchTasks, fetchUI, createTeam, createProject, createTask, amendActiveSidebar, toggleModal })(App);
+export default connect(mapStateToProps, { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask })(App);

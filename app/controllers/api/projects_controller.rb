@@ -6,6 +6,7 @@ class Api::ProjectsController < ApplicationController
   def index
     @projects = current_user.projects
     
+    @all_projects_array = []
     @others_projects_array = []
     @projects_led_array = []
     project_tasks = {}
@@ -50,6 +51,7 @@ class Api::ProjectsController < ApplicationController
       else
         @others_projects_array << project.attributes.merge!('tasks' => project_tasks)
       end
+      @all_projects_array << project.attributes.merge!('tasks' => project_tasks)
 
       project_tasks = {}
       project_tasks_due_soon = []
@@ -60,7 +62,7 @@ class Api::ProjectsController < ApplicationController
       project_tasks_completed = []
     end
 
-    render json: { all_projects: @projects, others_projects: @others_projects_array, projects_led: @projects_led_array }
+    render json: { all_projects: @all_projects_array, others_projects: @others_projects_array, projects_led: @projects_led_array }
   end
 
   # POST /projects or /projects.json

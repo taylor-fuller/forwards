@@ -1,6 +1,15 @@
 import axios from 'axios'
 import { batch } from 'react-redux'
 
+export const fetchAll = () => async (dispatch) => {
+    return batch(() => {
+        dispatch(fetchTeams())
+        dispatch(fetchProjects())
+        dispatch(fetchTasks())
+        dispatch(fetchUI())
+    })
+}
+
 export const fetchTeams = () => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
@@ -78,9 +87,11 @@ export const amendActiveSidebar = (sidebarOption) => async (dispatch) => {
 }
 
 export const amendActiveProject = (project_id, project_name) => async (dispatch) => {
-    dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
-    dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: project_name })
-    dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+    return batch(() => {
+        dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: project_name })
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+    })
 }
 
 export const resetUI = () => async (dispatch) => {
@@ -118,10 +129,12 @@ export const createTask = (title, description, team_id, project_id, completed, d
 }
 
 export const amendActiveTask = (task_id, task_name, project_id, project_name, workspace) => async (dispatch) => {
-    dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
-    dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: project_name })
-    dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
-    dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+    return batch(() => {
+        dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: project_name })
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+        dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+    })
 }
 
 export const toggleModal = (bool, option) => async (dispatch) => {
@@ -131,5 +144,37 @@ export const toggleModal = (bool, option) => async (dispatch) => {
         } else {
             dispatch({ type: 'TOGGLE_MODAL', payload: {isModalOpen: true, modalOption: option} })
         }
+    })
+}
+
+export const patchProject = (project) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    axios.patch('http://localhost:3000/api/projects', { 
+        data: project
+    })
+    .then( (data) => {
+        return batch(() => {
+            dispatch(fetchTeams())
+            dispatch(fetchProjects())
+            dispatch(fetchTasks())
+        })
+    })
+}
+
+export const patchTask = (task) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    axios.patch('http://localhost:3000/api/projects', { 
+        data: task
+    })
+    .then( (data) => {
+        return batch(() => {
+            dispatch(fetchTeams())
+            dispatch(fetchProjects())
+            dispatch(fetchTasks())
+        })
     })
 }
