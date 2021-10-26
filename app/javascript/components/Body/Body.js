@@ -3,7 +3,7 @@ import axios from 'axios'
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
 import { resetUI } from '../../actions';
-import HomeContainer from './HomeContainer/HomeContainer';
+import HomeContainer from './HomeContainer';
 
 // import AOS from 'aos';
 // import 'aos/dist/aos.css';
@@ -35,7 +35,7 @@ const Body = (props) => {
 
     function determineRender(active) {
         if (active === 'Dashboard' || active === 'My Tasks' || active === 'My Projects' || active === 'My Teams') {
-            return(<HomeContainer />) 
+            return <HomeContainer />
         } else {
             return null
         }

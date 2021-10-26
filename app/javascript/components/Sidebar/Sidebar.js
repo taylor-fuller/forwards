@@ -22,46 +22,24 @@ const projectIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBo
 const taskIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><rect fill="none" height="24" width="24"/><path d="M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z"/></svg>
 
 const Sidebar = (props) => {
-    function handleWorkspaceSelect(team_id, team_name) {
-        props.amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name})
-        props.amendActiveSidebar('Dashboard')
-    }
-
-    function determineSelects() {
-        let Teams
-
-        if (props.teams.all_teams) {
-            Teams = props.teams.all_teams.map(team => <option key={team.id} value={team.name} id={team.id} onClick={() => handleWorkspaceSelect(team.id, team.name)}>{team.name}</option>)
-            return (
-                <form>
-                    <select name="workspace" value={props.UI.activeWorkspace.workspace_name ? props.UI.activeWorkspace.workspace_name : ''} id="workspace" readOnly>
-                        <option value='' disabled hidden>Select a Workspace</option>
-                        {Teams}
-                    </select>
-                </form>
-            )
+    let teams
+    if (props.teams.all_teams) {
+        if (props.teams.all_teams.length >= 1) {
+            teams = props.teams.all_teams.map(team => <div key={team.id} id={team.id} className={props.UI.activeSidebarOption === team.name ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveWorkspace({workspace_id: team.id, workspace_name: team.name})} title={team.name}><h4 id={team.id}>{team.name}</h4></div>)
         } else {
-            return(<div className="empty">No Workspaces</div>)
+            teams = <div className="empty">No Workspaces</div>
         }
-    }
-
-    function handleSidebarSelect(option) {
-        props.amendActiveSidebar(option)
-    }
-
-    function handleProjectSelect(project_id, project_name) {
-        props.amendActiveProject(project_id, project_name)
     }
     
-    let Projects
-    if (props.projects.all_projects) {
-        let userProjects = props.projects.all_projects.filter((project) => project.team_id === Number(props.UI.activeWorkspace.workspace_id))
-        if (userProjects.length != 0) {
-            Projects = userProjects.map(project => <div key={project.id} id={project.id} className={props.UI.activeProject.project_id === project.id ? 'text-item active' : 'text-item'} onClick={() => handleProjectSelect(project.id, project.name)}><h4 id={project.id}>{project.name}</h4></div>)
-        } else {
-            Projects = <div className="empty">No Projects</div>
-        }
-    }
+    // let Projects
+    // if (props.projects.all_projects) {
+    //     let userProjects = props.projects.all_projects.filter((project) => project.team_id === Number(props.UI.activeWorkspace.workspace_id))
+    //     if (userProjects.length != 0) {
+    //         Projects = userProjects.map(project => <div key={project.id} id={project.id} className={props.UI.activeProject.project_id === project.id ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveProject(project.id, project.name)} title={project.name}><h4 id={project.id}>{project.name}</h4></div>)
+    //     } else {
+    //         Projects = <div className="empty">No Projects</div>
+    //     }
+    // }
 
     return (
         <ProSidebar>
@@ -71,10 +49,10 @@ const Sidebar = (props) => {
             <div className="sidebar-container">
                 <div className="sidebar-home">
                     <h2>Home</h2>
-                    <div className={props.UI.activeSidebarOption === 'Dashboard' ? 'text-item active' : 'text-item'} onClick={() => handleSidebarSelect('Dashboard')}><span>{homeIcon}</span><h3>Dashboard</h3></div>
-                    <div className={props.UI.activeSidebarOption === 'My Tasks' ? 'text-item active' : 'text-item'} onClick={() => handleSidebarSelect('My Tasks')}><span>{taskIcon}</span><h3>My Tasks</h3></div>
-                    <div className={props.UI.activeSidebarOption === 'My Projects' ? 'text-item active' : 'text-item'} onClick={() => handleSidebarSelect('My Projects')}><span>{projectIcon}</span><h3>My Projects</h3></div>
-                    <div className={props.UI.activeSidebarOption === 'My Teams' ? 'text-item active' : 'text-item'} onClick={() => handleSidebarSelect('My Teams')}><span>{teamIcon}</span><h3>My Teams</h3></div>
+                    <div className={props.UI.activeSidebarOption === 'Dashboard' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('Dashboard')}><span>{homeIcon}</span><h3>Dashboard</h3></div>
+                    <div className={props.UI.activeSidebarOption === 'My Tasks' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('My Tasks')}><span>{taskIcon}</span><h3>My Tasks</h3></div>
+                    <div className={props.UI.activeSidebarOption === 'My Projects' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('My Projects')}><span>{projectIcon}</span><h3>My Projects</h3></div>
+                    <div className={props.UI.activeSidebarOption === 'My Teams' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('My Teams')}><span>{teamIcon}</span><h3>My Teams</h3></div>
                 </div>
                 <div className="sidebar-item">
                     <h2>Create</h2>
@@ -82,12 +60,12 @@ const Sidebar = (props) => {
                 </div>
                 <div className="sidebar-workspace">
                     <h2>Workspace <span className='icon' onClick={() => props.toggleModal(true, 'team')}>{addIcon}</span></h2>
-                    {determineSelects()}
+                    { teams }
                 </div>
-                <div className="sidebar-item">
+                {/* <div className="sidebar-item">
                     <h2>Projects <span className='icon' onClick={() => props.toggleModal(true, 'project')}>{addIcon}</span></h2>
                     { props.UI.activeWorkspace ? Projects : <div className="empty">Select a Workspace</div> }
-                </div>
+                </div> */}
             </div>
         </ProSidebar>
     )

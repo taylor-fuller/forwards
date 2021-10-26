@@ -63,10 +63,10 @@ class Api::TasksController < ApplicationController
   # PATCH/PUT /tasks/1 or /tasks/1.json
   def update
     respond_to do |format|
-      if @project.update(project_params)
-        format.json { render :show, status: :ok }
+      if @task.update(task_params)
+        format.json { render json: @task, status: :ok }
       else
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end

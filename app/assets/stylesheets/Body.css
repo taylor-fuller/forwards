@@ -8,6 +8,7 @@
     align-content: flex-start;
     flex-flow: column nowrap;
     background-image: linear-gradient(135deg, var(--lightGrey), var(--grey));
+    overflow: hidden;
 }
 
 .header {
@@ -76,7 +77,7 @@
     padding-top: 0;
 }
 
-.task-item {
+.task-item, .project-item, .team-item {
     cursor: pointer;
 }
 

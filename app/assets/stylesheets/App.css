@@ -73,6 +73,8 @@ body {
     flex-direction: row;
 	min-height: 100vh;
     color: var(--base0);
+	max-height: 100vh;
+	overflow: hidden;
 }
 
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
@@ -109,8 +111,3 @@ span.emoji {
 	vertical-align: middle;
 	line-height: 2;
 }
-
-.auto-scroll {
-	overflow-y: overlay;
-	overflow-x: overlay;
- }

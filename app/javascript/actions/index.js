@@ -74,6 +74,7 @@ export const amendActiveWorkspace = (workspace) => async (dispatch) => {
         dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
         dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
         dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: workspace.workspace_name })
     })
 }
 
@@ -151,10 +152,10 @@ export const patchProject = (project) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch('http://localhost:3000/api/projects', { 
+    axios.patch(`http://localhost:3000/api/projects/${data.id}`, { 
         data: project
     })
-    .then( (data) => {
+    .then( () => {
         return batch(() => {
             dispatch(fetchTeams())
             dispatch(fetchProjects())
@@ -167,10 +168,26 @@ export const patchTask = (task) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch('http://localhost:3000/api/projects', { 
+    axios.patch(`http://localhost:3000/api/tasks/${data.id}`, { 
         data: task
     })
-    .then( (data) => {
+    .then( () => {
+        return batch(() => {
+            dispatch(fetchTeams())
+            dispatch(fetchProjects())
+            dispatch(fetchTasks())
+        })
+    })
+}
+
+export const toggleTaskComplete = (task_id, bool) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    axios.patch(`http://localhost:3000/api/tasks/${task_id}`, { 
+        completed: bool
+    })
+    .then( () => {
         return batch(() => {
             dispatch(fetchTeams())
             dispatch(fetchProjects())
