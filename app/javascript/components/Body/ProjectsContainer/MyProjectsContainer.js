@@ -1,25 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import axios from 'axios'
 import { connect } from 'react-redux';
-import { resetUI, amendActiveSidebar, amendActiveTask, amendActiveProject, amendActiveWorkspace, patchProject, toggleTaskComplete } from '../../../actions';
+import { amendActiveProject, amendActiveWorkspace } from '../../../actions';
 import Emoji from '../../Emoji/Emoji';
-
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
-
-// AOS.init({
-//   duration: 500,
-// })
-
-const csrfToken = document.querySelector('[name="csrf-token"]').content
-axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const MyProjectsContainer = (props) => {
     let homeRef = useRef()
 
     function handleProjectSelect(project_id, project_name, team_id, team_name) {
-        props.amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name})
-        props.amendActiveProject(project_id, project_name)
+        props.amendActiveProject(project_id, project_name, {workspace_id: team_id, workspace_name: team_name})
     }
 
     function returnTeamName(team_id) {
@@ -50,7 +38,7 @@ const MyProjectsContainer = (props) => {
             projectsLed = props.projects_led.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name, project.team_id, returnTeamName(project.team_id))}><h3>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 className={project.tasks.all_tasks.length === 0 ? "grey" : null}>{project.tasks.all_tasks.length}</h3> <h3 className={project.tasks.completed.length === 0 ? "grey" : null}>{project.tasks.completed.length}</h3> <h3 className={isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'grey' : null}>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'N/A' : (Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100) + '%')}</h3> <h3>{returnTeamName(project.team_id)}</h3></div>)
         }
         if (props.projects.others_projects.length >= 1) {
-            projects = props.projects.others_projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name)}><h3>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3>{returnTeamName(project.team_id)}</h3> <h3>{returnProjectLeadName(project.team_id, project.lead_id)}</h3> </div>)
+            projects = props.projects.others_projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name, project.team_id, returnTeamName(project.team_id))}><h3>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3>{returnTeamName(project.team_id)}</h3> <h3>{returnProjectLeadName(project.team_id, project.lead_id)}</h3> </div>)
         }
         return(
             <div className="projects-container" ref={homeRef}> 
@@ -79,4 +67,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { resetUI, amendActiveSidebar, amendActiveTask, amendActiveProject, amendActiveWorkspace, patchProject, toggleTaskComplete })(MyProjectsContainer);
+export default connect(mapStateToProps, { amendActiveProject, amendActiveWorkspace })(MyProjectsContainer);

@@ -1,16 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios'
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
 import { resetUI } from '../../actions';
 import HomeContainer from './HomeContainer';
-
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
-
-// AOS.init({
-//   duration: 500,
-// })
 
 const Body = (props) => {
     function determineHeader(props) {

@@ -1,18 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import axios from 'axios'
 import { connect } from 'react-redux';
-import { resetUI, amendActiveSidebar, amendActiveTask, amendActiveProject, amendActiveWorkspace, patchProject, toggleTaskComplete } from '../../../actions';
+import { amendActiveTask, toggleTaskComplete } from '../../../actions';
 import Emoji from '../../Emoji/Emoji';
-
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
-
-// AOS.init({
-//   duration: 500,
-// })
-
-const csrfToken = document.querySelector('[name="csrf-token"]').content
-axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const MyTasksContainer = (props) => {
     let homeRef = useRef()
@@ -128,4 +117,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { resetUI, amendActiveSidebar, amendActiveTask, amendActiveProject, amendActiveWorkspace, patchProject, toggleTaskComplete })(MyTasksContainer);
+export default connect(mapStateToProps, { amendActiveTask, toggleTaskComplete })(MyTasksContainer);

@@ -1,19 +1,9 @@
 import { ProSidebar, SidebarHeader, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
 import '../../../assets/stylesheets/Sidebar';
-import axios from 'axios'
 import { connect } from 'react-redux';
-import { amendActiveSidebar, amendActiveWorkspace, amendActiveProject, toggleModal } from '../../actions';
+import { amendActiveSidebar, amendActiveWorkspace, toggleModal } from '../../actions';
 import React, { useState, useEffect } from 'react';
-
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
-
-// AOS.init({
-//   duration: 500,
-// })
-
-
 
 const homeIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z"/></svg>
 const addIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
@@ -30,16 +20,6 @@ const Sidebar = (props) => {
             teams = <div className="empty">No Workspaces</div>
         }
     }
-    
-    // let Projects
-    // if (props.projects.all_projects) {
-    //     let userProjects = props.projects.all_projects.filter((project) => project.team_id === Number(props.UI.activeWorkspace.workspace_id))
-    //     if (userProjects.length != 0) {
-    //         Projects = userProjects.map(project => <div key={project.id} id={project.id} className={props.UI.activeProject.project_id === project.id ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveProject(project.id, project.name)} title={project.name}><h4 id={project.id}>{project.name}</h4></div>)
-    //     } else {
-    //         Projects = <div className="empty">No Projects</div>
-    //     }
-    // }
 
     return (
         <ProSidebar>
@@ -74,9 +54,8 @@ const Sidebar = (props) => {
 const mapStateToProps = state => {
     return { 
         teams: state.teams,
-        projects: state.projects,
         UI: state.UI
     }
 }
 
-export default connect(mapStateToProps, { amendActiveSidebar, amendActiveWorkspace, amendActiveProject, toggleModal })(Sidebar);
+export default connect(mapStateToProps, { amendActiveSidebar, amendActiveWorkspace, toggleModal })(Sidebar);

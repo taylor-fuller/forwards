@@ -1,18 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import axios from 'axios'
 import { connect } from 'react-redux';
 import { amendActiveWorkspace } from '../../../actions';
 import Emoji from '../../Emoji/Emoji';
-
-// import AOS from 'aos';
-// import 'aos/dist/aos.css';
-
-// AOS.init({
-//   duration: 500,
-// })
-
-const csrfToken = document.querySelector('[name="csrf-token"]').content
-axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
 const MyTeamsContainer = (props) => {
     let homeRef = useRef()
