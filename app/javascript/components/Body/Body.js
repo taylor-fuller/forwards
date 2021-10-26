@@ -6,6 +6,8 @@ import MyTeamsContainer from './TeamsContainer/MyTeamsContainer';
 import MyProjectsContainer from './ProjectsContainer/MyProjectsContainer';
 import MyTasksContainer from './TasksContainer/MyTasksContainer';
 import DashboardContainer from './DashboardContainer/DashboardContainer';
+import ActiveTeamContainer from './TeamsContainer/ActiveTeamContainer';
+import ActiveProjectContainer from './ProjectsContainer/ActiveProjectContainer';
 
 const Body = (props) => {
     let homeRef = useRef()
@@ -47,11 +49,10 @@ const Body = (props) => {
             return <MyTeamsContainer />
         } else {
             if (props.UI.activeProject) {
-                return 'project page'
+                return <ActiveProjectContainer />
             } else {
-                return 'team page'
+                return <ActiveTeamContainer />
             }
-            
         }
     }
 
@@ -60,7 +61,7 @@ const Body = (props) => {
 
     return (
         <div className="body-content">
-            <div className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => resetUI()}>Logout</a> </div>
+            <header className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => resetUI()}>Logout</a> </header>
             { Body }
         </div>
     )

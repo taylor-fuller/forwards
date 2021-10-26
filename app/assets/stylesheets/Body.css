@@ -11,19 +11,33 @@
     overflow: hidden;
 }
 
-.header {
+header {
     box-sizing: border-box;
-    padding-left: 2rem;
+    padding: 0 2rem;
     min-height: 91px;
     background-color: var(--base2);
     display: flex;
     border-left: 1px solid var(--accent1);
+    justify-content: space-between;
 }
 
-.header h2 {
+header h2 {
     color: var(--base0);
     margin: auto 0;
     font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+header a {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--accent1);
+    margin: auto 0;
+    text-decoration: none;
+}
+
+header a:hover {
+    color: var(--accent1);
+    text-decoration: underline;
 }
 
 .task-container, .projects-container, .teams-container {
@@ -66,6 +80,7 @@
     padding: 2rem 0;
     font-size: 1.2rem;
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .task-container h2, .projects-container h2, .teams-container h2 {
