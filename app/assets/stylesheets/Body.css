@@ -239,10 +239,11 @@ header a:hover {
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     border-bottom: 1px solid var(--darkGrey);
+    height: 90px;
 }
 
 .active-team-container .overview, .active-team-container .active-team-members {
-    min-height: 300px;
+    min-height: 200px;
 }
 
 .active-team-container .icon {
@@ -259,4 +260,59 @@ header a:hover {
 .active-team-container .icon svg:hover {
     fill: var(--fontBlack);
     transform: scale(1.15);
+}
+
+.active-team-container .overview-header, .active-team-container .overview {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.active-team-container .overview-container h3, .active-team-container .overview-container .overview-item {
+    width: 150px;
+    margin-top: 2rem;
+    font-size: 1rem;
+    height: auto;
+}
+
+.active-team-container .overview-container .overview-item {
+    width: 100px;
+    height: 100px;
+    margin: 0 25px;
+    margin-top: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.active-team-container .overview-container .overview-item h4 {
+    margin: auto;
+    font-size: 2rem;
+    line-height: 100px;
+}
+
+.active-team-container .overview-container .overview-item .red {
+    background-color: var(--redTint);
+    color: white;
+}
+
+.active-team-container .overview-container .overview-item .orange {
+    background-color: var(--accent0);
+    color: white;
+}
+
+.active-team-container .overview-container .overview-item .grey {
+    background-color: var(--darkGrey);
+    color: var(--base0);
+}
+
+.active-team-container .overview-container .overview-item .active-grey {
+    background-color: var(--darkGrey);
+    color: var(--fontBlack);
+}
+
+.team-lead span {
+    color: var(--fontBlack);
+    font-weight: normal;
 }

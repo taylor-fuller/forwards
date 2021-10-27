@@ -3,7 +3,7 @@ import "../../assets/stylesheets/App.css"
 import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import { connect } from 'react-redux';
-import { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask } from '../actions';
+import { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask,addUserToTeam } from '../actions';
 import Modal from 'react-modal';
 import CreateProjectForm from './Forms/CreateProjectForm';
 import CreateTeamForm from './Forms/CreateTeamForm';
@@ -60,17 +60,20 @@ const App = (props) => {
                 event.target.due_date.value,
                 Number(event.target.assignee_id.value),
             )
-        } else if (type == 'createProject') {
+        } else if (type === 'createProject') {
             props.createProject(
                 event.target.name.value,
                 event.target.description.value,
                 props.UI.activeWorkspace.workspace_id
             )
-        } else if (type == 'createTeam') {
+        } else if (type === 'createTeam') {
             props.createTeam(
                 event.target.name.value,
             )
-        } else if (type == 'patchTask') {
+        } else if (type === 'addTeamMember') {
+            props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.workspace_id)
+        }
+         else if (type === 'patchTask') {
             console.log('patch task')
             // props.patchTask(
             //     event.target.title.value,
@@ -81,14 +84,14 @@ const App = (props) => {
             //     event.target.due_date.value,
             //     Number(event.target.assignee_id.value),
             // )
-        } else if (type == 'patchProject') {
+        } else if (type === 'patchProject') {
             console.log('patch project')
             // props.patchProject(
             //     event.target.name.value,
             //     event.target.description.value,
             //     props.UI.activeWorkspace.workspace_id
             // )
-        } else if (type == 'patchTeam') {
+        } else if (type === 'patchTeam') {
             console.log('patch team')
             // props.patchTeam(
             //     event.target.name.value,
@@ -125,4 +128,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask })(App);
+export default connect(mapStateToProps, { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam })(App);

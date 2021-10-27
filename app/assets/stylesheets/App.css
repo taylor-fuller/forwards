@@ -58,6 +58,7 @@ table {
     --grey: rgb(230,230,230);
     --darkGrey: rgb(200,200,200);
     --lightGrey: rgb(240,240,240);
+    --redTint: #e91010c2;
 }
 
 a:hover {

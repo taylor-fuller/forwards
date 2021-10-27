@@ -195,3 +195,16 @@ export const toggleTaskComplete = (task_id, bool) => async (dispatch) => {
         })
     })
 }
+
+export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    axios.post('http://localhost:3000/api/add_user_to_team', { 
+        id: team_id,
+        user_id: user_id
+    })
+    .then( () => {
+        dispatch(fetchTeams())
+    })
+}
