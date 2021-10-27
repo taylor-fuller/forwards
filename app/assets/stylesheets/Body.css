@@ -225,12 +225,12 @@ header a:hover {
 
 .active-team-overview-and-members {
     padding: 2rem;
-    flex-basis: 40%;
+    flex-basis: 30%;
 }
 
 .active-team-projects {
     padding: 2rem;
-    flex-basis: 60%;
+    flex-basis: 70%;
 }
 
 .active-team-container h2 {
@@ -242,8 +242,8 @@ header a:hover {
     height: 90px;
 }
 
-.active-team-container .overview, .active-team-container .active-team-members {
-    min-height: 200px;
+.active-team-container .overview, .active-team-container .active-team-members, .team-lead {
+    min-height: 150px;
 }
 
 .active-team-container .icon {
@@ -312,7 +312,42 @@ header a:hover {
     color: var(--fontBlack);
 }
 
-.team-lead span {
-    color: var(--fontBlack);
+.team-members, .lead {
+    padding: 1rem;
+}
+
+
+.team-members div, .lead div {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.member-container {
+    display: flex;
+    padding: .5rem 0;
+}
+
+.member-container .avatar {
+    font-family: 'Montserrat', sans-serif;
     font-weight: normal;
+    font-size: 1.3rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--base2);
+    color: var(--base0);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-right: 2rem;
+}
+
+.member-container span {
+    color: var(--darkGrey);
+}
+
+.team-member {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
 }

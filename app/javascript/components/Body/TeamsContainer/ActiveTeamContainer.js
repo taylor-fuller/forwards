@@ -38,9 +38,43 @@ const ActiveTeamContainer = (props) => {
         }
     }
 
+    function returnTeamLeadEmail(team_id) {
+        let team
+        let team_lead
+        team = props.teams.all_teams.filter((team) => team.id === team_id)
+        if (team[0]) {
+            team_lead = team[0].members.filter((member) => member.id === team[0].lead_id)
+            if (team_lead[0]) {
+                return (team_lead[0].email)
+            }
+        }
+    }
+
+    function returnTeamLeadInitials(team_id) {
+        let team
+        let team_lead
+        team = props.teams.all_teams.filter((team) => team.id === team_id)
+        if (team[0]) {
+            team_lead = team[0].members.filter((member) => member.id === team[0].lead_id)
+            if (team_lead[0]) {
+                return (team_lead[0].first_name.charAt(0) + team_lead[0].last_name.charAt(0))
+            }
+        }
+    }
+
+    function returnInitials(first_name, last_name=null) {
+        if (!last_name) {
+            return first_name.charAt(0)
+        } else {
+            return first_name.charAt(0) + last_name.charAt(0)
+        }
+    }
+
     let team = returnTeam(props.teams.all_teams, props.UI.activeWorkspace.workspace_id)
+    let membersArray = team.members.filter((member) => member.id !== team.lead_id)
 
     if (team) {
+        const members = membersArray.map(member => <div className="member-container"><div className="avatar">{returnInitials(member.first_name, member.last_name)}</div><div key={member.id} id={member.id} className='team-member'>{member.first_name + ' ' + member.last_name} <br /><span>{member.email}</span></div></div>)
         return(
             <div className="active-team-container">
                 <div className="active-team-overview-and-members">
@@ -59,11 +93,21 @@ const ActiveTeamContainer = (props) => {
                             </div>
                         </div>
                     </div>
+                    <div className="active-team-lead">
+                        <div className="team-lead">
+                            <h2>Team Lead</h2>
+                            <div className="lead">
+                                <div className="member-container">
+                                <div className="avatar">{returnTeamLeadInitials(props.UI.activeWorkspace.workspace_id)}</div>
+                                    <div className='team-member'>{returnTeamLeadName(props.UI.activeWorkspace.workspace_id)} <br /><span>{returnTeamLeadEmail(props.UI.activeWorkspace.workspace_id)}</span></div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div>
                     <div className="active-team-members">
                         <h2>Members <span className='icon' onClick={() => props.toggleModal(true, 'addTeamMember')}>{addIcon}</span></h2>
-                        <div className="team-lead"><span>Team Lead: {returnTeamLeadName(props.UI.activeWorkspace.workspace_id)}</span></div>
-                        <div className="active-team-members">
-
+                        <div className="team-members">
+                            { members.length >= 1 ? members : 'No Team Members'}
                         </div>
                     </div>
                 </div>
