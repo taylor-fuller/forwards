@@ -3,7 +3,7 @@ import "../../assets/stylesheets/App.css"
 import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import { connect } from 'react-redux';
-import { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask,addUserToTeam } from '../actions';
+import { fetchAll,fetchUI, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam } from '../actions';
 import Modal from 'react-modal';
 import CreateProjectForm from './Forms/CreateProjectForm';
 import CreateTeamForm from './Forms/CreateTeamForm';
@@ -25,6 +25,7 @@ Modal.setAppElement('#root');
 const App = (props) => {
     useEffect(() => {
         props.fetchAll()
+        props.fetchUI()
     }, [])
     
     function determineForm(type) {
@@ -128,4 +129,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchAll, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam })(App);
+export default connect(mapStateToProps, { fetchAll, fetchUI, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam })(App);

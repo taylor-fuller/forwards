@@ -71,38 +71,34 @@ const DashboardContainer = (props) => {
     let dueToday
     let overdue
     
-    if (props.UI.initialLoad === true) {
-        return (<div className="loading" ><ClipLoader color={'#ff8851'} loading={props.UI.initialLoad} css={override} size={50} /></div>)
-    } else {
-        if (props.tasks.all_tasks) {
-            if (props.tasks.overdue.length >= 1) {
-                overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            }
-            if (props.tasks.due_today.length >= 1) {
-                dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-            }
-            return(
-                <div className="task-container" ref={homeRef}>
-                    <div className="tasks">
-                        { overdue ? <h2>Overdue</h2> : null}
-                        { overdue ? <div className="overdue"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> { overdue }</div> : null }
-                        <h2>Tasks Due Today</h2>
-                        <div className="due-today">
-                            { dueToday ? <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> : null }
-                            { dueToday ? dueToday : <div className="empty">No Tasks Due Today &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='👁️'/><Emoji symbol='👄'/><Emoji symbol='👁️'/></div>}
-                        </div>
-                    </div>
-                    <div className="dashboard-favorites">
-                        <h2>Favorite Projects</h2>
-                        <div className="favorites">
-                            
-                        </div>
+    if (props.tasks.all_tasks && props.UI.initialLoad === false) {
+        if (props.tasks.overdue.length >= 1) {
+            overdue = props.tasks.overdue.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+        }
+        if (props.tasks.due_today.length >= 1) {
+            dueToday = props.tasks.due_today.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3>{returnProjectName(task.project_id)}</h3> <h3>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+        }
+        return(
+            <div className="task-container" ref={homeRef}>
+                <div className="tasks">
+                    { overdue ? <h2>Overdue</h2> : null}
+                    { overdue ? <div className="overdue"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> { overdue }</div> : null }
+                    <h2>Tasks Due Today</h2>
+                    <div className="due-today">
+                        { dueToday ? <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> : null }
+                        { dueToday ? dueToday : <div className="empty">No Tasks Due Today &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='👁️'/><Emoji symbol='👄'/><Emoji symbol='👁️'/></div>}
                     </div>
                 </div>
-            )
-        } else {
-            return null
-        }
+                <div className="dashboard-favorites">
+                    <h2>Favorite Projects</h2>
+                    <div className="favorites">
+                        
+                    </div>
+                </div>
+            </div>
+        )
+    } else {
+        return (<div className="loading" ><ClipLoader color={'#ff8851'} loading={props.UI.initialLoad} css={override} size={50} /></div>)
     }
 }
     

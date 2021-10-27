@@ -6,7 +6,6 @@ export const fetchAll = () => async (dispatch) => {
         dispatch(fetchTeams())
         dispatch(fetchProjects())
         dispatch(fetchTasks())
-        dispatch(fetchUI())
     })
 }
 
