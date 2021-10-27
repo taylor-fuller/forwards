@@ -217,3 +217,46 @@ header a:hover {
     font-size: 1.1rem;
     color: var(--accent0);
 }
+
+.active-team-container {
+    width: 100%;
+    display: flex;
+}
+
+.active-team-overview-and-members {
+    padding: 2rem;
+    flex-basis: 40%;
+}
+
+.active-team-projects {
+    padding: 2rem;
+    flex-basis: 60%;
+}
+
+.active-team-container h2 {
+    padding: 2rem 0;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid var(--darkGrey);
+}
+
+.active-team-container .overview, .active-team-container .active-team-members {
+    min-height: 300px;
+}
+
+.active-team-container .icon {
+    margin-left: 1rem;
+}
+
+.active-team-container .icon svg {
+    margin: auto;
+    fill: var(--darkGrey);
+    transition: .1s all ease-in-out;
+    cursor: pointer;
+}
+
+.active-team-container .icon svg:hover {
+    fill: var(--fontBlack);
+    transform: scale(1.15);
+}

@@ -77,20 +77,41 @@ body {
 	overflow: hidden;
 }
 
-.ReactModal__Overlay.ReactModal__Overlay--after-open {
-	margin-left: 270px;
-}
-
 .ReactModal__Content.ReactModal__Content--after-open {
 	margin: auto;
-	max-width: 800px;
-	max-height: 700px;
-	
+	max-width: 600px;
+	max-height: 500px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.ReactModalPortal h2 {
+    color: var(--base0);
+    text-align: center;
+    vertical-align: center;
+    margin: auto;
+    padding-bottom: 24px;
+}
+
+.ReactModalPortal .empty {
+    font-size: 1.2rem;
+}
+
+.ReactModalPortal form {
+    min-height: 300px;
 }
 
 .button {
-	color: var(--base0);
+    height: 24px;
 	cursor: pointer;
+    margin-left: auto;
+    transition: .1s all ease-in-out;
+}
+
+.button:hover svg {
+	fill: var(--darkGrey);
+    transition: .1s all ease-in-out;
 }
 
 .content-container {

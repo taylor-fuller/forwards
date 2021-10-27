@@ -18,6 +18,7 @@ h1 {
     min-height: 100vh;
     max-height: 100vh;
     overflow-y: auto;
+    z-index: 0;
 }
 
 #view .pro-sidebar-inner, .pro-sidebar-layout {
@@ -138,10 +139,16 @@ h1 {
     color: var(--base2);
 }
 
+.icon {
+    vertical-align: middle;
+    display: inline-block;
+}
+
 .icon svg {
-   fill: #708396;
-   transition: .1s all ease-in-out;
-   cursor: pointer;
+    margin: auto;
+    fill: #708396;
+    transition: .1s all ease-in-out;
+    cursor: pointer;
 }
 
 .icon svg:hover {

@@ -14,5 +14,6 @@ Rails.application.routes.draw do
     resources :teams
     resources :tasks
     post 'add_user_to_team', to: 'teams#add_user_to_team'
+    post 'users', to: 'users#index'
   end
 end
