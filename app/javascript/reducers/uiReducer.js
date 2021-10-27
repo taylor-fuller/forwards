@@ -1,7 +1,7 @@
-export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: '', isModalOpen: false, modalOption: null}, action) => {
+export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: '', isModalOpen: false, modalOption: null, initialLoad: true}, action) => {
     switch(action.type) {
         case 'FETCH_UI':
-            return state
+            return {...state, initialLoad: false}
         case 'AMEND_ACTIVE_WORKSPACE':
             state = {...state, activeWorkspace: action.payload}
             return state
@@ -15,7 +15,7 @@ export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', 
             state = {...state, activeTask: action.payload}
             return state
         case 'RESET_UI':
-            state = {...state, activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: ''}
+            state = {...state, activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: '', initialLoad: true}
             return state
         case 'TOGGLE_MODAL':
             state = {...state, isModalOpen: action.payload.isModalOpen, modalOption: action.payload.modalOption}

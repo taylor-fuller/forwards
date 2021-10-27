@@ -84,10 +84,11 @@ body {
 	max-height: 500px;
     display: flex;
     flex-flow: column;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .ReactModalPortal h2 {
+    font-family: 'Montserrat', sans-serif;
     color: var(--base0);
     text-align: center;
     vertical-align: center;
@@ -97,6 +98,7 @@ body {
 
 .ReactModalPortal .empty {
     font-size: 1.2rem;
+    margin: auto;
 }
 
 .ReactModalPortal form {
@@ -132,4 +134,12 @@ span.emoji {
 	font-size: 30px;
 	vertical-align: middle;
 	line-height: 2;
+}
+
+.loading {
+    position: absolute;
+    top:50%;
+    right:0px;
+    width:100%;
+    height:100%;
 }

@@ -7,7 +7,6 @@ import App from '../components/App'
 import thunk from 'redux-thunk'
 import { loadState, saveState } from './localStorage'
 import throttle from 'lodash/throttle'
-import { sortedIndex } from 'lodash'
 
 const persistedState = loadState()
 const store = createStore(reducers, persistedState, applyMiddleware(thunk))
@@ -23,7 +22,8 @@ store.subscribe(throttle(() => {
       activeWorkspace: store.getState().UI.activeWorkspace,
       activeSidebarOption: store.getState().UI.activeSidebarOption,
       activeProject: store.getState().UI.activeProject,
-      activeTask: store.getState().UI.activeTask
+      activeTask: store.getState().UI.activeTask,
+      initialLoad: store.getState().UI.initialLoad
     }
   })
 }, 1000))

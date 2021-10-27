@@ -107,7 +107,7 @@ const ActiveTeamContainer = (props) => {
                     <div className="active-team-members">
                         <h2>Members <span className='icon' onClick={() => props.toggleModal(true, 'addTeamMember')}>{addIcon}</span></h2>
                         <div className="team-members">
-                            { members.length >= 1 ? members : 'No Team Members'}
+                            { members.length >= 1 ? members : 'No Additional Team Members'}
                         </div>
                     </div>
                 </div>

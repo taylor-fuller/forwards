@@ -4,6 +4,13 @@ import '../../../assets/stylesheets/Sidebar';
 import { connect } from 'react-redux';
 import { amendActiveSidebar, amendActiveWorkspace, toggleModal } from '../../actions';
 import React, { useState, useEffect } from 'react';
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+`;
 
 const homeIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 5v2h-4V5h4M9 5v6H5V5h4m10 8v6h-4v-6h4M9 17v2H5v-2h4M21 3h-8v6h8V3zM11 3H3v10h8V3zm10 8h-8v10h8V11zm-10 4H3v6h8v-6z"/></svg>
 const addIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
@@ -13,11 +20,15 @@ const taskIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="
 
 const Sidebar = (props) => {
     let teams
-    if (props.teams.all_teams) {
-        if (props.teams.all_teams.length >= 1) {
-            teams = props.teams.all_teams.map(team => <div key={team.id} id={team.id} className={props.UI.activeSidebarOption === team.name ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveWorkspace({workspace_id: team.id, workspace_name: team.name})} title={team.name}><h4 id={team.id}>{team.name}</h4></div>)
-        } else {
-            teams = <div className="empty">No Workspaces</div>
+    if (props.UI.initialLoad === true) {
+        teams = <ClipLoader color={'#ff8851'} loading={props.UI.initialLoad} css={override} size={25} />
+    } else {
+        if (props.teams.all_teams) {
+            if (props.teams.all_teams.length >= 1) {
+                teams = props.teams.all_teams.map(team => <div key={team.id} id={team.id} className={props.UI.activeSidebarOption === team.name ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveWorkspace({workspace_id: team.id, workspace_name: team.name})} title={team.name}><h4 id={team.id}>{team.name}</h4></div>)
+            } else {
+                teams = <div className="empty">No Workspaces</div>
+            }
         }
     }
 
@@ -34,18 +45,10 @@ const Sidebar = (props) => {
                     <div className={props.UI.activeSidebarOption === 'My Projects' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('My Projects')}><span>{projectIcon}</span><h3>My Projects</h3></div>
                     <div className={props.UI.activeSidebarOption === 'My Teams' ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveSidebar('My Teams')}><span>{teamIcon}</span><h3>My Teams</h3></div>
                 </div>
-                {/* <div className="sidebar-item">
-                    <h2>Create</h2>
-                    <div className="text-item" onClick={() => props.toggleModal(true, 'createTask')}><h3>Create Task</h3><span>{addIcon}</span></div>
-                </div> */}
                 <div className="sidebar-workspace">
                     <h2>Workspace <span className='icon' onClick={() => props.toggleModal(true, 'createTeam')}>{addIcon}</span></h2>
                     { teams }
                 </div>
-                {/* <div className="sidebar-item">
-                    <h2>Projects <span className='icon' onClick={() => props.toggleModal(true, 'createProject')}>{addIcon}</span></h2>
-                    { props.UI.activeWorkspace ? Projects : <div className="empty">Select a Workspace</div> }
-                </div> */}
             </div>
         </ProSidebar>
     )
