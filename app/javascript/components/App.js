@@ -56,8 +56,6 @@ const App = (props) => {
                 false,
                 event.target.due_date.value,
                 Number(event.target.assignee_id.value),
-                // event.target.parent_task_id.value
-                null
             )
         } else if (type == 'createProject') {
             props.createProject(
@@ -79,8 +77,6 @@ const App = (props) => {
             //     false,
             //     event.target.due_date.value,
             //     Number(event.target.assignee_id.value),
-            //     // event.target.parent_task_id.value
-            //     null
             // )
         } else if (type == 'patchProject') {
             console.log('patch project')

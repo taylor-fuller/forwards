@@ -58,13 +58,11 @@ ActiveRecord::Schema.define(version: 2021_10_20_224124) do
     t.integer "creator_id", null: false
     t.integer "assignee_id"
     t.integer "project_id"
-    t.integer "parent_task_id"
     t.integer "team_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["creator_id"], name: "index_tasks_on_creator_id"
-    t.index ["parent_task_id"], name: "index_tasks_on_parent_task_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["team_id"], name: "index_tasks_on_team_id"
   end

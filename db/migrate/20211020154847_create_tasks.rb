@@ -8,7 +8,6 @@ class CreateTasks < ActiveRecord::Migration[6.1]
       t.integer :creator_id, null: false
       t.integer :assignee_id
       t.integer :project_id, null: true
-      t.integer :parent_task_id
       t.integer :team_id, null: false
       t.timestamps
     end
@@ -16,7 +15,6 @@ class CreateTasks < ActiveRecord::Migration[6.1]
     add_index :tasks, :creator_id
     add_index :tasks, :assignee_id
     add_index :tasks, :project_id
-    add_index :tasks, :parent_task_id
     add_index :tasks, :team_id
   end
 end

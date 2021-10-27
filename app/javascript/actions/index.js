@@ -107,7 +107,7 @@ export const fetchTasks = () => async (dispatch) => {
     dispatch({ type: 'FETCH_TASKS', payload: response.data })
 }
 
-export const createTask = (title, description, team_id, project_id, completed, due_date, assignee_id, parent_task_id) => async (dispatch) => {
+export const createTask = (title, description, team_id, project_id, completed, due_date, assignee_id) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
@@ -118,8 +118,7 @@ export const createTask = (title, description, team_id, project_id, completed, d
         project_id: project_id,
         completed: completed,
         due_date: due_date, 
-        assignee_id: assignee_id,
-        parent_task_id: parent_task_id
+        assignee_id: assignee_id
     })
     .then( (data) => {
         return batch(() => {
