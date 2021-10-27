@@ -13,11 +13,11 @@ def add_user_to_team(user_id, team_id)
 end
 
 User.create!([
-  {first_name: 'Taylor', last_name: 'F.', email: 'test@example.com', password: 'password', password_confirmation: 'password'},
-  {first_name: 'Samantha', last_name: 'E.',email: 'test2@example.com', password: 'password', password_confirmation: 'password'},
-  {first_name: 'Dylan', last_name: 'G.',email: 'test3@example.com', password: 'password', password_confirmation: 'password'},
-  {first_name: 'Sherlock', last_name: '',email: 'test4@example.com', password: 'password', password_confirmation: 'password'},
-  {first_name: 'Chester', last_name: '',email: 'test5@example.com', password: 'password', password_confirmation: 'password'}
+  {first_name: 'James', last_name: 'Karine', email: 'tkarine@fakecompany.com', password: 'password', password_confirmation: 'password'},
+  {first_name: 'Alexandra', last_name: 'Keira',email: 'akeira@fakecompany.com', password: 'password', password_confirmation: 'password'},
+  {first_name: 'Ivan', last_name: 'Giuditta',email: 'igiuditta@fakecompany.com', password: 'password', password_confirmation: 'password'},
+  {first_name: 'Gerald', last_name: 'Ulric',email: 'gulric@fakecompany.com', password: 'password', password_confirmation: 'password'},
+  {first_name: 'Samantha', last_name: 'Stephens',email: 'sstephens@fakecompany.com', password: 'password', password_confirmation: 'password'}
 ])
 
 Team.create!([
