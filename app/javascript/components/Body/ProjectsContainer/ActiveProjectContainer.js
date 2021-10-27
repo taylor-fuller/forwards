@@ -5,13 +5,19 @@ import { amendActiveProject, amendActiveWorkspace } from '../../../actions';
 const ActiveProjectContainer = (props) => {
     if (props.projects.all_projects) {
         return(
-            'project page'
+            <div className="active-project-container">
+                <div className="project-tasks-container">
+                    'project'
+                </div>
+                <div className="project-task-details-container">
+
+                </div>
+            </div>
         )
     } else {
         return null
     }
 }
-    
 
 const mapStateToProps = state => {
     return { 
