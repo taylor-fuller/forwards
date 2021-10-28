@@ -82,6 +82,30 @@ const ActiveTeamContainer = (props) => {
         }
     }
 
+    function returnProjectLeadInitials(team_id, project_lead_id) {
+        let team
+        let project_lead
+        team = props.teams.all_teams.filter((team) => team.id === team_id)
+        if (team[0]) {
+            project_lead = team[0].members.filter((member) => member.id === project_lead_id)
+            if (project_lead[0]) {
+                return (project_lead[0].first_name.charAt(0) + project_lead[0].last_name.charAt(0))
+            }
+        }
+    }
+
+    function returnProjectLeadEmail(team_id, project_lead_id) {
+        let team
+        let project_lead
+        team = props.teams.all_teams.filter((team) => team.id === team_id)
+        if (team[0]) {
+            project_lead = team[0].members.filter((member) => member.id === project_lead_id)
+            if (project_lead[0]) {
+                return (project_lead[0].email)
+            }
+        }
+    }
+
     function handleProjectSelect(project_id, project_name, team_id, team_name) {
         props.amendActiveProject(project_id, project_name, {workspace_id: team_id, workspace_name: team_name})
     }
@@ -97,8 +121,8 @@ const ActiveTeamContainer = (props) => {
                         <div className="member-container">
                             <div className='dark-grey'>Project Lead</div>
                             <div className="avatar-name-container">
-                                <div className="avatar-small">{returnTeamLeadInitials(props.UI.activeWorkspace.workspace_id)}</div>
-                                <div className='team-member'>{returnTeamLeadName(props.UI.activeWorkspace.workspace_id)} <br /><span>{returnTeamLeadEmail(props.UI.activeWorkspace.workspace_id)}</span></div>
+                                <div className="avatar-small">{returnProjectLeadInitials(props.UI.activeWorkspace.workspace_id, project.lead_id)}</div>
+                                <div className='team-member'>{returnProjectLeadName(props.UI.activeWorkspace.workspace_id, project.lead_id)} <br /><span>{returnProjectLeadEmail(props.UI.activeWorkspace.workspace_id, project.lead_id)}</span></div>
                             </div>
                         </div>   
                     </div>
