@@ -124,7 +124,7 @@ form input[type="submit"]:active {
     background-color: var(--base0);
 }
 
-form input[name="user[email]"], form input[name="user[password]"], form input[name="user[password_confirmation]"] {
+form input[name="user[first_name]"], form input[name="user[last_name]"], form input[name="user[email]"], form input[name="user[password]"], form input[name="user[password_confirmation]"] {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;

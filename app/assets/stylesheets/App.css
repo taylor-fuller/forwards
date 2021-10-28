@@ -94,6 +94,7 @@ body {
     vertical-align: center;
     margin: auto;
     padding-bottom: 24px;
+    font-weight: bold;
 }
 
 .ReactModalPortal .empty {
