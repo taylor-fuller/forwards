@@ -41,10 +41,9 @@ const AddTeamMemberForm = (props) => {
         const members = memberArray.map(member => <option key={member.id} value={member.id} label={member.first_name + ' ' + member.last_name} id={member.id}>{ member.first_name + ' ' + member.last_name }</option>)
         return (
             <div className="form">
-                <h2>Add a Team Member to {props.UI.activeWorkspace.workspace_name}</h2>
                 <form onSubmit={props.onSubmit}>
                     <div className="form-group">
-                        <label htmlFor="user_id"></label>
+                        <label htmlFor="user_id" className="small">Select a User to add to {props.UI.activeWorkspace.workspace_name}</label>
                         <select name="user_id" value={newMember} id="user_id" onChange={(event) => setNewMember(event.target.value)} readOnly>
                             <option value='' disabled hidden>Select a User</option>
                             { members }

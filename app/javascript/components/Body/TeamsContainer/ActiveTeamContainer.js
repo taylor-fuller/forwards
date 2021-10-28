@@ -70,8 +70,53 @@ const ActiveTeamContainer = (props) => {
         }
     }
 
+    function returnProjectLeadName(team_id, project_lead_id) {
+        let team
+        let project_lead
+        team = props.teams.all_teams.filter((team) => team.id === team_id)
+        if (team[0]) {
+            project_lead = team[0].members.filter((member) => member.id === project_lead_id)
+            if (project_lead[0]) {
+                return (project_lead[0].first_name + ' ' + project_lead[0].last_name)
+            }
+        }
+    }
+
+    function handleProjectSelect(project_id, project_name, team_id, team_name) {
+        props.amendActiveProject(project_id, project_name, {workspace_id: team_id, workspace_name: team_name})
+    }
+
+    function renderProjects(team) {
+        let projectsArray = team.projects
+        console.log(projectsArray)
+        if (projectsArray) {
+            return (projectsArray.map(project => 
+                <div key={project.id} id={project.id} className='active-team-project-item' onClick={() => handleProjectSelect(project.id, project.name, project.team_id, props.UI.activeWorkspace.workspace_name)}>
+                    <div className="project-name-and-lead">
+                        <h2>{project.name}</h2>
+                        <div className="member-container">
+                            <div className='dark-grey'>Project Lead</div>
+                            <div className="avatar-name-container">
+                                <div className="avatar-small">{returnTeamLeadInitials(props.UI.activeWorkspace.workspace_id)}</div>
+                                <div className='team-member'>{returnTeamLeadName(props.UI.activeWorkspace.workspace_id)} <br /><span>{returnTeamLeadEmail(props.UI.activeWorkspace.workspace_id)}</span></div>
+                            </div>
+                        </div>   
+                    </div>
+                    <div className="project-info">
+                        <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3>
+                        <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3>
+                        <h3 className={project.tasks.all_tasks.length === 0 ? "grey" : null}>{project.tasks.all_tasks.length}</h3>
+                        <h3 className={project.tasks.completed.length === 0 ? "grey" : null}>{project.tasks.completed.length}</h3>
+                        <h3 className={isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'grey' : null}>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'N/A' : (Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100) + '%')}</h3>
+                    </div>
+                </div>
+            ))
+        }
+    }
+
     let team = returnTeam(props.teams.all_teams, props.UI.activeWorkspace.workspace_id)
     let membersArray = team.members.filter((member) => member.id !== team.lead_id)
+    let projects = renderProjects(team)
 
     if (team) {
         const members = membersArray.map(member => <div className="member-container"><div className="avatar">{returnInitials(member.first_name, member.last_name)}</div><div key={member.id} id={member.id} className='team-member'>{member.first_name + ' ' + member.last_name} <br /><span>{member.email}</span></div></div>)
@@ -98,7 +143,7 @@ const ActiveTeamContainer = (props) => {
                             <h2>Team Lead</h2>
                             <div className="lead">
                                 <div className="member-container">
-                                <div className="avatar">{returnTeamLeadInitials(props.UI.activeWorkspace.workspace_id)}</div>
+                                    <div className="avatar">{returnTeamLeadInitials(props.UI.activeWorkspace.workspace_id)}</div>
                                     <div className='team-member'>{returnTeamLeadName(props.UI.activeWorkspace.workspace_id)} <br /><span>{returnTeamLeadEmail(props.UI.activeWorkspace.workspace_id)}</span></div>
                                 </div>                                
                             </div>
@@ -114,7 +159,7 @@ const ActiveTeamContainer = (props) => {
                 <div className="active-team-projects">
                     <h2>Projects <span className='icon' onClick={() => props.toggleModal(true, 'createProject')}>{addIcon}</span></h2>
                     <div className="team-projects-container">
-
+                        { projects }
                     </div>
                 </div>
             </div>

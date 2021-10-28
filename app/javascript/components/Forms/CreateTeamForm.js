@@ -6,7 +6,7 @@ const CreateTeamForm = (props) => {
             <h2>Create A Workspace</h2>
             <form onSubmit={props.onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="name"></label>
+                    <label htmlFor="name">Workspace Name</label>
                     <input 
                         type="text" 
                         id="name"

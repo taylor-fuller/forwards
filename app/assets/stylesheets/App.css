@@ -78,10 +78,10 @@ body {
 	overflow: hidden;
 }
 
-.ReactModal__Content.ReactModal__Content--after-open {
+.ReactModal__Content {
 	margin: auto;
-	max-width: 600px;
-	max-height: 500px;
+	width: 600px;
+	height: fit-content;
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
@@ -97,13 +97,112 @@ body {
     font-weight: bold;
 }
 
+.ReactModalPortal label {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--base0);
+    padding-bottom: .5rem;
+    font-weight: bold;
+    display: block;
+}
+
+.ReactModalPortal label.small {
+    width: 300px;
+    margin: 0 auto;
+}
+
 .ReactModalPortal .empty {
     font-size: 1.2rem;
     margin: auto;
 }
 
 .ReactModalPortal form {
-    min-height: 300px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.ReactModalPortal .form-group {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.ReactModalPortal form select[name="user_id"]  {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 300px;
+    border: none;
+    box-sizing: border-box;
+    padding: .375rem .5rem;
+    margin: 0 auto;
+    font-size: 1rem;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    color: var(--fontBlack);
+    border: 1px solid rgba(80, 80, 80, 0.25);
+    border-radius: .3rem;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+    margin-bottom: 1.5rem;
+}
+
+.ReactModalPortal form input[name="name"], .ReactModalPortal form textarea[name="description"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    padding: .375rem .5rem;
+    margin: 0 auto;
+    font-size: 1rem;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    color: var(--fontBlack);
+    border: 1px solid rgba(80, 80, 80, 0.25);
+    border-radius: .3rem;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.ReactModalPortal form textarea[name="description"] {
+    height: 200px;
+}
+
+.ReactModalPortal form .button {
+    margin: 0 auto;
+    height: fit-content;
+}
+
+.ReactModalPortal form button[type="submit"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-top: 1rem;
+    width: 150px;
+    display: block;
+    padding: .375rem .75rem;
+    background-clip: padding-box;
+    border: 1px solid #f2f2f2b7;
+    border-radius: .3rem;
+    transition: all .1s ease-in-out;
+    background-color: var(--base2);
+    color: var(--base0);
+    margin: 0 auto;
+}
+
+.ReactModalPortal form button[type="submit"]:hover {
+    transition: all .1s ease-in-out;
+    background-color: var(--accent0);
+}
+
+.ReactModalPortal form button[type="submit"]:active {
+    transition: all 0s ease-in-out;
+    background-color: var(--base0);
 }
 
 .button {

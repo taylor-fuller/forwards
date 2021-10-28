@@ -6,7 +6,7 @@ const CreateProjectForm = (props) => {
             <h2>Create A Project</h2>
             <form onSubmit={props.onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="name"></label>
+                    <label htmlFor="name">Project Name</label>
                     <input 
                         type="text" 
                         id="name"
@@ -17,14 +17,14 @@ const CreateProjectForm = (props) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="description"></label>
+                    <label htmlFor="description">Project Description</label>
                     <textarea 
                         id="description"
                         name="description"
                         placeholder="Project Description"
                         autoComplete="off"
-                        row="10"
-                        cols="70"
+                        row="30"
+                        cols="150"
                     />
                 </div>
                 <div className="button">

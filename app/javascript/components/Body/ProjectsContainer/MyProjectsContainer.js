@@ -44,7 +44,7 @@ const MyProjectsContainer = (props) => {
             <div className="projects-container" ref={homeRef}> 
                 <div className="projects">
                     { projectsLed ? <h2>Projects Led</h2> : null }
-                    { projectsLed ? <div className="projects-led"><div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Total Tasks</h3> <h3>Completed Tasks</h3> <h3>Complete %</h3> <h3>Team</h3></div> { projectsLed }</div> : null }
+                    { projectsLed ? <div className="projects-led"><div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Active Tasks</h3> <h3>Completed Tasks</h3> <h3>Complete %</h3> <h3>Team</h3></div> { projectsLed }</div> : null }
                     <h2>Projects</h2>
                     <div className="all-projects">
                         { projects ? <div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Team</h3> <h3>Project Lead</h3></div> : null }

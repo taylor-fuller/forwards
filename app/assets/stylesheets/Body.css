@@ -222,16 +222,19 @@ header a:hover {
     padding: 0 5rem;
     width: 100%;
     display: flex;
+    overflow: hidden;
 }
 
 .active-team-overview-and-members {
     padding: 2rem;
+    padding-bottom: 0;
     flex-basis: 25%;
 }
 
 .active-team-projects {
     min-width: 800px;
     padding: 2rem;
+    padding-bottom: 0;
     flex-basis: 75%;
 }
 
@@ -356,7 +359,7 @@ body .avatar-small {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-right: 2rem;
+    margin-right: 1rem;
 }
 
 .member-container span {
@@ -367,4 +370,65 @@ body .avatar-small {
     display: flex;
     flex-flow: column;
     justify-content: center;
+}
+
+.active-team-projects {
+    display: flex;
+    flex-flow: column;
+}
+
+.team-projects-container {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.active-team-project-item {
+    display: flex;
+    padding: 1rem;
+    height: 150px;
+    box-sizing: border-box;
+    background-color: var(--base0);
+    border-radius: 1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 2px solid var(--darkGrey);
+    margin: 2rem;
+    align-items: center;
+}
+
+.project-name-and-lead {
+    width: 300px;
+}
+
+.active-team-project-item h2 {
+    margin: auto 0;
+    padding: 0;
+    height: auto;
+    border-bottom: none;
+}
+
+.avatar-name-container {
+    padding-top: .5rem;
+    display: flex;
+}
+
+.active-team-project-item .member-container {
+    margin-left: 1rem;
+    display: flex;
+    flex-flow: column;
+}
+
+.active-team-project-item .member-container .team-member {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.dark-grey {
+    color: var(--darkGrey);
+}
+
+.project-info {
+    padding: 0 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
