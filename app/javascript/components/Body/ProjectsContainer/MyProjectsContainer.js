@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { amendActiveProject, amendActiveWorkspace } from '../../../actions';
 import Emoji from '../../Emoji/Emoji';
@@ -30,32 +30,55 @@ const MyProjectsContainer = (props) => {
         }
     }
 
-    let projects
-    let projectsLed
-    
-    if (props.projects.all_projects) {
-        if (props.projects_led.length >= 1) {
+    function renderProjectsLed() {
+        let projectsLed
+        if (props.projects_led && props.projects_led.length >= 1) {
             projectsLed = props.projects_led.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name, project.team_id, returnTeamName(project.team_id))}><h3 title={project.name}>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 className={project.tasks.all_tasks.length === 0 ? "grey" : null}>{project.tasks.all_tasks.length}</h3> <h3 className={project.tasks.completed.length === 0 ? "grey" : null}>{project.tasks.completed.length}</h3> <h3 className={isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'grey' : null}>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'N/A' : (Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100) + '%')}</h3> <h3 title={returnTeamName(project.team_id)}>{returnTeamName(project.team_id)}</h3></div>)
+            return(
+                <Fragment>
+                    <h2>Projects Led</h2>
+                    <div className="projects-led"><div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Active Tasks</h3> <h3>Completed Tasks</h3> <h3>Complete %</h3> <h3>Team</h3></div> { projectsLed }</div>
+                </Fragment>
+            )
+        } else {
+            return null
         }
-        if (props.projects.others_projects.length >= 1) {
+    }
+
+    function renderProjects() {
+        let projects
+        if (props.projects.all_projects && props.projects.all_projects.length >= 1) {
             projects = props.projects.others_projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name, project.team_id, returnTeamName(project.team_id))}><h3 title={project.name}>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 title={returnTeamName(project.team_id)}>{returnTeamName(project.team_id)}</h3> <h3 title={returnProjectLeadName(project.team_id, project.lead_id)}>{returnProjectLeadName(project.team_id, project.lead_id)}</h3> </div>)
+            return(
+                <Fragment>
+                    <div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Team</h3> <h3>Project Lead</h3></div>
+                    { projects }
+                </Fragment>
+            )
+        } else {
+            return(
+                <Fragment>
+                    <div className="empty">No Projects &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤔'/></div>
+                </Fragment>
+            )
         }
-        return(
-            <div className="projects-container" ref={homeRef}> 
-                <div className="projects">
-                    { projectsLed ? <h2>Projects Led</h2> : null }
-                    { projectsLed ? <div className="projects-led"><div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Active Tasks</h3> <h3>Completed Tasks</h3> <h3>Complete %</h3> <h3>Team</h3></div> { projectsLed }</div> : null }
-                    <h2>Projects</h2>
-                    <div className="all-projects">
-                        { projects ? <div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Team</h3> <h3>Project Lead</h3></div> : null }
-                        { projects ? projects : <div className="empty">No Projects &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤔'/></div> }
-                    </div>
+    }
+
+    
+    const Projects = useMemo(() => renderProjects(), [props.projects.all_projects])
+    const ProjectsLed = useMemo(() => renderProjectsLed(), [props.projects_led])
+
+    return(
+        <div className="projects-container" ref={homeRef}> 
+            <div className="projects">
+                { ProjectsLed }
+                <h2>Projects</h2>
+                <div className="all-projects">
+                    { Projects}
                 </div>
             </div>
-        )
-    } else {
-        return null
-    }
+        </div>
+    )
 }
     
 

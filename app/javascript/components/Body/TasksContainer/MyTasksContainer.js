@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { amendActiveTask, toggleTaskComplete } from '../../../actions';
 import Emoji from '../../Emoji/Emoji';
@@ -62,50 +62,96 @@ const MyTasksContainer = (props) => {
         return checkbox
     }
 
-    let recentlyAssigned
-    let upcoming
-    let dueSoon
-    let completed
-    
-    if (props.tasks.all_tasks) {
-        if (props.tasks.recently_assigned.length >= 1) {
+    function renderRecentlyAssigned() {
+        let recentlyAssigned
+        if (props.tasks.recently_assigned && props.tasks.recently_assigned.length >= 1) {
             recentlyAssigned = props.tasks.recently_assigned.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            return(
+                <Fragment>
+                    <h2>Recently Assigned</h2>
+                    <div className="recently-assigned"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> { recentlyAssigned }</div>
+                </Fragment>
+            )
+        } else {
+            return null
         }
-        if (props.tasks.due_soon.length >= 1) {
+    }
+
+    function renderDueSoon() {
+        if (props.tasks.due_soon && props.tasks.due_soon.length >= 1) {
+            let dueSoon
             dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
-        } 
-        if (props.tasks.upcoming.length >= 1) {
+            return(
+                <Fragment>
+                    <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div>
+                    { dueSoon }
+                </Fragment>
+            )
+        } else {
+            return(
+                <div className="empty">No Tasks Due Soon &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🎉'/><Emoji symbol='🎈'/><Emoji symbol='🥳'/></div>
+            )
+        }
+    }
+
+    function renderUpcoming() {
+        if (props.tasks.upcoming && props.tasks.upcoming.length >= 1) {
+            let upcoming
             upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            return(
+                <Fragment>
+                    <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div>
+                    { upcoming }
+                </Fragment>
+            )
+        } else {
+            return(
+                <div className="empty">No Upcoming Tasks &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤌'/><Emoji symbol='🤌'/><Emoji symbol='🤌'/></div>
+            )
         }
-        if (props.tasks.completed.length >= 1) {
+    }
+
+    function renderCompleted() {
+        if (props.tasks.completed && props.tasks.completed.length >= 1) {
+            let completed
             completed = props.tasks.completed.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            return(
+                <Fragment>
+                    <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div>
+                    { completed }
+                </Fragment>
+            )
+        } else {
+            return(
+                <div className="empty">No Completed Tasks, Better Get to Work &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤡'/></div>
+            )
         }
-        return(
-            <div className="task-container" ref={homeRef}> 
-                <div className="tasks">
-                    { recentlyAssigned ? <h2>Recently Assigned</h2> : null }
-                    { recentlyAssigned ? <div className="recently-assigned"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> { recentlyAssigned }</div> : null }
-                    <h2>Due Soon</h2>
-                    <div className="due-soon">
-                        { dueSoon ? <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> : null }
-                        { dueSoon ? dueSoon : <div className="empty">No Tasks Due Soon &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🎉'/><Emoji symbol='🎈'/><Emoji symbol='🥳'/></div> }
-                    </div>
-                    <h2>Upcoming</h2>
-                    <div className="upcoming">
-                        { upcoming ? <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> : null }
-                        { upcoming ? upcoming : <div className="empty">No Upcoming Tasks &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤌'/><Emoji symbol='🤌'/><Emoji symbol='🤌'/></div> }
-                    </div>
-                    <h2>Completed</h2>
-                    <div className="completed-tasks">
-                        { completed ? <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div> : null }
-                        { completed ? completed : <div className="empty">No Completed Tasks, Better Get to Work &nbsp;&nbsp;&nbsp;&nbsp;<Emoji symbol='🤡'/></div> }
-                    </div>
+    }
+
+    const RecentlyAssigned = useMemo(() => renderRecentlyAssigned(), [props.tasks.recently_assigned])
+    const Upcoming = useMemo(() => renderDueSoon(), [props.tasks.due_soon])
+    const DueSoon = useMemo(() => renderUpcoming(), [props.tasks.upcoming])
+    const Completed = useMemo(() => renderCompleted(), [props.tasks.completed])
+
+    return(
+        <div className="task-container" ref={homeRef}> 
+            <div className="tasks">
+                { RecentlyAssigned }
+                <h2>Due Soon</h2>
+                <div className="due-soon">
+                    { DueSoon }
+                </div>
+                <h2>Upcoming</h2>
+                <div className="upcoming">
+                    { Upcoming }
+                </div>
+                <h2>Completed</h2>
+                <div className="completed-tasks">
+                    { Completed }
                 </div>
             </div>
-        )
-    } else {
-        return null
-    }
+        </div>
+    )
 }
     
 

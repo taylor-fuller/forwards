@@ -407,6 +407,13 @@ body .avatar-small {
     flex-flow: column;
 }
 
+.team-projects-container .empty-projects {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 5rem;
+}
+
 .active-team-project-item {
     display: flex;
     min-height: 175px;

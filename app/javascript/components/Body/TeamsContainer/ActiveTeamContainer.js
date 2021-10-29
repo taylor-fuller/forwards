@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useMemo, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { toggleModal, amendActiveProject } from '../../../actions';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -96,74 +96,105 @@ const ActiveTeamContainer = (props) => {
         }
     }
 
+    function renderTeam(team) {
+        if (team) {
+            return(
+                <Fragment>
+                    <div className="overview-item-container"><h3>Overdue</h3><div className="overview-item"><h4 className={team.tasks.overdue.length === 0 ? 'grey' : 'red'}>{team.tasks.overdue.length}</h4></div></div>
+                    <div className="overview-item-container"><h3>Tasks Due Today</h3><div className="overview-item"><h4 className={team.tasks.due_today.length === 0 ? 'grey' : 'red'}>{team.tasks.due_today.length}</h4></div></div>
+                    <div className="overview-item-container"><h3>Tasks Due Soon</h3><div className="overview-item"><h4 className={team.tasks.due_soon.length === 0 ? 'grey' : 'orange'}>{team.tasks.due_soon.length}</h4></div></div>
+                    <div className="overview-item-container"><h3>Active Projects</h3><div className="overview-item"><h4 className='active-grey'>{team.projects.length}</h4></div></div>
+                </Fragment>
+            )         
+        } else {
+            return(
+                <Fragment>
+                    <div className="overview-item-container"><h3>Overdue</h3><div className="overview-item"><h4 className='grey'></h4></div></div>
+                    <div className="overview-item-container"><h3>Tasks Due Today</h3><div className="overview-item"><h4 className='grey'></h4></div></div>
+                    <div className="overview-item-container"><h3>Tasks Due Soon</h3><div className="overview-item"><h4 className='grey'></h4></div></div>
+                    <div className="overview-item-container"><h3>Active Projects</h3><div className="overview-item"><h4 className='active-grey'></h4></div></div>
+                </Fragment>
+            )
+        }
+    }
+
+    function renderMembers(team) {
+        if (team) {
+            let membersArray = team.members.filter((member) => member.id !== team.lead_id)
+            if (membersArray) {
+                return membersArray.map(member => <div className="member-container" key={member.id} id={member.id}><div className="avatar">{returnInitials(member.first_name, member.last_name)}</div><div className='team-member'>{member.first_name + ' ' + member.last_name} <br /><span>{member.email}</span></div></div>)
+            } else {
+                return null
+            }
+        } else {
+            return null
+        }
+    }
+
     function renderProjects(team) {
-        let projectsArray = team.projects
-        if (projectsArray) {
-            return (projectsArray.map(project => 
-                <div key={project.id} id={project.id} className='active-team-project-item' onClick={() => props.amendActiveProject(project.id, project.name, {workspace_id: project.team_id, workspace_name: props.UI.activeWorkspace.workspace_name} )}>
-                    <h2>{project.name}</h2>
-                    <div className="project-info">
-                        <div className="project-info-item"><div className="project-info-item-header">Overdue</div><h3 className={project.tasks.overdue.length === 0 ? "grey" : 'red'}>{project.tasks.overdue.length}</h3></div>
-                        <div className="project-info-item"><div className="project-info-item-header">Due Today</div><h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3></div>
-                        <div className="project-info-item"><div className="project-info-item-header">Due Soon</div><h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3></div>
-                        <div className="project-info-item"><div className="project-info-item-header">Active Tasks</div><h3>{project.tasks.all_tasks.length}</h3></div>
-                        <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))} text={`${(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))}%`} styles={buildStyles({rotation: 0.5})}/></div>}</h3></div>
-                        <div className="project-info-item"><div className="project-info-item-header">Lead</div><h3 className="avatar" title={returnProjectLeadName(props.UI.activeWorkspace.workspace_id, project.lead_id)}>{returnProjectLeadInitials(props.UI.activeWorkspace.workspace_id, project.lead_id)}</h3></div>
+        if (team) {
+            let projectsArray = team.projects
+            if (projectsArray) {
+                return (projectsArray.map(project => 
+                    <div key={project.id} id={project.id} className='active-team-project-item' onClick={() => props.amendActiveProject(project.id, project.name, {workspace_id: project.team_id, workspace_name: props.UI.activeWorkspace.workspace_name} )}>
+                        <h2>{project.name}</h2>
+                        <div className="project-info">
+                            <div className="project-info-item"><div className="project-info-item-header">Overdue</div><h3 className={project.tasks.overdue.length === 0 ? "grey" : 'red'}>{project.tasks.overdue.length}</h3></div>
+                            <div className="project-info-item"><div className="project-info-item-header">Due Today</div><h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3></div>
+                            <div className="project-info-item"><div className="project-info-item-header">Due Soon</div><h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3></div>
+                            <div className="project-info-item"><div className="project-info-item-header">Active Tasks</div><h3>{project.tasks.all_tasks.length}</h3></div>
+                            <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))} text={`${(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))}%`} styles={buildStyles({rotation: 0.5})}/></div>}</h3></div>
+                            <div className="project-info-item"><div className="project-info-item-header">Lead</div><h3 className="avatar" title={returnProjectLeadName(props.UI.activeWorkspace.workspace_id, project.lead_id)}>{returnProjectLeadInitials(props.UI.activeWorkspace.workspace_id, project.lead_id)}</h3></div>
+                        </div>
                     </div>
-                </div>
-            ))
+                ))
+            }
         }
     }
 
     let team = returnTeam(props.teams.all_teams, props.UI.activeWorkspace.workspace_id)
-    let membersArray = team.members.filter((member) => member.id !== team.lead_id)
-    let projects = renderProjects(team)
+    
+    const Team = useMemo(() => renderTeam(team), [team])
+    const Projects = useMemo(() => renderProjects(team), [team])
+    const Members = useMemo(() => renderMembers(team), [team])
 
-    if (team) {
-        const members = membersArray.map(member => <div className="member-container" key={member.id} id={member.id}><div className="avatar">{returnInitials(member.first_name, member.last_name)}</div><div className='team-member'>{member.first_name + ' ' + member.last_name} <br /><span>{member.email}</span></div></div>)
-        return(
-            <div className="active-team-container">
-                <div className="active-team-overview-and-members">
-                    <div className="active-team-overview">
-                        <h2>Overview</h2>
-                        <div className="overview-container">
-                            <div className="overview">
-                                <div className="overview-item-container"><h3>Overdue</h3><div className="overview-item"><h4 className={team.tasks.overdue.length === 0 ? 'grey' : 'red'}>{team.tasks.overdue.length}</h4></div></div>
-                                <div className="overview-item-container"><h3>Tasks Due Today</h3><div className="overview-item"><h4 className={team.tasks.due_today.length === 0 ? 'grey' : 'red'}>{team.tasks.due_today.length}</h4></div></div>
-                                <div className="overview-item-container"><h3>Tasks Due Soon</h3><div className="overview-item"><h4 className={team.tasks.due_soon.length === 0 ? 'grey' : 'orange'}>{team.tasks.due_soon.length}</h4></div></div>
-                                <div className="overview-item-container"><h3>Active Projects</h3><div className="overview-item"><h4 className='active-grey'>{team.projects.length}</h4></div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="active-team-lead">
-                        <div className="team-lead">
-                            <h2>Team Lead</h2>
-                            <div className="lead">
-                                <div className="member-container">
-                                    <div className="avatar">{returnTeamLeadInitials(props.UI.activeWorkspace.workspace_id)}</div>
-                                    <div className='team-member'>{returnTeamLeadName(props.UI.activeWorkspace.workspace_id)} <br /><span>{returnTeamLeadEmail(props.UI.activeWorkspace.workspace_id)}</span></div>
-                                </div>                                
-                            </div>
-                        </div>
-                    </div>
-                    <div className="active-team-members">
-                        <h2>Members <span className='icon' onClick={() => props.toggleModal(true, 'addTeamMember')}>{addIcon}</span></h2>
-                        <div className="team-members">
-                            { members.length >= 1 ? members : 'No Additional Team Members'}
+    return(
+        <div className="active-team-container">
+            <div className="active-team-overview-and-members">
+                <div className="active-team-overview">
+                    <h2>Overview</h2>
+                    <div className="overview-container">
+                        <div className="overview">
+                            { Team }
                         </div>
                     </div>
                 </div>
-                <div className="active-team-projects">
-                    <h2>Projects <span className='icon' onClick={() => props.toggleModal(true, 'createProject')}>{addIcon}</span></h2>
-                    <div className="team-projects-container">
-                        { projects }
+                <div className="active-team-lead">
+                    <div className="team-lead">
+                        <h2>Team Lead</h2>
+                        <div className="lead">
+                            <div className="member-container">
+                                <div className="avatar">{returnTeamLeadInitials(props.UI.activeWorkspace.workspace_id)}</div>
+                                <div className='team-member'>{returnTeamLeadName(props.UI.activeWorkspace.workspace_id)} <br /><span>{returnTeamLeadEmail(props.UI.activeWorkspace.workspace_id)}</span></div>
+                            </div>                                
+                        </div>
+                    </div>
+                </div>
+                <div className="active-team-members">
+                    <h2>Members <span className='icon' onClick={() => props.toggleModal(true, 'addTeamMember')}>{addIcon}</span></h2>
+                    <div className="team-members">
+                        { (Members && Members.length >= 1) ? Members : 'No Additional Team Members'}
                     </div>
                 </div>
             </div>
-        )
-    } else {
-        return null
-    }
+            <div className="active-team-projects">
+                <h2>Projects <span className='icon' onClick={() => props.toggleModal(true, 'createProject')}>{addIcon}</span></h2>
+                <div className="team-projects-container">
+                    { (Projects && Projects.length) >= 1 ? Projects : <div className="empty-projects">No Active Projects</div> }
+                </div>
+            </div>
+        </div>
+    )
 }
     
 

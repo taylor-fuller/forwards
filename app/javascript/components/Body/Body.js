@@ -1,13 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
-import { resetUI } from '../../actions';
+import { resetUI, resetLoad } from '../../actions';
 import MyTeamsContainer from './TeamsContainer/MyTeamsContainer';
 import MyProjectsContainer from './ProjectsContainer/MyProjectsContainer';
 import MyTasksContainer from './TasksContainer/MyTasksContainer';
 import DashboardContainer from './DashboardContainer/DashboardContainer';
 import ActiveTeamContainer from './TeamsContainer/ActiveTeamContainer';
 import ActiveProjectContainer from './ProjectsContainer/ActiveProjectContainer';
+import { css } from "@emotion/react";
+import ClipLoader from "react-spinners/ClipLoader";
+
+const override = css`
+  display: block;
+  margin: auto;
+`;
 
 const Body = (props) => {
     let homeRef = useRef()
@@ -31,11 +38,10 @@ const Body = (props) => {
         return header
     }
 
-    function resetUI() {
-        props.resetUI()
-    }
-
     function determineRender() {
+        if (props.UI.initialLoad) {
+            return <ClipLoader color={'#ff8851'} loading={props.UI.initialLoad} css={override} size={50} />
+        }
         if (props.UI.activeSidebarOption === 'Dashboard') {
             return <DashboardContainer />
         } else if (props.UI.activeSidebarOption === 'My Tasks') {
@@ -58,7 +64,7 @@ const Body = (props) => {
 
     return (
         <div className="body-content">
-            <header className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => resetUI()}>Logout</a> </header>
+            <header className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => { props.resetLoad(); props.resetUI();  }}>Logout</a> </header>
             { Body }
         </div>
     )
@@ -70,4 +76,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { resetUI })(Body);
+export default connect(mapStateToProps, { resetUI, resetLoad })(Body);

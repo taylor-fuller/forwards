@@ -97,6 +97,10 @@ export const resetUI = () => async (dispatch) => {
     dispatch({ type: 'RESET_UI' })
 }
 
+export const resetLoad = () => async (dispatch) => {
+    dispatch({ type: 'RESET_LOAD' })
+}
+
 export const fetchTasks = () => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken

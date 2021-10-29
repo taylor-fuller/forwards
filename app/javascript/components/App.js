@@ -25,80 +25,103 @@ Modal.setAppElement('#root');
 const App = (props) => {
     useEffect(() => {
         props.fetchAll()
-        props.fetchUI()
+        setTimeout(() => {
+            props.fetchUI()
+        }, 1000);
     }, [])
     
     function determineForm(type) {
-        if (type === null) {
-            return
-        } else if (type === 'createTask') {
-            return <CreateTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-        } else if (type === 'createProject') {
-            return <CreateProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-        } else if (type === 'createTeam') {
-            return <CreateTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-        } else if (type === 'patchTask') {
-            return <PatchTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-        } else if (type === 'patchProject') {
-            return <PatchProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-        } else if (type === 'patchTeam') {
-            return <PatchTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-        } else if (type === 'addTeamMember') {
-            return <AddTeamMemberForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+        switch(type) {
+            case 'createTask':
+                return <CreateTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
+            case 'createProject':
+                return <CreateProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
+            case 'createTeam':
+                return <CreateTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
+            case 'addTeamMember':
+                return <AddTeamMemberForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
+            case 'patch task':
+                return <PatchTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
+            case 'patchProject':
+                return <PatchProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
+            case 'patchTeam':
+                return <PatchTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
+            default:
+                return
         }
     }
 
     function handleFormSubmit(event, type) {
         event.preventDefault();
 
-        if (type == 'createTask') {
-            props.createTask(
-                event.target.title.value,
-                event.target.description.value,
-                props.UI.activeWorkspace.workspace_id,
-                props.UI.activeProject.project_id,
-                false,
-                event.target.due_date.value,
-                Number(event.target.assignee_id.value),
-            )
-        } else if (type === 'createProject') {
-            props.createProject(
-                event.target.name.value,
-                event.target.description.value,
-                props.UI.activeWorkspace.workspace_id
-            )
-        } else if (type === 'createTeam') {
-            props.createTeam(
-                event.target.name.value,
-            )
-        } else if (type === 'addTeamMember') {
-            props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.workspace_id)
+        switch(type) {
+            case 'createTask':
+                props.createTask(
+                    event.target.title.value,
+                    event.target.description.value,
+                    props.UI.activeWorkspace.workspace_id,
+                    props.UI.activeProject.project_id,
+                    false,
+                    event.target.due_date.value,
+                    Number(event.target.assignee_id.value),
+                )
+                props.toggleModal(false, null)
+                break;
+            case 'createProject':
+                props.createProject(
+                    event.target.name.value,
+                    event.target.description.value,
+                    props.UI.activeWorkspace.workspace_id
+                )
+                props.toggleModal(false, null)
+                break;
+            case 'createTeam':
+                props.createTeam(
+                    event.target.name.value,
+                )
+                props.toggleModal(false, null)
+                break;
+            case 'addTeamMember':
+                props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.workspace_id)
+                props.toggleModal(false, null)
+                break;
+            case 'patch task':
+                console.log()
+                // props.patchTask(
+                //     event.target.title.value,
+                //     event.target.description.value,
+                //     props.UI.activeWorkspace.workspace_id,
+                //     props.UI.activeProject.project_id,
+                //     false,
+                //     event.target.due_date.value,
+                //     Number(event.target.assignee_id.value),
+                // )
+                props.toggleModal(false, null)
+                break;
+            case 'patchProject':
+                console.log('patch project')
+                // props.patchProject(
+                //     event.target.name.value,
+                //     event.target.description.value,
+                //     props.UI.activeWorkspace.workspace_id
+                // )
+                props.toggleModal(false, null)
+                break;
+            case 'patchTeam':
+                console.log('patch team')
+                // props.patchTeam(
+                //     event.target.name.value,
+                // )
+                props.toggleModal(false, null)
+                break;
         }
-         else if (type === 'patchTask') {
-            console.log('patch task')
-            // props.patchTask(
-            //     event.target.title.value,
-            //     event.target.description.value,
-            //     props.UI.activeWorkspace.workspace_id,
-            //     props.UI.activeProject.project_id,
-            //     false,
-            //     event.target.due_date.value,
-            //     Number(event.target.assignee_id.value),
-            // )
-        } else if (type === 'patchProject') {
-            console.log('patch project')
-            // props.patchProject(
-            //     event.target.name.value,
-            //     event.target.description.value,
-            //     props.UI.activeWorkspace.workspace_id
-            // )
-        } else if (type === 'patchTeam') {
-            console.log('patch team')
-            // props.patchTeam(
-            //     event.target.name.value,
-            // )
-        }
-        props.toggleModal(false, null)
     }
 
     const form = determineForm(props.UI.modalOption)

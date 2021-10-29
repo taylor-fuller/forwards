@@ -15,7 +15,10 @@ export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', 
             state = {...state, activeTask: action.payload}
             return state
         case 'RESET_UI':
-            state = {...state, activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: '', initialLoad: true}
+            state = {...state, activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: ''}
+            return state
+        case 'RESET_LOAD':
+            state = {...state, initialLoad: true}
             return state
         case 'TOGGLE_MODAL':
             state = {...state, isModalOpen: action.payload.isModalOpen, modalOption: action.payload.modalOption}
