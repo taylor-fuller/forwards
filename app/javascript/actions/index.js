@@ -29,7 +29,7 @@ export const createTeam = (name) => async (dispatch) => {
         return batch(() => {
             dispatch({ type: 'RESET_UI' })
             dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
-            dispatch(fetchTeams())
+            dispatch(fetchAll())
         })
     })
 }
@@ -57,8 +57,7 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     .then( (data) => {
         return batch(() => {
             dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
-            dispatch(fetchTeams())
-            dispatch(fetchProjects())
+            dispatch(fetchAll())
         })
     })
 }
@@ -122,8 +121,7 @@ export const createTask = (title, description, team_id, project_id, completed, d
     .then( (data) => {
         return batch(() => {
             dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: data.data.id, task_name: data.data.name} })
-            dispatch(fetchProjects())
-            dispatch(fetchTasks())
+            dispatch(fetchAll())
         })
     })
 }
@@ -155,11 +153,7 @@ export const patchProject = (project) => async (dispatch) => {
         data: project
     })
     .then( () => {
-        return batch(() => {
-            dispatch(fetchTeams())
-            dispatch(fetchProjects())
-            dispatch(fetchTasks())
-        })
+        dispatch(fetchAll())
     })
 }
 
@@ -171,11 +165,7 @@ export const patchTask = (task) => async (dispatch) => {
         data: task
     })
     .then( () => {
-        return batch(() => {
-            dispatch(fetchTeams())
-            dispatch(fetchProjects())
-            dispatch(fetchTasks())
-        })
+        dispatch(fetchAll())
     })
 }
 
@@ -187,11 +177,7 @@ export const toggleTaskComplete = (task_id, bool) => async (dispatch) => {
         completed: bool
     })
     .then( () => {
-        return batch(() => {
-            dispatch(fetchTeams())
-            dispatch(fetchProjects())
-            dispatch(fetchTasks())
-        })
+        dispatch(fetchAll())
     })
 }
 
@@ -204,6 +190,6 @@ export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
         user_id: user_id
     })
     .then( () => {
-        dispatch(fetchTeams())
+        dispatch(fetchAll())
     })
 }

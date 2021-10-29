@@ -22,30 +22,37 @@ const CreateTaskForm = (props) => {
         <div className="form">
             <h2>Create A Task</h2>
             <form onSubmit={props.onSubmit}>
-                <div className="form-group">
-                    <label htmlFor="title"></label>
-                    <input 
-                        type="text" 
-                        id="title"
-                        name="title"
-                        placeholder="Task Title"
-                        autoComplete="off"
-                        autoFocus="autofocus"
-                    />
+                <div className="title-description">
+                    <div className="form-group">
+                        <label htmlFor="title">Task Title</label>
+                        <input 
+                            type="text" 
+                            id="title"
+                            name="title"
+                            placeholder="Task Title"
+                            autoComplete="off"
+                            autoFocus="autofocus"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="description">Task Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Task Description"
+                            autoComplete="off"
+                        />
+                    </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="description"></label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        placeholder="Task Description"
-                        autoComplete="off"
-                        row="10"
-                        cols="70"
-                    />
+                    <label htmlFor="assignee_id">Assignee</label>
+                    <select name="assignee_id" value={teamMember} id="assignee_id" onChange={(event) => setTeamMember(event.target.value)} readOnly>
+                        <option value='' disabled hidden>Select an Assignee</option>
+                        { determineSelects() }
+                    </select>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="due_date"></label>
+                <div className="form-group-date">
+                    <label htmlFor="due_date">Due Date</label>
                     <Flatpickr
                         options={{
                             enableTime: true,
@@ -55,7 +62,6 @@ const CreateTaskForm = (props) => {
                             defaultHour: 17,
                             defaultMinute: 0,
                             dateFormat: "Z",
-                            inline: true,
                             value: dueDate,
                             onChange: function(dateStr) {
                                 () => setDueDate(dateStr)
@@ -63,14 +69,8 @@ const CreateTaskForm = (props) => {
                         }}
                         placeholder="Select a Due Date"
                         id="due_date"
+                        name="due_date"
                     />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="assignee_id"></label>
-                    <select name="assignee_id" value={teamMember} id="assignee_id" onChange={(event) => setTeamMember(event.target.value)} readOnly>
-                        <option value='' disabled hidden>Select an Assignee</option>
-                        { determineSelects() }
-                    </select>
                 </div>
                 <div className="button">
                     <button type="submit">Submit</button>

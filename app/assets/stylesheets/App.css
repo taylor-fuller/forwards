@@ -121,7 +121,7 @@ body {
     justify-content: center;
 }
 
-.ReactModalPortal .form-group {
+.ReactModalPortal .form-group, .ReactModalPortal .form-group-date {
     display: flex;
     flex-flow: column;
     width: 80%;
@@ -140,15 +140,15 @@ body {
     font-size: 1rem;
     font-weight: normal;
     font-family: 'Lato', sans-serif;
-    color: var(--fontBlack);
     border: 1px solid rgba(80, 80, 80, 0.25);
     border-radius: .3rem;
     overflow: hidden;
     transition: all .2s ease-in-out;
     margin-bottom: 1.5rem;
+    display: block;
 }
 
-.ReactModalPortal form input[name="name"], .ReactModalPortal form textarea[name="description"] {
+.ReactModalPortal form input[name="name"], .ReactModalPortal form textarea[name="description"], .ReactModalPortal form input[name="title"], .ReactModalPortal form select[name="assignee_id"], .ReactModalPortal form .form-group-date input {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -160,7 +160,6 @@ body {
     font-size: 1rem;
     font-weight: normal;
     font-family: 'Lato', sans-serif;
-    color: var(--fontBlack);
     border: 1px solid rgba(80, 80, 80, 0.25);
     border-radius: .3rem;
     overflow: hidden;
@@ -170,7 +169,7 @@ body {
 }
 
 .ReactModalPortal form textarea[name="description"] {
-    height: 200px;
+    height: 100px;
 }
 
 .ReactModalPortal form .button {

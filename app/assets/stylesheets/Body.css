@@ -260,18 +260,18 @@ header a:hover {
     flex-flow: row wrap;
 }
 
-.active-team-container .icon {
+.active-team-container .icon, .active-project-container .icon {
     margin-left: 1rem;
 }
 
-.active-team-container .icon svg {
+.active-team-container .icon svg, .active-project-container .icon svg {
     margin: auto;
     fill: var(--darkGrey);
     transition: .1s all ease-in-out;
     cursor: pointer;
 }
 
-.active-team-container .icon svg:hover {
+.active-team-container .icon svg:hover, .active-project-container .icon svg:hover {
     fill: var(--fontBlack);
     transform: scale(1.15);
 }
@@ -409,7 +409,7 @@ body .avatar-small {
 
 .active-team-project-item {
     display: flex;
-    min-height: 200px;
+    min-height: 175px;
     box-sizing: border-box;
     background-color: var(--base0);
     border-radius: 1rem;
@@ -538,7 +538,7 @@ body .avatar-small {
 }
 
 .active-project-container .project-task-details-container {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     background-color: var(--grey);
     flex-basis: 40%;
     width: 40%;
