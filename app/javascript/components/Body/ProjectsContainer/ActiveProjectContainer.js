@@ -7,7 +7,9 @@ const ActiveProjectContainer = (props) => {
         return(
             <div className="active-project-container">
                 <div className="project-tasks-container">
-                    'project'
+                    <div className="project-tasks-container-header">
+                        <h2>Tasks</h2>
+                    </div>
                 </div>
                 <div className="project-task-details-container">
 

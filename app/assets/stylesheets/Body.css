@@ -157,7 +157,7 @@ header a:hover {
 .tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3, .teams .team-header h3, .teams .team-item h3 {
     width: 200px;
     max-width: 200px;
-    margin: auto 0;
+    margin: auto;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
@@ -219,7 +219,7 @@ header a:hover {
 }
 
 .active-team-container {
-    padding: 0 5rem;
+    padding: 0 2rem;
     width: 100%;
     display: flex;
     overflow: hidden;
@@ -229,16 +229,20 @@ header a:hover {
     padding: 2rem;
     padding-bottom: 0;
     flex-basis: 25%;
+    min-width: 400px;
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto;
 }
 
 .active-team-projects {
-    min-width: 800px;
+    min-width: 75%;
     padding: 2rem;
     padding-bottom: 0;
     flex-basis: 75%;
 }
 
-.active-team-container h2 {
+.active-team-container h2, .project-tasks-container-header h2 {
     padding: 2rem 0;
     font-size: 1.2rem;
     box-sizing: border-box;
@@ -249,6 +253,11 @@ header a:hover {
 
 .active-team-container .overview, .active-team-container .active-team-members, .team-lead {
     min-height: 150px;
+}
+
+.active-team-container .overview {
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .active-team-container .icon {
@@ -289,6 +298,16 @@ header a:hover {
     text-align: center;
     border-radius: 50%;
     overflow: hidden;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.active-team-container .overview-item-container {
+    flex-basis: 50%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    min-width: 150px;
+    margin: auto;
 }
 
 .active-team-container .overview-container .overview-item h4 {
@@ -297,22 +316,22 @@ header a:hover {
     line-height: 100px;
 }
 
-.active-team-container .overview-container .overview-item .red {
+.active-team-container .overview-container .overview-item .red, .project-info-item .red {
     background-color: var(--redTint);
     color: white;
 }
 
-.active-team-container .overview-container .overview-item .orange {
+.active-team-container .overview-container .overview-item .orange, .project-info-item .orange {
     background-color: var(--accent0);
     color: white;
 }
 
-.active-team-container .overview-container .overview-item .grey {
+.active-team-container .overview-container .overview-item .grey, .project-info-item .grey {
     background-color: var(--darkGrey);
     color: var(--base0);
 }
 
-.active-team-container .overview-container .overview-item .active-grey {
+.active-team-container .overview-container .overview-item .active-grey, .project-info-item .active-grey {
     background-color: var(--darkGrey);
     color: var(--fontBlack);
 }
@@ -345,6 +364,7 @@ body .avatar {
     justify-content: center;
     align-items: center; 
     margin-right: 2rem;
+    flex-shrink: 0;
 }
 
 body .avatar-small {
@@ -375,35 +395,65 @@ body .avatar-small {
 .active-team-projects {
     display: flex;
     flex-flow: column;
+    min-width: 900px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-.team-projects-container {
+.team-projects-container, .team-members {
     height: 100%;
     overflow-y: auto;
+    display: flex;
+    flex-flow: column;
 }
 
 .active-team-project-item {
     display: flex;
-    padding: 1rem;
-    height: 150px;
+    min-height: 200px;
     box-sizing: border-box;
     background-color: var(--base0);
     border-radius: 1rem;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    border: 2px solid var(--darkGrey);
-    margin: 2rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    margin: 2rem auto;
     align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-flow: column;
+    cursor: pointer;
+    transition: .1s all ease-in-out;
 }
 
-.project-name-and-lead {
-    width: 300px;
+.active-team-project-item:hover {
+    transition: .1s all ease-in-out;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .active-team-project-item h2 {
-    margin: auto 0;
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
     padding: 0;
-    height: auto;
     border-bottom: none;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--base2);
+    color: var(--base0);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    height: auto;
+    transition: .1s all ease-in-out;
+}
+
+.active-team-project-item:hover h2 {
+    transition: .1s all ease-in-out;
+    background-color: #4f5d6b;
+}
+
+.active-team-members {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
 }
 
 .avatar-name-container {
@@ -427,8 +477,78 @@ body .avatar-small {
 }
 
 .project-info {
-    padding: 0 2rem;
+    margin: 0 auto;
+    align-self: flex-start;
+    padding: 1rem;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    height: 100%;
+    max-width: 900px;
+}
+
+.project-info-item-header {
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: .5rem;
+    text-align: center;
+}
+
+#view .CircularProgressbar-path {
+    stroke: var(--base2);
+}
+
+#view .CircularProgressbar-text {
+    font-family: 'Montserrat', sans-serif;
+    fill: var(--fontBlack);
+}
+
+.project-info-item {
+    display: flex;
+    flex-flow: column;
+}
+
+.project-info-item h3 {
+    border-radius: 50%;
+    margin: auto;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.active-project-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+}
+
+.active-project-container .project-tasks-container, .active-project-container .project-task-details-container {
+    flex-basis: 50%;
+    width: 50%;
+}
+
+.active-project-container .project-tasks-container {
+    background-color: var(--base0);
+    flex-basis: 60%;
+    width: 60%;
+}
+
+.active-project-container .project-task-details-container {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    background-color: var(--grey);
+    flex-basis: 40%;
+    width: 40%;
+}
+
+.project-tasks-container-header h2 {
+    padding: 2rem;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid var(--darkGrey);
+    height: 90px;
 }

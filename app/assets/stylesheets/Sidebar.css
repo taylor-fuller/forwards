@@ -95,9 +95,37 @@ h1 {
     padding-right: 2rem;
 }
 
-.sidebar-container .text-item {
+.sidebar-container .sidebar-home .text-item {
     min-height: 50px;
     line-height: 50px;
+}
+
+.sidebar-container .sidebar-workspace .text-item {
+    min-height: 50px;
+    display: flex;
+    flex-flow: column;
+    text-align: left;
+    justify-content: center;
+}
+
+.sidebar-container .sidebar-workspace .text-item.active {
+    max-height: 50px;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.sidebar-workspace .text-item span.sub {
+    display: flex;
+    align-content: center;
+    line-height: normal;
+    text-overflow: ellipsis;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+
+.sidebar-workspace .text-item span.sub svg {
+    transform: translateY(-2px);
+    margin-right: 5px;
 }
 
 .sidebar-container .text-item h4 {
