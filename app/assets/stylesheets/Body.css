@@ -188,12 +188,15 @@ header a:hover {
 
 .complete-checkbox svg {
     margin: auto;
-    transition: .1s all ease-in-out;
+    transition: transform .1s ease-in-out;
 }
 
 .complete-checkbox:hover svg {
     transform: scale(1.2);
-    transition: .1s all ease-in-out;
+}
+
+.complete-checkbox:active svg {
+    fill: var(--base2);
 }
 
 .tasks .empty, .projects .empty, .teams .empty {
