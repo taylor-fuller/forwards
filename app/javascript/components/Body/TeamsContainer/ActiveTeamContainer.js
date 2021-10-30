@@ -12,29 +12,15 @@ const ActiveTeamContainer = (props) => {
         return team[0]
     }
 
-    function returnTasksDueTodayForTeam(team_id) {
-        let team
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            return team[0].tasks.due_today.length
-        }
-    }
-
-    function returnTasksDueSoonForTeam(team_id) {
-        let team
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            return team[0].tasks.due_soon.length
-        }
-    }
-
     function returnTeamLeadName(team_id) {
         let team
         let team_lead
         team = props.teams.all_teams.filter((team) => team.id === team_id)
         if (team[0]) {
             team_lead = team[0].members.filter((member) => member.id === team[0].lead_id)
-            if (team_lead[0]) {
+            if (!team_lead[0].last_name) {
+                return team_lead[0].first_name
+            } else {
                 return (team_lead[0].first_name + ' ' + team_lead[0].last_name)
             }
         }
@@ -59,7 +45,11 @@ const ActiveTeamContainer = (props) => {
         if (team[0]) {
             team_lead = team[0].members.filter((member) => member.id === team[0].lead_id)
             if (team_lead[0]) {
-                return (team_lead[0].first_name.charAt(0) + team_lead[0].last_name.charAt(0))
+                if (!team_lead[0].last_name) {
+                    return team_lead[0].first_name.charAt(0)
+                } else {
+                    return (team_lead[0].first_name.charAt(0) + team_lead[0].last_name.charAt(0))
+                }
             }
         }
     }

@@ -46,7 +46,9 @@ const MyTasksContainer = (props) => {
         team = props.teams.all_teams.filter((team) => team.id === team_id)
         if (team[0]) {
             task_creator = team[0].members.filter((creator) => creator.id === creator_id)
-            if (task_creator[0]) {
+            if (!task_creator[0].last_name) {
+                return task_creator[0].first_name
+            } else {
                 return (task_creator[0].first_name + ' ' + task_creator[0].last_name)
             }
         }

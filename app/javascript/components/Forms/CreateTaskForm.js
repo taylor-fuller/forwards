@@ -63,8 +63,9 @@ const CreateTaskForm = (props) => {
                             defaultMinute: 0,
                             dateFormat: "Z",
                             value: dueDate,
+                            position: 'auto center',
                             onChange: function(dateStr) {
-                                () => setDueDate(dateStr)
+                                () => {setDueDate(dateStr)}
                             }
                         }}
                         placeholder="Select a Due Date"

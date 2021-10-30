@@ -23,6 +23,7 @@ class Api::TeamsController < ApplicationController
 
         # hash and arrays for project
         project_tasks = {}
+        all_project_tasks = []
         project_tasks_due_soon = []
         project_tasks_due_today = []
         project_tasks_recently_assigned = []
@@ -38,6 +39,7 @@ class Api::TeamsController < ApplicationController
             # iterate through each project and grab the tasks
             team_projects.each do |project|
                 all_team_tasks = project.tasks
+                all_projects_tasks = project.tasks
                 # iterate through the tasks and sort into various arrays
                 all_team_tasks.each do |task|
                 if task.due_date && !task.completed
@@ -68,7 +70,7 @@ class Api::TeamsController < ApplicationController
             end
 
             # populate project hash with sorted task arrays
-            project_tasks['all_tasks'] = all_team_tasks
+            project_tasks['all_tasks'] = all_projects_tasks
             project_tasks['due_today'] = project_tasks_due_today
             project_tasks['due_soon'] = project_tasks_due_soon
             project_tasks['recently_assigned'] = project_tasks_recently_assigned
@@ -81,6 +83,7 @@ class Api::TeamsController < ApplicationController
 
             # reset project hash and arrays for next project iteration
             project_tasks = {}
+            all_project_tasks = []
             project_tasks_due_soon = []
             project_tasks_due_today = []
             project_tasks_recently_assigned = []

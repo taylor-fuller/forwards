@@ -168,6 +168,10 @@ body {
     display: block;
 }
 
+.ReactModalPortal form .form-group-date input {
+    cursor: pointer;
+}
+
 .ReactModalPortal form textarea[name="description"] {
     height: 100px;
 }
