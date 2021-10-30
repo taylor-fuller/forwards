@@ -410,11 +410,11 @@ body .avatar-small {
     flex-flow: column;
 }
 
-.team-projects-container .empty-projects {
+.team-projects-container .empty-projects, .projects-tasks-container-tasks .empty-tasks {
     font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
-    padding-top: 5rem;
+    padding-top: 3rem;
 }
 
 .active-team-project-item {

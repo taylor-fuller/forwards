@@ -5,7 +5,14 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 const ActiveProjectContainer = (props) => {
+    let taskRef = useRef(null)
     const addIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+
+    useEffect(() => {
+        if (props.UI.activeTask) {
+            taskRef.current.scrollIntoView() 
+        }
+    }, [])
 
     function returnProjectLeadName(team_id, project_id) {
         let team
@@ -116,10 +123,10 @@ const ActiveProjectContainer = (props) => {
     function renderTasks(project) {
         let tasks
         if (project.tasks.all_tasks.length > 1) {
-            tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.team_id, task.assignee_id)}>{returnTaskAssigneeName(task.team_id, task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.team_id, task.assignee_id)}>{returnTaskAssigneeName(task.team_id, task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
             return(<div className="project-tasks"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Assigned To</h3> <h3>Assigned By</h3></div> <div className="project-tasks-list">{ tasks }</div></div>)
         } else {
-            return <div className='empty'>No Tasks</div>
+            return <div className='empty-tasks'>No Active Tasks</div>
         }
     }
 
