@@ -146,15 +146,15 @@ header a:hover {
     background-color: var(--grey);
 }
 
-.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects-led .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-teams .team-item h3:first-of-type, .teams-led .team-item h3:first-of-type, .all-teams .team-header h3:first-of-type, .teams-led .team-header h3:first-of-type {
+.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects-led .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-teams .team-item h3:first-of-type, .teams-led .team-item h3:first-of-type, .all-teams .team-header h3:first-of-type, .teams-led .team-header h3:first-of-type, .project-tasks .task-item h3:first-of-type, .project-tasks .task-header h3:first-of-type {
     text-align: left;
 }
 
-.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects-led .project-header h3:last-of-type, .all-projects .project-header h3:last-of-type, .all-teams .team-item h3:last-of-type, .teams-led .team-item h3:last-of-type, .all-teams .team-header h3:last-of-type, .teams-led .team-header h3:last-of-type {
+.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects-led .project-header h3:last-of-type, .all-projects .project-header h3:last-of-type, .all-teams .team-item h3:last-of-type, .teams-led .team-item h3:last-of-type, .all-teams .team-header h3:last-of-type, .teams-led .team-header h3:last-of-type, .project-tasks .task-item h3:last-of-type, .project-tasks .task-header h3:last-of-type {
     text-align: right;
 }
 
-.tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3, .teams .team-header h3, .teams .team-item h3 {
+.tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3, .teams .team-header h3, .teams .team-item h3, .project-tasks .task-item h3, .project-tasks .task-header h3 {
     width: 200px;
     max-width: 200px;
     margin: auto;
@@ -174,7 +174,7 @@ header a:hover {
     border-bottom-color: var(--fontBlack);
 }
 
-.tasks .task-header h3, .projects .project-header h3, .teams .team-header h3 {
+.tasks .task-header h3, .projects .project-header h3, .teams .team-header h3, .project-tasks .task-header h3 {
     font-size: 1rem;
     font-weight: bold;
 }
@@ -403,7 +403,7 @@ body .avatar-small {
     margin: 0 auto;
 }
 
-.team-projects-container, .team-members {
+.team-projects-container, .team-members, .project-tasks-list {
     height: 100%;
     overflow-y: auto;
     display: flex;
@@ -576,10 +576,6 @@ body .avatar-small {
     margin: auto;
 }
 
-.project-tasks-overview .project-info .project-info-item:last-of-type {
-    padding-left: 1rem;
-}
-
 .project-tasks-overview .project-info .project-info-item:last-of-type .project-info-item-header {
     padding-left: 1rem;
     text-align: left;
@@ -587,4 +583,26 @@ body .avatar-small {
 
 .project-tasks-overview .avatar {
     margin-right: 1rem;
+}
+
+.project-tasks .task-item, .project-tasks .task-header {
+    padding: 0 1rem;
+}
+
+.task-item.active {
+    background-color: var(--accent0);
+}
+
+.task-item.active svg {
+    fill: var(--base0);
+}
+
+.active-project-container, .project-tasks-container, .projects-tasks-container-tasks, .project-tasks {
+    height:100%;
+    overflow: hidden;
+}
+
+.project-tasks-container, .projects-tasks-container-tasks, .project-tasks {
+    display: flex;
+    flex-flow: column;
 }
