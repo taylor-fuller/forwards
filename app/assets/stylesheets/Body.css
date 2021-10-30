@@ -286,15 +286,15 @@ header a:hover {
 }
 
 .active-team-container .overview-container h3, .active-team-container .overview-container .overview-item {
-    width: 150px;
+    width: 125px;
     margin-top: 2rem;
     font-size: 1rem;
     height: auto;
 }
 
 .active-team-container .overview-container .overview-item {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     margin: 0 25px;
     margin-top: 2rem;
     box-sizing: border-box;
@@ -309,14 +309,14 @@ header a:hover {
     display: flex;
     flex-flow: column;
     align-items: center;
-    min-width: 150px;
+    min-width: 125px;
     margin: auto;
 }
 
 .active-team-container .overview-container .overview-item h4 {
     margin: auto;
     font-size: 2rem;
-    line-height: 100px;
+    line-height: 75px;
 }
 
 .active-team-container .overview-container .overview-item .red, .project-info-item .red {
@@ -605,4 +605,9 @@ body .avatar-small {
 .project-tasks-container, .projects-tasks-container-tasks, .project-tasks {
     display: flex;
     flex-flow: column;
+}
+
+.projects-tasks-container-tasks .empty {
+    padding: 2rem;
+    font-size: 1.2rem;
 }
