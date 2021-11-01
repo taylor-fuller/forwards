@@ -8,10 +8,15 @@ const CreateTaskForm = (props) => {
     const [dueDate, setDueDate] = useState(null)
 
     function determineSelects() {
-        let members = props.UI.activeWorkspace.members.map(member => <option key={member.id} value={member.id} label={member.first_name + ' ' + member.last_name} id={member.id}>{ member.first_name + ' ' + member.last_name }</option>)
-        return (
-            members
-        )
+        let team = props.teams.all_teams.filter((team) => team.id === props.UI.activeWorkspace.workspace_id)
+        let Members
+
+        if (team[0]) {
+            Members = team[0].members.map(member => <option key={member.id} value={member.id} label={member.first_name + ' ' + member.last_name} id={member.id}>{ member.first_name + ' ' + member.last_name }</option>)
+            return (
+                Members
+            )
+        }
     }
     return (
         <div className="form">

@@ -128,8 +128,8 @@ const ActiveTeamContainer = (props) => {
     }
     
     const Team = useMemo(() => renderTeam(), [props.UI.activeWorkspace])
-    const Projects = useMemo(() => renderProjects(), [props.UI.activeWorkspace, props.UI.activeWorkspace.projects])
-    const Members = useMemo(() => renderMembers(), [props.UI.activeWorkspace.members])
+    const Projects = useMemo(() => renderProjects(), [props.UI.activeWorkspace])
+    const Members = useMemo(() => renderMembers(), [props.UI.activeWorkspace])
 
     return(
         <div className="active-team-container">
