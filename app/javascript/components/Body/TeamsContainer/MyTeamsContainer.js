@@ -6,10 +6,6 @@ import Emoji from '../../Emoji/Emoji';
 const MyTeamsContainer = (props) => {
     let homeRef = useRef()
 
-    function handleWorkspaceSelect(team_id, team_name) {
-        props.amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name})
-    }
-
     function returnTasksDueTodayForTeam(team_id) {
         let team
         team = props.teams.all_teams.filter((team) => team.id === team_id)
@@ -43,10 +39,10 @@ const MyTeamsContainer = (props) => {
     
     if (props.teams.all_teams) {
         if (props.teams_led.length >= 1) {
-            teamsLed = props.teams_led.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleWorkspaceSelect(team.id, team.name)}><h3>{team.name}</h3> <h3 className={returnTasksDueTodayForTeam(team.id) === 0 ? "grey" : 'red'}>{returnTasksDueTodayForTeam(team.id)}</h3> <h3 className={returnTasksDueSoonForTeam(team.id) === 0 ? "grey" : 'orange'}>{returnTasksDueSoonForTeam(team.id)}</h3> <h3>{team.projects.length}</h3> <h3>{team.tasks.all_tasks.length}</h3> <h3>{team.members.length}</h3></div>)
+            teamsLed = props.teams_led.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => props.amendActiveWorkspace(team)}><h3>{team.name}</h3> <h3 className={returnTasksDueTodayForTeam(team.id) === 0 ? "grey" : 'red'}>{returnTasksDueTodayForTeam(team.id)}</h3> <h3 className={returnTasksDueSoonForTeam(team.id) === 0 ? "grey" : 'orange'}>{returnTasksDueSoonForTeam(team.id)}</h3> <h3>{team.projects.length}</h3> <h3>{team.tasks.all_tasks.length}</h3> <h3>{team.members.length}</h3></div>)
         }
         if (props.teams.others_teams.length >= 1) {
-            teams = props.teams.others_teams.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => handleWorkspaceSelect(team.id, team.name)}><h3>{team.name}</h3> <h3 className={returnTasksDueTodayForTeam(team.id) === 0 ? "grey" : 'red'}>{returnTasksDueTodayForTeam(team.id)}</h3> <h3 className={returnTasksDueSoonForTeam(team.id) === 0 ? "grey" : 'orange'}>{returnTasksDueSoonForTeam(team.id)}</h3> <h3>{team.members.length}</h3> <h3>{returnTeamLeadName(team.id)}</h3></div>)
+            teams = props.teams.others_teams.map(team => <div key={team.id} id={team.id} className='team-item' onClick={() => props.amendActiveWorkspace(team)}><h3>{team.name}</h3> <h3 className={returnTasksDueTodayForTeam(team.id) === 0 ? "grey" : 'red'}>{returnTasksDueTodayForTeam(team.id)}</h3> <h3 className={returnTasksDueSoonForTeam(team.id) === 0 ? "grey" : 'orange'}>{returnTasksDueSoonForTeam(team.id)}</h3> <h3>{team.members.length}</h3> <h3>{returnTeamLeadName(team.id)}</h3></div>)
         }
         return(
             <div className="teams-container" ref={homeRef}> 

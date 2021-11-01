@@ -19,7 +19,7 @@ const AddTeamMemberForm = (props) => {
 
     useEffect(() => {
         axios.post('http://localhost:3000/api/users', {
-            team_id: props.UI.activeWorkspace.workspace_id
+            team_id: props.UI.activeWorkspace.id
         })
         .then((data) => {
             if (data.data.users.length === 0) {
@@ -43,7 +43,7 @@ const AddTeamMemberForm = (props) => {
             <div className="form">
                 <form onSubmit={props.onSubmit}>
                     <div className="form-group">
-                        <label htmlFor="user_id" className="small">Select a User to add to {props.UI.activeWorkspace.workspace_name}</label>
+                        <label htmlFor="user_id" className="small">Select a User to add to {props.UI.activeWorkspace.name}</label>
                         <select name="user_id" value={newMember} id="user_id" onChange={(event) => setNewMember(event.target.value)} readOnly>
                             <option value='' disabled hidden>Select a User</option>
                             { members }

@@ -28,8 +28,8 @@ export const createTeam = (name) => async (dispatch) => {
     .then( (data) => {
         return batch(() => {
             dispatch({ type: 'RESET_UI' })
-            dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
             dispatch(fetchAll())
+            dispatch(amendActiveWorkspace(data.data))
         })
     })
 }
@@ -56,8 +56,8 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     })
     .then( (data) => {
         return batch(() => {
-            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
             dispatch(fetchAll())
+            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: data.data })
         })
     })
 }
@@ -71,7 +71,7 @@ export const amendActiveWorkspace = (workspace) => async (dispatch) => {
         dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: '' })
         dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
         dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
-        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: workspace.workspace_name })
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: workspace.name })
     })
 }
 
@@ -84,11 +84,11 @@ export const amendActiveSidebar = (sidebarOption) => async (dispatch) => {
     })
 }
 
-export const amendActiveProject = (project_id, project_name, workspace) => async (dispatch) => {
+export const amendActiveProject = (project, workspace) => async (dispatch) => {
     return batch(() => {
         dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
-        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: workspace.workspace_name })
-        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: workspace.name })
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: project })
         dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
     })
 }
@@ -124,18 +124,18 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
     .then( (data) => {
         return batch(() => {
-            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: data.data.id, task_name: data.data.name} })
+            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: data.data })
             dispatch(fetchAll())
         })
     })
 }
 
-export const amendActiveTask = (task_id, task_name, project_id, project_name, workspace) => async (dispatch) => {
+export const amendActiveTask = (task, project, workspace) => async (dispatch) => {
     return batch(() => {
         dispatch({ type: 'AMEND_ACTIVE_WORKSPACE', payload: workspace })
-        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: workspace.workspace_name })
-        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
-        dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+        dispatch({ type: 'AMEND_ACTIVE_SIDEBAR', payload: workspace.name })
+        dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: project })
+        dispatch({ type: 'AMEND_ACTIVE_TASK', payload: task })
     })
 }
 

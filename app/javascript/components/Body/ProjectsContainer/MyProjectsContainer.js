@@ -6,8 +6,9 @@ import Emoji from '../../Emoji/Emoji';
 const MyProjectsContainer = (props) => {
     let homeRef = useRef()
 
-    function handleProjectSelect(project_id, project_name, team_id, team_name) {
-        props.amendActiveProject(project_id, project_name, {workspace_id: team_id, workspace_name: team_name})
+    function handleProjectSelect(project, team_id) {
+        let team = props.teams.all_teams.filter((team) => team.id === team_id)
+        props.amendActiveProject(project, team[0])
     }
 
     function returnTeamName(team_id) {
@@ -15,6 +16,14 @@ const MyProjectsContainer = (props) => {
         team = props.teams.all_teams.filter((team) => team.id === team_id)
         if (team[0]) {
             return team[0].name
+        }
+    }
+
+    function returnTeam(team_id) {
+        let team
+        team = props.teams.all_teams.filter((team) => team.id === team_id)
+        if (team[0]) {
+            return team[0]
         }
     }
 
@@ -33,7 +42,7 @@ const MyProjectsContainer = (props) => {
     function renderProjectsLed() {
         let projectsLed
         if (props.projects_led && props.projects_led.length >= 1) {
-            projectsLed = props.projects_led.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name, project.team_id, returnTeamName(project.team_id))}><h3 title={project.name}>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 className={project.tasks.all_tasks.length === 0 ? "grey" : null}>{project.tasks.all_tasks.length}</h3> <h3 className={project.tasks.completed.length === 0 ? "grey" : null}>{project.tasks.completed.length}</h3> <h3 className={isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'grey' : null}>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'N/A' : (Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100) + '%')}</h3> <h3 title={returnTeamName(project.team_id)}>{returnTeamName(project.team_id)}</h3></div>)
+            projectsLed = props.projects_led.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project, project.team_id)}><h3 title={project.name}>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 className={project.tasks.all_tasks.length === 0 ? "grey" : null}>{project.tasks.all_tasks.length}</h3> <h3 className={project.tasks.completed.length === 0 ? "grey" : null}>{project.tasks.completed.length}</h3> <h3 className={isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'grey' : null}>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? 'N/A' : (Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100) + '%')}</h3> <h3 title={returnTeamName(project.team_id)}>{returnTeamName(project.team_id)}</h3></div>)
             return(
                 <Fragment>
                     <h2>Projects Led</h2>
@@ -48,7 +57,7 @@ const MyProjectsContainer = (props) => {
     function renderProjects() {
         let projects
         if (props.projects.all_projects && props.projects.all_projects.length >= 1) {
-            projects = props.projects.others_projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project.id, project.name, project.team_id, returnTeamName(project.team_id))}><h3 title={project.name}>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 title={returnTeamName(project.team_id)}>{returnTeamName(project.team_id)}</h3> <h3 title={returnProjectLeadName(project.team_id, project.lead_id)}>{returnProjectLeadName(project.team_id, project.lead_id)}</h3> </div>)
+            projects = props.projects.others_projects.map(project => <div key={project.id} id={project.id} className='project-item' onClick={() => handleProjectSelect(project, project.team_id)}><h3 title={project.name}>{project.name}</h3> <h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3> <h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3> <h3 title={returnTeamName(project.team_id)}>{returnTeamName(project.team_id)}</h3> <h3 title={returnProjectLeadName(project.team_id, project.lead_id)}>{returnProjectLeadName(project.team_id, project.lead_id)}</h3> </div>)
             return(
                 <Fragment>
                     <div className="project-header"><h3>Project</h3> <h3>Tasks Due Today</h3> <h3>Tasks Due Soon</h3> <h3>Team</h3> <h3>Project Lead</h3></div>
