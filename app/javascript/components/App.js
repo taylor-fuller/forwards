@@ -3,7 +3,7 @@ import "../../assets/stylesheets/App.css"
 import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import { connect } from 'react-redux';
-import { fetchAll,fetchUI, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam } from '../actions';
+import { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam } from '../actions';
 import Modal from 'react-modal';
 import CreateProjectForm from './Forms/CreateProjectForm';
 import CreateTeamForm from './Forms/CreateTeamForm';
@@ -24,35 +24,29 @@ Modal.setAppElement('#root');
 
 const App = (props) => {
     useEffect(() => {
-        props.fetchAll()
-        setTimeout(() => {
-            props.fetchUI()
-        }, 1000);
+        if (props.UI.initialLoad) {
+            props.fetchInitial()
+        } else {
+            props.fetchAll()
+        }
     }, [])
     
     function determineForm(type) {
         switch(type) {
             case 'createTask':
                 return <CreateTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-                break;
             case 'createProject':
                 return <CreateProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-                break;
             case 'createTeam':
                 return <CreateTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-                break;
             case 'addTeamMember':
                 return <AddTeamMemberForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-                break;
             case 'patch task':
                 return <PatchTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-                break;
             case 'patchProject':
                 return <PatchProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-                break;
             case 'patchTeam':
                 return <PatchTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-                break;
             default:
                 return
         }
@@ -152,4 +146,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchAll, fetchUI, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam })(App);
+export default connect(mapStateToProps, { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam })(App);

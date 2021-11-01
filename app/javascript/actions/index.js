@@ -1,6 +1,21 @@
 import axios from 'axios'
 import { batch } from 'react-redux'
 
+export function fetchInitial() {
+    return (dispatch) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            return dispatch(fetchProjects())
+        })
+        .then(() => {
+            return dispatch(fetchTasks())
+        })
+        .then(() => {
+            return dispatch(fetchUI())
+        })
+    }
+}
+
 export const fetchAll = () => async (dispatch) => {
     return batch(() => {
         dispatch(fetchTeams())
