@@ -124,7 +124,9 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
     .then( (data) => {
         return batch(() => {
-            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: data.data })
+            console.log(data.data.project_tasks)
+            dispatch({ type: 'RECEIVE_TASKS', payload: data.data.project_tasks })
+            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: data.data.task })
             dispatch(fetchAll())
         })
     })
@@ -193,7 +195,8 @@ export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
         id: team_id,
         user_id: user_id
     })
-    .then( () => {
+    .then((data) => {
         dispatch(fetchAll())
+        dispatch({type: 'RECEIVE_MEMBERS', payload: data.data.team_members})
     })
 }

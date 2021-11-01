@@ -128,7 +128,7 @@ class Api::TeamsController < ApplicationController
         @team.members << @user
 
         @team.projects.each do |project|
-        @user.projects << project
+            @user.projects << project
         end
 
         render json: { team_members: @team.members }
