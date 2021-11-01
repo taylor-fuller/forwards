@@ -25,7 +25,7 @@ const Sidebar = (props) => {
     } else {
         if (props.teams.all_teams) {
             if (props.teams.all_teams.length >= 1) {
-                teams = props.teams.all_teams.map(team => <div key={team.id} id={team.id} className={props.UI.activeSidebarOption === team.name ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveWorkspace(team)} title={team.name}><h4 id={team.id}>{team.name}</h4>{(team.id === props.UI.activeWorkspace.id && props.UI.activeProject) ? <span className='sub'><svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="var(--base0)"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M19 15l-6 6-1.42-1.42L15.17 16H4V4h2v10h9.17l-3.59-3.58L13 9l6 6z"/></svg>{props.UI.activeProject.name}</span> : null}</div>)
+                teams = props.teams.all_teams.map(team => <div key={team.id} id={team.id} className={props.UI.activeSidebarOption === team.name ? 'text-item active' : 'text-item'} onClick={() => props.amendActiveWorkspace({workspace_id: team.id, workspace_name: team.name})} title={team.name}><h4 id={team.id}>{team.name}</h4>{(team.id === props.UI.activeWorkspace.workspace_id && props.UI.activeProject) ? <span className='sub'><svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 0 24 24" width="16px" fill="var(--base0)"><path d="M24 24H0V0h24v24z" fill="none" opacity=".87"/><path d="M19 15l-6 6-1.42-1.42L15.17 16H4V4h2v10h9.17l-3.59-3.58L13 9l6 6z"/></svg>{props.UI.activeProject.project_name}</span> : null}</div>)
             } else {
                 teams = <div className="empty">No Workspaces</div>
             }

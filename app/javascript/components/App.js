@@ -34,18 +34,25 @@ const App = (props) => {
         switch(type) {
             case 'createTask':
                 return <CreateTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
             case 'createProject':
                 return <CreateProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
             case 'createTeam':
                 return <CreateTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
             case 'addTeamMember':
                 return <AddTeamMemberForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
             case 'patch task':
                 return <PatchTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
             case 'patchProject':
                 return <PatchProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
             case 'patchTeam':
                 return <PatchTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
+                break;
             default:
                 return
         }
@@ -59,8 +66,8 @@ const App = (props) => {
                 props.createTask(
                     event.target.title.value,
                     event.target.description.value,
-                    props.UI.activeWorkspace.id,
-                    props.UI.activeProject.id,
+                    props.UI.activeWorkspace.workspace_id,
+                    props.UI.activeProject.project_id,
                     false,
                     event.target.due_date.value,
                     Number(event.target.assignee_id.value),
@@ -71,7 +78,7 @@ const App = (props) => {
                 props.createProject(
                     event.target.name.value,
                     event.target.description.value,
-                    props.UI.activeWorkspace.id
+                    props.UI.activeWorkspace.workspace_id
                 )
                 props.toggleModal(false, null)
                 break;
@@ -82,16 +89,16 @@ const App = (props) => {
                 props.toggleModal(false, null)
                 break;
             case 'addTeamMember':
-                props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.id)
+                props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.workspace_id)
                 props.toggleModal(false, null)
                 break;
             case 'patch task':
-                console.log('patch task')
+                console.log()
                 // props.patchTask(
                 //     event.target.title.value,
                 //     event.target.description.value,
-                //     props.UI.activeWorkspace.id,
-                //     props.UI.activeProject.id,
+                //     props.UI.activeWorkspace.workspace_id,
+                //     props.UI.activeProject.project_id,
                 //     false,
                 //     event.target.due_date.value,
                 //     Number(event.target.assignee_id.value),
@@ -103,7 +110,7 @@ const App = (props) => {
                 // props.patchProject(
                 //     event.target.name.value,
                 //     event.target.description.value,
-                //     props.UI.activeWorkspace.id
+                //     props.UI.activeWorkspace.workspace_id
                 // )
                 props.toggleModal(false, null)
                 break;
