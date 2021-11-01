@@ -54,34 +54,7 @@ class Api::TasksController < ApplicationController
                     @user.tasks << @task
                 end
 
-                due_soon = []
-                due_today = []
-                recently_assigned = []
-                overdue = []
-                upcoming = []
-                completed = []
-
-                @project.tasks.each do |task|
-                    if task.due_date && !task.completed
-                        if Time.now.to_date == task.due_date.to_date
-                            due_today << task
-                        elsif (Time.now.to_date > task.due_date.to_date)
-                            overdue << task
-                        elsif (task.due_date.to_date - Time.now.to_date).to_i <= 3
-                            due_soon << task
-                        else 
-                            upcoming << task
-                        end
-                        if (task.created_at.to_date - Time.now.to_date).to_i <= 3
-                            recently_assigned << task
-                        end
-                    elsif task.completed
-                        completed << task
-                    else
-                        upcoming << task
-                    end
-                end
-            format.json { render json: {task: @task, project_tasks: { all_tasks: @project.tasks, overdue: overdue, due_today: due_today, due_soon: due_soon, recently_assigned: recently_assigned, upcoming: upcoming, completed: completed }}, status: :created }
+            format.json { render json: @task, status: :created }
             else
             format.json { render json: @task.errors, status: :unprocessable_entity }
             end

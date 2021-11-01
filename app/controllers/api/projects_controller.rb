@@ -83,18 +83,8 @@ class Api::ProjectsController < ApplicationController
             @team.members.each do |user|
                 user.projects << @project
             end
-            
-            project_tasks = {}
-            project_tasks['all_tasks'] = []
-            project_tasks['due_today'] = []
-            project_tasks['due_soon'] = []
-            project_tasks['recently_assigned'] = []
-            project_tasks['overdue'] = []
-            project_tasks['upcoming'] = []
-            project_tasks['completed'] = []
 
-            project = @project.attributes.merge!('tasks' => project_tasks)
-            format.json { render json: project, status: :created }
+            format.json { render json: @project, status: :created }
         else
             format.json { render json: @project.errors, status: :unprocessable_entity }
         end

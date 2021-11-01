@@ -142,21 +142,8 @@ class Api::TeamsController < ApplicationController
         respond_to do |format|
         if @team.save
             @team.members << current_user
-            team_members = @team.members
-            team_projects = []
-            team_tasks = {}
-
-            team_tasks['all_tasks'] = []
-            team_tasks['due_today'] = []
-            team_tasks['due_soon'] = []
-            team_tasks['recently_assigned'] = []
-            team_tasks['overdue'] = []
-            team_tasks['upcoming'] = []
-            team_tasks['completed'] = []
-
-            team = @team.attributes.merge!('members' => team_members, 'projects' => team_projects, 'tasks' => team_tasks)
             # @user_team = UserTeam.create!(member_id: current_user.id, team_id: @team.id)
-            format.json { render json: team, status: :created }
+            format.json { render json: @team, status: :created }
         else
             format.json { render json: @team.errors, status: :unprocessable_entity }
         end

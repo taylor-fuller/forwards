@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { batch } from 'react-redux'
+import getState from 'redux-thunk'
 
 export const fetchAll = () => async (dispatch) => {
     return batch(() => {
@@ -28,8 +29,7 @@ export const createTeam = (name) => async (dispatch) => {
     .then( (data) => {
         return batch(() => {
             dispatch({ type: 'RESET_UI' })
-            dispatch(fetchAll())
-            dispatch(amendActiveWorkspace(data.data))
+            dispatch(handleTeamCreation(data.data.id))
         })
     })
 }
@@ -56,8 +56,7 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     })
     .then( (data) => {
         return batch(() => {
-            dispatch(fetchAll())
-            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: data.data })
+            dispatch(handleTeamCreation(data.data.id))
         })
     })
 }
@@ -124,10 +123,8 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
     .then( (data) => {
         return batch(() => {
-            console.log(data.data.project_tasks)
-            dispatch({ type: 'RECEIVE_TASKS', payload: data.data.project_tasks })
-            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: data.data.task })
             dispatch(fetchAll())
+            dispatch({ type: 'UPDATE_ACTIVE_WORKSPACE', payload: team_id })
         })
     })
 }
@@ -195,8 +192,43 @@ export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
         id: team_id,
         user_id: user_id
     })
-    .then((data) => {
-        dispatch(fetchAll())
-        dispatch({type: 'RECEIVE_MEMBERS', payload: data.data.team_members})
+    .then(() => {
+        dispatch(handleMemberAddition(team_id))
     })
+}
+
+export function handleMemberAddition(team_id) {
+    return (dispatch, getState) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            dispatch(fetchProjects())
+            dispatch(fetchTasks())
+            const teams = getState().teams.all_teams
+            let team = teams.filter((team) => team.id === team_id)
+            return dispatch(amendActiveWorkspace(team[0]))
+        })
+    }
+}
+
+export function handleTeamCreation(team_id) {
+    return (dispatch, getState) => {
+        return dispatch(fetchTeams()).then(() => {
+            const teams = getState().teams.all_teams
+            let team = teams.filter((team) => team.id === team_id)
+            return dispatch(amendActiveWorkspace(team[0]))
+        })
+    }
+}
+
+export function handleProjectCreation(project_id) {
+    return (dispatch, getState) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            dispatch(fetchProjects())
+            const teams = getState().teams.all_teams
+            let team = teams.filter((team) => team.id === team_id)
+            let project = team.filter((project) => project.id === project_id)
+            return dispatch(amendActiveProject(project[0], team[0]))
+        })
+    }
 }
