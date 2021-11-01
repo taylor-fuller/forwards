@@ -12,28 +12,28 @@ const MyTeamsContainer = (props) => {
 
     function returnTasksDueTodayForTeam(team_id) {
         let team
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            return team[0].tasks.due_today.length
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            return team.tasks.due_today.length
         }
     }
 
     function returnTasksDueSoonForTeam(team_id) {
         let team
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            return team[0].tasks.due_soon.length
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            return team.tasks.due_soon.length
         }
     }
 
     function returnTeamLeadName(team_id) {
         let team
         let team_lead
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            team_lead = team[0].members.filter((member) => member.id === team[0].lead_id)
-            if (team_lead[0]) {
-                return (team_lead[0].first_name + ' ' + team_lead[0].last_name)
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            team_lead = team.members.find((member) => member.id === team.lead_id)
+            if (team_lead) {
+                return (team_lead.first_name + ' ' + team_lead.last_name)
             }
         }
     }

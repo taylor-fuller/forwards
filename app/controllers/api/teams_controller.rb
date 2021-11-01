@@ -111,6 +111,7 @@ class Api::TeamsController < ApplicationController
 
             #  reset team hash and arrays for next team iteration
             team_tasks = {}
+            all_team_tasks = []
             team_due_soon = []
             team_due_today = []
             team_recently_assigned = []

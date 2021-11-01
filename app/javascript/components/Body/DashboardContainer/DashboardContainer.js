@@ -31,30 +31,30 @@ const DashboardContainer = (props) => {
 
     function returnProjectName(project_id) {
         let project
-        project = props.projects.all_projects.filter((project) => project.id === project_id)
-        if (project[0]) {
-            return project[0].name
+        project = props.projects.all_projects.find((project) => project.id === project_id)
+        if (project) {
+            return project.name
         }
     }
 
     function returnTeamName(team_id) {
         let team
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            return team[0].name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            return team.name
         }
     }
 
     function returnTaskAuthorName(team_id, creator_id) {
         let team
         let task_creator
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            task_creator = team[0].members.filter((creator) => creator.id === creator_id)
-            if (!task_creator[0].last_name) {
-                return task_creator[0].first_name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            task_creator = team.members.find((creator) => creator.id === creator_id)
+            if (!task_creator.last_name) {
+                return task_creator.first_name
             } else {
-                return (task_creator[0].first_name + ' ' + task_creator[0].last_name)
+                return (task_creator.first_name + ' ' + task_creator.last_name)
             }
         }
     }

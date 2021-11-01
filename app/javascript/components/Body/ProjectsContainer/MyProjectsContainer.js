@@ -12,20 +12,20 @@ const MyProjectsContainer = (props) => {
 
     function returnTeamName(team_id) {
         let team
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            return team[0].name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            return team.name
         }
     }
 
     function returnProjectLeadName(team_id, project_lead_id) {
         let team
         let project_lead
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            project_lead = team[0].members.filter((member) => member.id === project_lead_id)
-            if (project_lead[0]) {
-                return (project_lead[0].first_name + ' ' + project_lead[0].last_name)
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            project_lead = team.members.find((member) => member.id === project_lead_id)
+            if (project_lead) {
+                return (project_lead.first_name + ' ' + project_lead.last_name)
             }
         }
     }

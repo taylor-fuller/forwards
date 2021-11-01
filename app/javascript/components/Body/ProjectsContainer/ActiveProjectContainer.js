@@ -18,16 +18,16 @@ const ActiveProjectContainer = (props) => {
         let team
         let project
         let project_lead
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            project = team[0].projects.filter((project) => project.id === project_id)
-            if (project[0]) {
-                project_lead = team[0].members.filter((member) => member.id === project[0].lead_id)
-                if (project_lead[0]) {
-                    if (!project_lead[0].last_name) {
-                        return project_lead[0].first_name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            project = team.projects.find((project) => project.id === project_id)
+            if (project) {
+                project_lead = team.members.find((member) => member.id === project.lead_id)
+                if (project_lead) {
+                    if (!project_lead.last_name) {
+                        return project_lead.first_name
                     } else {
-                        return (project_lead[0].first_name + ' ' + project_lead[0].last_name)
+                        return (project_lead.first_name + ' ' + project_lead.last_name)
                     }
                 }
             }
@@ -38,16 +38,16 @@ const ActiveProjectContainer = (props) => {
         let team
         let project
         let project_lead
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            project = team[0].projects.filter((project) => project.id === project_id)
-            if (project[0]) {
-                project_lead = team[0].members.filter((member) => member.id === project[0].lead_id)
-                if (project_lead[0]) {
-                    if (!project_lead[0].last_name) {
-                        return project_lead[0].first_name.charAt(0)
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            project = team.projects.find((project) => project.id === project_id)
+            if (project) {
+                project_lead = team.members.find((member) => member.id === project.lead_id)
+                if (project_lead) {
+                    if (!project_lead.last_name) {
+                        return project_lead.first_name.charAt(0)
                     } else {
-                        return (project_lead[0].first_name.charAt(0) + project_lead[0].last_name.charAt(0))
+                        return (project_lead.first_name.charAt(0) + project_lead.last_name.charAt(0))
                     }
                 }
             }
@@ -58,14 +58,14 @@ const ActiveProjectContainer = (props) => {
         let team
         let project
         let project_lead
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            project = team[0].projects.filter((project) => project.id === project_id)
-            if (project[0]) {
-                project_lead = team[0].members.filter((member) => member.id === project[0].lead_id)
-                if (project_lead[0]) {
-                    if (project_lead[0]) {
-                        return project_lead[0].email
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            project = team.projects.find((project) => project.id === project_id)
+            if (project) {
+                project_lead = team.members.find((member) => member.id === project.lead_id)
+                if (project_lead) {
+                    if (project_lead) {
+                        return project_lead.email
                     }
                 }
             }
@@ -73,11 +73,12 @@ const ActiveProjectContainer = (props) => {
     }
 
     function returnProject(teams, active_team_id, active_project_id) {
-        let team = teams.filter((team) => team.id === active_team_id)
-        if (team[0]) {
-            let project = team[0].projects.filter((project) => project.id === active_project_id)
-            if (project[0]) {
-                return project[0]
+        console.log(active_project_id)
+        let team = teams.find((team) => team.id === active_team_id)
+        if (team) {
+            let project = team.projects.find((project) => project.id === active_project_id)
+            if (project) {
+                return project
             }
         }
     }
@@ -85,13 +86,13 @@ const ActiveProjectContainer = (props) => {
     function returnTaskAuthorName(team_id, creator_id) {
         let team
         let task_creator
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            task_creator = team[0].members.filter((creator) => creator.id === creator_id)
-            if (!task_creator[0].last_name) {
-                return task_creator[0].first_name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            task_creator = team.members.find((creator) => creator.id === creator_id)
+            if (!task_creator.last_name) {
+                return task_creator.first_name
             } else {
-                return (task_creator[0].first_name + ' ' + task_creator[0].last_name)
+                return (task_creator.first_name + ' ' + task_creator.last_name)
             }
         }
     }
@@ -99,13 +100,13 @@ const ActiveProjectContainer = (props) => {
     function returnTaskAssigneeName(team_id, task_assignee_id) {
         let team
         let task_assignee
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            task_assignee = team[0].members.filter((member) => member.id === task_assignee_id)
-            if (!task_assignee[0].last_name) {
-                return task_assignee[0].first_name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            task_assignee = team.members.find((member) => member.id === task_assignee_id)
+            if (!task_assignee.last_name) {
+                return task_assignee.first_name
             } else {
-                return (task_assignee[0].first_name + ' ' + task_assignee[0].last_name)
+                return (task_assignee.first_name + ' ' + task_assignee.last_name)
             }
         }
     }
@@ -122,7 +123,7 @@ const ActiveProjectContainer = (props) => {
 
     function renderTasks(project) {
         let tasks
-        if (project.tasks.all_tasks.length > 1) {
+        if (project.tasks.all_tasks.length >= 1) {
             tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.team_id, task.assignee_id)}>{returnTaskAssigneeName(task.team_id, task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
             return(<div className="project-tasks"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Assigned To</h3> <h3>Assigned By</h3></div> <div className="project-tasks-list">{ tasks }</div></div>)
         } else {

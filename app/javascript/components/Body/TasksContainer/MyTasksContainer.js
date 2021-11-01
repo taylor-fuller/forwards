@@ -26,30 +26,30 @@ const MyTasksContainer = (props) => {
 
     function returnProjectName(project_id) {
         let project
-        project = props.projects.all_projects.filter((project) => project.id === project_id)
-        if (project[0]) {
-            return project[0].name
+        project = props.projects.all_projects.find((project) => project.id === project_id)
+        if (project) {
+            return project.name
         }
     }
 
     function returnTeamName(team_id) {
         let team
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            return team[0].name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            return team.name
         }
     }
 
     function returnTaskAuthorName(team_id, creator_id) {
         let team
         let task_creator
-        team = props.teams.all_teams.filter((team) => team.id === team_id)
-        if (team[0]) {
-            task_creator = team[0].members.filter((creator) => creator.id === creator_id)
-            if (!task_creator[0].last_name) {
-                return task_creator[0].first_name
+        team = props.teams.all_teams.find((team) => team.id === team_id)
+        if (team) {
+            task_creator = team.members.find((creator) => creator.id === creator_id)
+            if (!task_creator.last_name) {
+                return task_creator.first_name
             } else {
-                return (task_creator[0].first_name + ' ' + task_creator[0].last_name)
+                return (task_creator.first_name + ' ' + task_creator.last_name)
             }
         }
     }
@@ -81,8 +81,7 @@ const MyTasksContainer = (props) => {
 
     function renderDueSoon() {
         if (props.tasks.due_soon && props.tasks.due_soon.length >= 1) {
-            let dueSoon
-            dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            let dueSoon = props.tasks.due_soon.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
             return(
                 <Fragment>
                     <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div>
@@ -98,8 +97,7 @@ const MyTasksContainer = (props) => {
 
     function renderUpcoming() {
         if (props.tasks.upcoming && props.tasks.upcoming.length >= 1) {
-            let upcoming
-            upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            let upcoming = props.tasks.upcoming.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
             return(
                 <Fragment>
                     <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div>
@@ -115,8 +113,7 @@ const MyTasksContainer = (props) => {
 
     function renderCompleted() {
         if (props.tasks.completed && props.tasks.completed.length >= 1) {
-            let completed
-            completed = props.tasks.completed.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+            let completed = props.tasks.completed.map(task => <div key={task.id} id={task.id} className={ task.completed ? 'task-item completed' : 'task-item' } onClick={(event) => handleTaskSelect(event, task.id, task.title, task.project_id, returnProjectName(task.project_id), task.team_id, returnTeamName(task.team_id))}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnProjectName(task.project_id)}>{returnProjectName(task.project_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
             return(
                 <Fragment>
                     <div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Project</h3> <h3>Assigned By</h3></div>

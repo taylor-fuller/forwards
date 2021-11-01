@@ -42,9 +42,9 @@ export const createTeam = (name) => async (dispatch) => {
     axios.post('http://localhost:3000/api/teams', { name: name })
     .then( (data) => {
         return batch(() => {
+            dispatch(fetchAll())
             dispatch({ type: 'RESET_UI' })
             dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
-            dispatch(fetchAll())
         })
     })
 }
@@ -71,8 +71,8 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     })
     .then( (data) => {
         return batch(() => {
-            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
             dispatch(fetchAll())
+            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
         })
     })
 }
@@ -139,8 +139,8 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
     .then( (data) => {
         return batch(() => {
-            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: data.data.id, task_name: data.data.name} })
             dispatch(fetchAll())
+            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: data.data.id, task_name: data.data.name} })
         })
     })
 }
