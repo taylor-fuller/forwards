@@ -56,7 +56,7 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     })
     .then( (data) => {
         return batch(() => {
-            dispatch(handleTeamCreation(team_id, data.data.id))
+            dispatch(handleTeamCreation(data.data.id))
         })
     })
 }
@@ -122,7 +122,10 @@ export const createTask = (title, description, team_id, project_id, completed, d
         assignee_id: assignee_id
     })
     .then( (data) => {
-        dispatch(handleTaskCreation(team_id, project_id, data.data.id))
+        return batch(() => {
+            dispatch(fetchAll())
+            dispatch({ type: 'UPDATE_ACTIVE_WORKSPACE', payload: team_id })
+        })
     })
 }
 
@@ -217,7 +220,7 @@ export function handleTeamCreation(team_id) {
     }
 }
 
-export function handleProjectCreation(team_id, project_id) {
+export function handleProjectCreation(project_id) {
     return (dispatch, getState) => {
         return dispatch(fetchTeams())
         .then(() => {
@@ -226,22 +229,6 @@ export function handleProjectCreation(team_id, project_id) {
             let team = teams.filter((team) => team.id === team_id)
             let project = team.filter((project) => project.id === project_id)
             return dispatch(amendActiveProject(project[0], team[0]))
-        })
-    }
-}
-
-export function handleTaskCreation(team_id, project_id, task_id) {
-    return (dispatch, getState) => {
-        return dispatch(fetchTeams())
-        .then(() => {
-            dispatch(fetchProjects())
-            dispatch(fetchTasks())
-            const teams = getState().teams.all_teams
-            let team = teams.filter((team) => team.id === team_id)
-            let project = team[0].projects.filter((project) => project.id === project_id)
-            let task = team[0].tasks.all_tasks.filter((task) => task.id === task_id)
-            console.log(team[0], project[0], task[0])
-            return dispatch(amendActiveTask(task[0], project[0], team[0]))
         })
     }
 }
