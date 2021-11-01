@@ -21,7 +21,7 @@ const ActiveProjectContainer = (props) => {
         }
     }, [])
 
-    function returnProjectLeadName(team_id, project_id) {
+    function returnProjectLeadName() {
         let team = props.team
         let project = props.project
         let project_lead = team.members.find((member) => member.id === project.lead_id)
@@ -32,7 +32,7 @@ const ActiveProjectContainer = (props) => {
         }
     }
 
-    function returnProjectLeadInitials(team_id, project_id) {
+    function returnProjectLeadInitials() {
         let team = props.team
         let project = props.project
         let project_lead = team.members.find((member) => member.id === project.lead_id)
@@ -43,25 +43,14 @@ const ActiveProjectContainer = (props) => {
         }
     }
 
-    function returnProjectLeadEmail(team_id, project_id) {
+    function returnProjectLeadEmail() {
         let team = props.team
         let project = props.project
         let project_lead = team.members.find((member) => member.id === project.lead_id)
         return project_lead.email
     }
 
-    function returnProject(teams, active_team_id, active_project_id) {
-        console.log(active_project_id)
-        let team = teams.find((team) => team.id === active_team_id)
-        if (team) {
-            let project = team.projects.find((project) => project.id === active_project_id)
-            if (project) {
-                return project
-            }
-        }
-    }
-
-    function returnTaskAuthorName(team_id, creator_id) {
+    function returnTaskAuthorName(creator_id) {
         let task_creator = props.team.members.find((creator) => creator.id === creator_id)
         if (!task_creator.last_name) {
             return task_creator.first_name
@@ -70,7 +59,7 @@ const ActiveProjectContainer = (props) => {
         }
     }
 
-    function returnTaskAssigneeName(team_id, task_assignee_id) {
+    function returnTaskAssigneeName(task_assignee_id) {
         let task_assignee = props.team.members.find((member) => member.id === task_assignee_id)
         if (!task_assignee.last_name) {
             return task_assignee.first_name
@@ -92,7 +81,7 @@ const ActiveProjectContainer = (props) => {
     function renderTasks() {
         if (props.project) {
             if (project.tasks.all_tasks.length >= 1) {
-                let tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.team_id, task.assignee_id)}>{returnTaskAssigneeName(task.team_id, task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.team_id, task.creator_id)}>{returnTaskAuthorName(task.team_id, task.creator_id)}</h3></div>)
+                let tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.assignee_id)}>{returnTaskAssigneeName(task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.creator_id)}>{returnTaskAuthorName(task.creator_id)}</h3></div>)
                 return(<div className="project-tasks"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Assigned To</h3> <h3>Assigned By</h3></div> <div className="project-tasks-list">{ tasks }</div></div>)
             } else {
                 return <div className='empty-tasks'>No Active Tasks</div>
@@ -121,7 +110,7 @@ const ActiveProjectContainer = (props) => {
     }
 
     let project = props.project
-    const Tasks = useMemo(() => renderTasks(), [props.project])
+    const Tasks = useMemo(() => renderTasks(), [props.project, props.UI.activeTask])
     
     if (props.project) {
         return(
@@ -138,7 +127,7 @@ const ActiveProjectContainer = (props) => {
                             <div className="project-info-item"><div className="project-info-item-header">Active Tasks</div><h3>{project.tasks.all_tasks.length}</h3></div>
                             <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))} text={`${(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))}%`} styles={buildStyles({rotation: 0.5})}/></div>}</h3></div>
                             <div className="project-info-item"><div className="project-info-item-header">Project Lead</div><div className="lead">
-                            <div className="member-container"><div className="avatar">{returnProjectLeadInitials(props.UI.activeWorkspace.workspace_id, props.UI.activeProject.project_id)}</div><div className='team-member'>{returnProjectLeadName(props.UI.activeWorkspace.workspace_id, props.UI.activeProject.project_id)} <br /><span>{returnProjectLeadEmail(props.UI.activeWorkspace.workspace_id, props.UI.activeProject.project_id)}</span></div></div></div></div>
+                            <div className="member-container"><div className="avatar">{returnProjectLeadInitials()}</div><div className='team-member'>{returnProjectLeadName()} <br /><span>{returnProjectLeadEmail()}</span></div></div></div></div>
                         </div>
                     </div>
                     <div className="projects-tasks-container-tasks">
