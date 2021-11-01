@@ -23,6 +23,13 @@ export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', 
         case 'TOGGLE_MODAL':
             state = {...state, isModalOpen: action.payload.isModalOpen, modalOption: action.payload.modalOption}
             return state
+        case 'RECEIVE_MEMBERS':
+            state = {...state, activeWorkspace: {...state.activeWorkspace, members: action.payload}}
+            return state
+        case 'RECEIVE_TASKS':
+            console.log(action.payload)
+            state = {...state, activeProject: {...state.activeProject, tasks: action.payload}}
+            return state
         default:
             return state
     }
