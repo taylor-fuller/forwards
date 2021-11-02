@@ -68,7 +68,7 @@ const ActiveTeamContainer = (props) => {
         let team = props.team
         return(
             <Fragment>
-                <div className="overview-item-container"><h3>Overdue</h3><div className="overview-item"><h4 className={team.tasks.overdue.length === 0 ? 'grey' : 'red'}>{team.tasks.overdue.length}</h4></div></div>
+                <div className="overview-item-container"><h3>Tasks Overdue</h3><div className="overview-item"><h4 className={team.tasks.overdue.length === 0 ? 'grey' : 'red'}>{team.tasks.overdue.length}</h4></div></div>
                 <div className="overview-item-container"><h3>Tasks Due Today</h3><div className="overview-item"><h4 className={team.tasks.due_today.length === 0 ? 'grey' : 'red'}>{team.tasks.due_today.length}</h4></div></div>
                 <div className="overview-item-container"><h3>Tasks Due Soon</h3><div className="overview-item"><h4 className={team.tasks.due_soon.length === 0 ? 'grey' : 'orange'}>{team.tasks.due_soon.length}</h4></div></div>
                 <div className="overview-item-container"><h3>Active Projects</h3><div className="overview-item"><h4 className='active-grey'>{team.projects.length}</h4></div></div>
@@ -77,7 +77,8 @@ const ActiveTeamContainer = (props) => {
     }
 
     function renderMembers() {
-        return props.team.members.map(member => <div className="member-container" key={member.id} id={member.id}><div className="avatar">{returnInitials(member.first_name, member.last_name)}</div><div className='team-member'>{member.first_name + ' ' + member.last_name} <br /><span>{member.email}</span></div></div>)
+        let MembersArray = props.team.members.filter((member) => member.id !== props.team.lead_id)
+        return MembersArray.map(member => <div className="member-container" key={member.id} id={member.id}><div className="avatar">{returnInitials(member.first_name, member.last_name)}</div><div className='team-member'>{member.first_name + ' ' + member.last_name} <br /><span>{member.email}</span></div></div>)
     }
 
     function renderProjects() {

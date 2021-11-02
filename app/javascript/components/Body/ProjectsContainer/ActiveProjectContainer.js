@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { toggleModal, amendActiveTask, toggleTaskComplete } from '../../../actions';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
@@ -29,7 +29,7 @@ const ActiveProjectContainer = (props) => {
         if (!project_lead.last_name) {
             return project_lead.first_name
         } else {
-            return (project_lead.first_name + project_lead.last_name)
+            return (project_lead.first_name + ' ' + project_lead.last_name)
         }
     }
 
@@ -60,6 +60,20 @@ const ActiveProjectContainer = (props) => {
         }
     }
 
+    function returnTaskAuthorInitials(creator_id) {
+        let task_creator = props.team.members.find((creator) => creator.id === creator_id)
+        if (!task_creator.last_name) {
+            return task_creator.first_name.charAt(0)
+        } else {
+            return (task_creator.first_name.charAt(0) + task_creator.last_name.charAt(0))
+        }
+    }
+
+    function returnTaskAuthorEmail(creator_id) {
+        let task_creator = props.team.members.find((creator) => creator.id === creator_id)
+        return task_creator.email
+    }
+
     function returnTaskAssigneeName(task_assignee_id) {
         let task_assignee = props.team.members.find((member) => member.id === task_assignee_id)
         if (!task_assignee.last_name) {
@@ -67,6 +81,20 @@ const ActiveProjectContainer = (props) => {
         } else {
             return (task_assignee.first_name + ' ' + task_assignee.last_name)
         }
+    }
+
+    function returnTaskAssigneeInitials(task_assignee_id) {
+        let task_assignee = props.team.members.find((member) => member.id === task_assignee_id)
+        if (!task_assignee.last_name) {
+            return task_assignee.first_name
+        } else {
+            return (task_assignee.first_name.charAt(0) + task_assignee.last_name.charAt(0))
+        }
+    }
+
+    function returnTaskAssigneeEmail(task_assignee_id) {
+        let task_assignee = props.team.members.find((member) => member.id === task_assignee_id)
+        return task_assignee.email
     }
 
     function returnCheckbox(task) {
@@ -110,10 +138,90 @@ const ActiveProjectContainer = (props) => {
         } 
     }
 
+    useEffect(() => {
+        console.log(props.task)
+    })
+
+    function returnPrettyDate(time) {
+        let day = new Date(time).toLocaleDateString("en-US")
+        let date = new Date(time)
+        let hour = date.getHours()
+        let minutes = date.getMinutes()
+
+        if (minutes < 10) {
+            minutes = ':0' + minutes
+        } else if (minutes === 0) {
+            minutes = ''
+        } else {
+            minutes = ':' + minutes
+        }
+
+        let am_pm = 'AM'
+        if (hour > 12) {
+            hour -= 12
+            am_pm = 'PM'
+        }
+
+        return (<Fragment>{day} <span className='date'>{' by ' + hour + minutes + am_pm}</span></Fragment>)
+    }
+
+    function determineButton(completed) {
+        if (!completed) {
+            return (
+                <div className="detail-item-complete">
+                    <h2>Mark Complete</h2>
+                </div>
+            )
+        } else {
+            return (
+                <div className="detail-item-complete">
+                    <h2>Mark Uncomplete</h2>
+                </div>
+            )
+        }
+    }
+
     function renderTaskDetail() {
         if (props.task) {
             return (
-                <div>{props.task.title}</div>
+                <div className="project-task-details-container">
+                    <div className="project-task-details-container-header">
+                        <h2>{props.task.title}</h2>
+                    </div>
+                    <div className="project-task-details-body">
+                        <div className="detail-item">
+                            <h2>Description</h2>
+                            <div className="task-detail-item">
+                                {props.task.description}
+                            </div>
+                        </div>
+                        <div className="detail-item">
+                            <h2>Assigned To</h2>
+                            <div className="task-detail-item">
+                                <div className="member-container">
+                                    <div className="avatar">{returnTaskAssigneeInitials(props.task.assignee_id)}</div>
+                                    <div className='team-member'>{returnTaskAssigneeName(props.task.assignee_id)} <br /><span>{returnTaskAssigneeEmail(props.task.assignee_id)}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="detail-item">
+                            <h2>Due Date</h2>
+                            <div className="task-detail-item">
+                                { returnPrettyDate(props.task.due_date) }
+                            </div>
+                        </div>
+                        <div className="detail-item">
+                            <h2>Assigned By</h2>
+                            <div className="task-detail-item">
+                                <div className="member-container">
+                                    <div className="avatar">{returnTaskAuthorInitials(props.task.creator_id)}</div>
+                                    <div className='team-member'>{returnTaskAuthorName(props.task.creator_id)} <br /><span>{returnTaskAuthorEmail(props.task.creator_id)}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        { determineButton(props.task.completed) }
+                    </div>
+                </div>
             )
         } else {
             return null
@@ -147,9 +255,7 @@ const ActiveProjectContainer = (props) => {
                             { Tasks }
                     </div>
                 </div>
-                <div className="project-task-details-container">
                     { TaskDetail }
-                </div>
             </div>
         )
     } else {

@@ -57,6 +57,7 @@ table {
     --fontBlack: rgb(80,80,80);
     --grey: rgb(230,230,230);
     --darkGrey: rgb(200,200,200);
+    --darkdarkGrey: rgb(150, 150, 150);
     --lightGrey: rgb(240,240,240);
     --redTint: #e91010c2;
 }
