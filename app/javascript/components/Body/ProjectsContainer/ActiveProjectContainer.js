@@ -97,21 +97,11 @@ const ActiveProjectContainer = (props) => {
         return task_assignee.email
     }
 
-    function returnCheckbox(task) {
-        let checkbox
-        if (task.completed === true) {
-            checkbox = (<svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#007F00" onClick={(event) => toggleTaskComplete(event, task.id, task.completed)} ><rect fill="none" height="24" width="24" /><path d="M22,5.18L10.59,16.6l-4.24-4.24l1.41-1.41l2.83,2.83l10-10L22,5.18z M19.79,10.22C19.92,10.79,20,11.39,20,12 c0,4.42-3.58,8-8,8s-8-3.58-8-8c0-4.42,3.58-8,8-8c1.58,0,3.04,0.46,4.28,1.25l1.44-1.44C16.1,2.67,14.13,2,12,2C6.48,2,2,6.48,2,12 c0,5.52,4.48,10,10,10s10-4.48,10-10c0-1.19-0.22-2.33-0.6-3.39L19.79,10.22z"/></svg>)
-        } else {
-            checkbox = (<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--accent0)" onClick={(event) => toggleTaskComplete(event, task.id, task.completed)}><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>)
-        }
-        return checkbox
-    }
-
     function renderTasks() {
         if (props.project) {
             if (project.tasks.all_tasks.length >= 1) {
-                let tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h4 className="complete-checkbox" title={'Toggle Complete'}>{returnCheckbox(task)}</h4> <h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.assignee_id)}>{returnTaskAssigneeName(task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.creator_id)}>{returnTaskAuthorName(task.creator_id)}</h3></div>)
-                return(<div className="project-tasks"><div className="task-header"><h4 className="complete-checkbox"></h4> <h3>Task</h3> <h3>Due Date</h3> <h3>Assigned To</h3> <h3>Assigned By</h3></div> <div className="project-tasks-list">{ tasks }</div></div>)
+                let tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.assignee_id)}>{returnTaskAssigneeName(task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.creator_id)}>{returnTaskAuthorName(task.creator_id)}</h3></div>)
+                return(<div className="project-tasks"><div className="task-header"><h3>Task</h3> <h3>Due Date</h3> <h3>Assigned To</h3> <h3>Assigned By</h3></div> <div className="project-tasks-list">{ tasks }</div></div>)
             } else {
                 return <div className='empty-tasks'>No Active Tasks</div>
             }
@@ -169,13 +159,19 @@ const ActiveProjectContainer = (props) => {
         if (!completed) {
             return (
                 <div className="detail-item-complete">
-                    <h2>Mark Complete</h2>
+                    <div className="complete-button" onClick={(event) => toggleTaskComplete(event, props.task.id, props.task.completed)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--darkdarkGrey)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+                        <h2>Mark Complete</h2>
+                    </div>
                 </div>
             )
         } else {
             return (
                 <div className="detail-item-complete">
-                    <h2>Mark Uncomplete</h2>
+                    <div className="complete-button" onClick={(event) => toggleTaskComplete(event, props.task.id, props.task.completed)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--darkdarkGrey)"><g><rect fill="none" height="24" width="24"/></g><g><path d="M4.84,1.98L3.43,3.39l10.38,10.38l-1.41,1.41l-4.24-4.24l-1.41,1.41l5.66,5.66l2.83-2.83l6.6,6.6l1.41-1.41L4.84,1.98z M18.05,12.36L23,7.4L21.57,6l-4.94,4.94L18.05,12.36z M17.34,7.4l-1.41-1.41l-2.12,2.12l1.41,1.41L17.34,7.4z M1.08,12.35 l5.66,5.66l1.41-1.41l-5.66-5.66L1.08,12.35z"/></g></svg>
+                        <h2>Mark Uncomplete</h2>
+                    </div>
                 </div>
             )
         }

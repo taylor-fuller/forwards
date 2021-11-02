@@ -191,11 +191,11 @@ header a:hover {
     transition: transform .1s ease-in-out;
 }
 
-.complete-checkbox:hover svg {
+.tasks .complete-checkbox:hover svg {
     transform: scale(1.2);
 }
 
-.complete-checkbox:active svg {
+.tasks .complete-checkbox:active svg {
     fill: var(--base2);
 }
 
@@ -634,12 +634,11 @@ body .avatar-small {
 
 .detail-item-complete {
     display: flex;
-    flex-flow: column;
-    justify-content: center;
+    flex-flow: row;
+    align-items: center;
     padding: 0 2rem;
     margin: 2rem 0;
     min-height: 75px;
-
 }
 
 .detail-item h2, .detail-item-complete h2 {
@@ -666,4 +665,50 @@ body .avatar-small {
     margin-left: 1rem;
     color: var(--darkdarkGrey);
     font-weight: normal;
+}
+
+.detail-item-complete svg {
+    margin: 0;
+    margin-right: 15px;
+}
+
+.complete-button h2 {
+    text-align: center;
+}
+
+.complete-button {
+    cursor: pointer;
+    display: flex;
+    width: 200px;
+    justify-content: flex-start;
+    padding: .5rem 1rem;
+    border: 1px solid var(--darkdarkGrey);
+    border-radius: .4rem;
+    transition: .1s all ease-in-out;
+}
+
+.complete-button:hover {
+    border: 1px solid var(--accent0);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.complete-button:hover h2 {
+    color: var(--accent0);
+}
+
+.complete-button:hover svg {
+    fill: var(--accent0);
+}
+
+.complete-button:active {
+    border: 1px solid var(--fontBlack);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.complete-button:active h2 {
+    color: var(--fontBlack);
+}
+
+.complete-button:active svg {
+    fill: var(--fontBlack);
 }
