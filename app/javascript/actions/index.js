@@ -40,12 +40,9 @@ export const createTeam = (name) => async (dispatch) => {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
     axios.post('http://localhost:3000/api/teams', { name: name })
-    .then( (data) => {
-        return batch(() => {
-            dispatch(fetchAll())
-            dispatch({ type: 'RESET_UI' })
-            dispatch(amendActiveWorkspace({workspace_id: data.data.id, workspace_name: data.data.name}))
-        })
+    .then((data) => {
+        dispatch({ type: 'SET_IS_LOADING' })
+        dispatch(handleTeamCreation(data.data.id, data.data.name))
     })
 }
 
@@ -70,10 +67,8 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
         team_id: team_id
     })
     .then( (data) => {
-        return batch(() => {
-            dispatch(fetchAll())
-            dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: data.data.id, project_name: data.data.name} })
-        })
+        dispatch({ type: 'SET_IS_LOADING' })
+        dispatch(handleProjectCreation(data.data.id, data.data.name))
     })
 }
 
@@ -138,10 +133,7 @@ export const createTask = (title, description, team_id, project_id, completed, d
         assignee_id: assignee_id
     })
     .then( (data) => {
-        return batch(() => {
-            dispatch(fetchAll())
-            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: data.data.id, task_name: data.data.name} })
-        })
+        dispatch(handleTaskCreation(data.data.id, data.data.name))
     })
 }
 
@@ -212,3 +204,42 @@ export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
         dispatch(fetchAll())
     })
 }
+
+export function handleTeamCreation(team_id, team_name) {
+    return (dispatch) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            return batch(() => {
+                dispatch({ type: 'UNSET_IS_LOADING' })
+                dispatch({ type: 'RESET_UI' })
+                dispatch(amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name}))
+            })
+        })
+    }
+}
+
+export function handleProjectCreation(project_id, project_name) {
+    return (dispatch) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            return batch(() => {
+                dispatch(fetchProjects())
+                dispatch({ type: 'UNSET_IS_LOADING' })
+                dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+            })
+        })
+    }
+}
+
+export function handleTaskCreation(task_id, task_name) {
+    return (dispatch) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            return batch(() => {
+                dispatch(fetchProjects())
+                dispatch(fetchTasks())
+                dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+            })
+        })
+    }
+} 

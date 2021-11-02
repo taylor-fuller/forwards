@@ -38,7 +38,7 @@ class Api::TeamsController < ApplicationController
 
             # iterate through each project and grab the tasks
             team_projects.each do |project|
-                all_projects_tasks = project.tasks
+                all_projects_tasks = project.tasks.order('due_date ASC')
                 # iterate through the tasks and sort into various arrays
                 all_projects_tasks.each do |task|
                     all_team_tasks << task

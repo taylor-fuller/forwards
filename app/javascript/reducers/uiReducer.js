@@ -1,7 +1,11 @@
-export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: '', isModalOpen: false, modalOption: null, initialLoad: true}, action) => {
+export default (state = {activeWorkspace: '', activeSidebarOption: 'Dashboard', activeProject: '', activeTask: '', isModalOpen: false, modalOption: null, initialLoad: true, isLoading: false}, action) => {
     switch(action.type) {
         case 'FETCH_UI':
             return {...state, initialLoad: false}
+        case 'SET_IS_LOADING':
+            return {...state, isLoading: true}
+        case 'UNSET_IS_LOADING':
+            return {...state, isLoading: false}
         case 'AMEND_ACTIVE_WORKSPACE':
             state = {...state, activeWorkspace: action.payload}
             return state

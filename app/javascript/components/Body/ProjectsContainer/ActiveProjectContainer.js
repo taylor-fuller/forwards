@@ -5,6 +5,7 @@ import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
+import { selectTeam } from '../../../reducers';
 
 const override = css`
   display: block;
@@ -146,9 +147,14 @@ const ActiveProjectContainer = (props) => {
 }
 
 const mapStateToProps = state => {
+    let Team = selectTeam(state.teams.all_teams, state.UI.activeWorkspace.workspace_id) || null
+    let Project = Team.projects.find((project) => project.id === state.UI.activeProject.project_id)
+    let Task = Project.tasks.all_tasks.find((task) => task.id === state.UI.activeTask.task_id)
+    
     return { 
-        team: state.teams.all_teams.find((team) => team.id === state.UI.activeWorkspace.workspace_id),
-        project: state.projects.all_projects.find((project) => project.id === state.UI.activeProject.project_id) || null,
+        team: Team,
+        project: Project,
+        task: Task,
         UI: state.UI
     }
 }

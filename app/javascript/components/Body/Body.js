@@ -30,6 +30,9 @@ const Body = (props) => {
         if (props.activeSidebarOption === 'Dashboard' || props.activeSidebarOption === 'My Tasks' || props.activeSidebarOption === 'My Teams' || props.activeSidebarOption === 'My Projects') {
             header = props.activeSidebarOption
         } else {
+            if (props.initialLoad || (!props.activeWorkspace && props.isLoading)) {
+                return null
+            }
             header = props.activeWorkspace.workspace_name
             if (props.activeProject) {
                 header = props.activeProject.project_name
@@ -39,8 +42,8 @@ const Body = (props) => {
     }
 
     function determineRender() {
-        if (props.UI.initialLoad) {
-            return <ClipLoader color={'#ff8851'} loading={props.UI.initialLoad} css={override} size={50} />
+        if (props.UI.initialLoad || props.UI.isLoading) {
+            return <ClipLoader color={'#ff8851'} loading={true} css={override} size={50} />
         }
         if (props.UI.activeSidebarOption === 'Dashboard') {
             return <DashboardContainer />

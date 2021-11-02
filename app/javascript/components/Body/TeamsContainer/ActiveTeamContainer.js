@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useMemo, Fragment } from 'react';
+import React, { useEffect, useRef, useMemo, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { toggleModal, amendActiveProject } from '../../../actions';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
+import { selectTeam } from '../../../reducers';
 
 const override = css`
   display: block;
@@ -95,9 +96,9 @@ const ActiveTeamContainer = (props) => {
         ))
     }
     
-    const Team = useMemo(() => renderTeam(), [props.team])
-    const Projects = useMemo(() => renderProjects(), [props.team])
-    const Members = useMemo(() => renderMembers(), [props.team])
+    const Team = useMemo(() => renderTeam(), [props.team, props.UI.activeWorkspace.workspace_id])
+    const Projects = useMemo(() => renderProjects(), [props.team, props.UI.activeWorkspace.workspace_id])
+    const Members = useMemo(() => renderMembers(), [props.team, props.UI.activeWorkspace.workspace_id])
 
     if (Team && Projects && Members) {
         return(
@@ -143,9 +144,10 @@ const ActiveTeamContainer = (props) => {
 }
     
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
+    let Team = selectTeam(state.teams.all_teams, state.UI.activeWorkspace.workspace_id)
     return { 
-        team: state.teams.all_teams.find((team) => team.id === state.UI.activeWorkspace.workspace_id),
+        team: Team,
         UI: state.UI
     }
 }
