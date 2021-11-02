@@ -110,8 +110,19 @@ const ActiveProjectContainer = (props) => {
         } 
     }
 
+    function renderTaskDetail() {
+        if (props.task) {
+            return (
+                <div>{props.task.title}</div>
+            )
+        } else {
+            return null
+        }
+    }
+
     let project = props.project
     const Tasks = useMemo(() => renderTasks(), [props.project, props.UI.activeTask])
+    const TaskDetail = useMemo(() => renderTaskDetail(), [props.project, props.task])
     
     if (props.project) {
         return(
@@ -137,7 +148,7 @@ const ActiveProjectContainer = (props) => {
                     </div>
                 </div>
                 <div className="project-task-details-container">
-                    
+                    { TaskDetail }
                 </div>
             </div>
         )
