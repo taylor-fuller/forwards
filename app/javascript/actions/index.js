@@ -41,8 +41,14 @@ export const createTeam = (name) => async (dispatch) => {
 
     axios.post('http://localhost:3000/api/teams', { name: name })
     .then((data) => {
+        dispatch(toggleModal(false, null))
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(handleTeamCreation(data.data.id, data.data.name))
+    })
+    .catch((error) => {
+        if (error.response.data) {
+            dispatch({type: 'CREATE_ERRORS', payload: error.response.data})
+        }
     })
 }
 
@@ -70,10 +76,19 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(handleProjectCreation(data.data.id, data.data.name))
     })
+    .catch((error) => {
+        if (error.response.data) {
+            dispatch({type: 'CREATE_ERRORS', payload: error.response.data})
+        }
+    })
 }
 
 export const fetchUI = () => async (dispatch) => {
     dispatch({ type: 'FETCH_UI' })
+}
+
+export const clearErrors = () => async (dispatch) => {
+    dispatch({ type: 'CLEAR_ERRORS' })
 }
 
 export const amendActiveWorkspace = (workspace) => async (dispatch) => {
@@ -132,8 +147,13 @@ export const createTask = (title, description, team_id, project_id, completed, d
         due_date: due_date, 
         assignee_id: assignee_id
     })
-    .then( (data) => {
+    .then((data) => {
         dispatch(handleTaskCreation(data.data.id, data.data.name))
+    })
+    .catch((error) => {
+        if (error.response.data) {
+            dispatch({type: 'CREATE_ERRORS', payload: error.response.data})
+        }
     })
 }
 
@@ -164,7 +184,7 @@ export const patchTeam = (team) => async (dispatch) => {
         name: team.name,
         lead_id: team.lead_id,
     })
-    .then((data) => {
+    .then(() => {
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(handleTeamPatch(team.id, team.name))
     })
@@ -193,7 +213,7 @@ export const patchTask = (task) => async (dispatch) => {
     axios.patch(`http://localhost:3000/api/tasks/${data.id}`, { 
         data: task
     })
-    .then( () => {
+    .then(() => {
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(fetchAll())
     })
@@ -206,7 +226,7 @@ export const toggleTaskComplete = (task_id, bool) => async (dispatch) => {
     axios.patch(`http://localhost:3000/api/tasks/${task_id}`, { 
         completed: bool
     })
-    .then( () => {
+    .then(() => {
         dispatch(fetchAll())
     })
 }
@@ -219,7 +239,7 @@ export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
         id: team_id,
         user_id: user_id
     })
-    .then( () => {
+    .then(() => {
         dispatch(fetchAll())
     })
 }

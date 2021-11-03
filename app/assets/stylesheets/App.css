@@ -53,6 +53,7 @@ table {
     --base1: #23292e;
 	--base2: #343D46;
 	--accent0: #ff8851;
+	--accent0Tint: #ff88519f;
     --accent1: #ff3c00;
     --fontBlack: rgb(80,80,80);
     --grey: rgb(230,230,230);
@@ -129,6 +130,10 @@ body {
     margin: 0 auto;
 }
 
+form input {
+    outline: none;
+}
+
 .ReactModalPortal form select[name="user_id"]  {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -145,7 +150,6 @@ body {
     border-radius: .3rem;
     overflow: hidden;
     transition: all .2s ease-in-out;
-    margin-bottom: 1.5rem;
     display: block;
 }
 
@@ -165,8 +169,12 @@ body {
     border-radius: .3rem;
     overflow: hidden;
     transition: all .2s ease-in-out;
-    margin-bottom: 1.5rem;
     display: block;
+    outline: none;
+}
+
+.ReactModalPortal form input:focus, .ReactModalPortal form textarea:focus, .ReactModalPortal form select:focus {
+    box-shadow: 0 0 0px 4px var(--accent0Tint);
 }
 
 .ReactModalPortal form .form-group-date input {
@@ -207,6 +215,30 @@ body {
 .ReactModalPortal form button[type="submit"]:active {
     transition: all 0s ease-in-out;
     background-color: var(--base0);
+}
+
+body .ReactModalPortal form input.error, body .ReactModalPortal form textarea.error, body .ReactModalPortal form select.error {
+    border: 1px solid red;
+}
+
+body .ReactModalPortal form input.error:focus, body .ReactModalPortal form textarea.error:focus, body .ReactModalPortal form select.error:focus {
+    box-shadow: 0 0 0px 4px rgba(255, 0, 0, 0.4);
+}
+
+.ReactModalPortal form ul {
+    width: 100%;
+    margin-left: 1.5rem;
+    padding-top: .5rem;
+}
+
+li.error-text {
+    list-style-type: disc;
+    font-size: .8rem;
+    color: red;
+}
+
+.ReactModalPortal .form-group, .ReactModalPortal .form-group-date {
+    padding-bottom: 1.5rem;
 }
 
 .button {

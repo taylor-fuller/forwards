@@ -1,4 +1,5 @@
 class Task < ApplicationRecord
+    validates :title, presence: { message: 'Please enter a task title' }, uniqueness: { scope: :project_id, message: 'This task title is already taken' }
     validates :creator_id, :team_id, presence: true
     validates :completed, inclusion: { in: [true, false] }
 

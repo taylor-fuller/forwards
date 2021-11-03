@@ -5,6 +5,7 @@ import uiReducer from "./uiReducer";
 import tasksReducer from "./tasksReducer";
 import teamsLedReducer from "./teamsLedReducer";
 import projectsLedReducer from "./projectsLedReducer";
+import errorsReducer from './errorsReducer'
 import _ from 'lodash'
 
 export default combineReducers({
@@ -14,6 +15,7 @@ export default combineReducers({
     projects_led: projectsLedReducer,
     tasks: tasksReducer,
     UI: uiReducer,
+    errors: errorsReducer
 })
 
 export const selectTeam = (teams, team_id) => {

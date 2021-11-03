@@ -76,31 +76,45 @@ const ActiveProjectContainer = (props) => {
 
     function returnTaskAssigneeName(task_assignee_id) {
         let task_assignee = props.team.members.find((member) => member.id === task_assignee_id)
-        if (!task_assignee.last_name) {
-            return task_assignee.first_name
+        if (task_assignee) {
+            if (!task_assignee.last_name) {
+                return task_assignee.first_name
+            } else {
+                return (task_assignee.first_name + ' ' + task_assignee.last_name)
+            }
         } else {
-            return (task_assignee.first_name + ' ' + task_assignee.last_name)
+            return (
+                <p className='grey'>Unassigned</p>
+            )
         }
     }
 
     function returnTaskAssigneeInitials(task_assignee_id) {
         let task_assignee = props.team.members.find((member) => member.id === task_assignee_id)
-        if (!task_assignee.last_name) {
-            return task_assignee.first_name
+        if (task_assignee) {
+            if (!task_assignee.last_name) {
+                return task_assignee.first_name
+            } else {
+                return (task_assignee.first_name.charAt(0) + task_assignee.last_name.charAt(0))
+            }
         } else {
-            return (task_assignee.first_name.charAt(0) + task_assignee.last_name.charAt(0))
+            return null
         }
     }
 
     function returnTaskAssigneeEmail(task_assignee_id) {
         let task_assignee = props.team.members.find((member) => member.id === task_assignee_id)
-        return task_assignee.email
+        if (task_assignee) {
+            return task_assignee.email
+        } else {
+            return null
+        }
     }
 
     function renderTasks() {
         if (props.project) {
             if (props.project.tasks.all_tasks.length >= 1) {
-                let tasks = props.project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.assignee_id)}>{returnTaskAssigneeName(task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.creator_id)}>{returnTaskAuthorName(task.creator_id)}</h3></div>)
+                let tasks = props.project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h3 title={task.title}>{task.title}</h3> <h3 className={task.due_date ? null : 'grey'}>{ task.due_date ? new Date(task.due_date).toLocaleDateString("en-US") : 'N/A' }</h3> <h3 title={task.assignee_id ? returnTaskAssigneeName(task.assignee_id) : null}>{returnTaskAssigneeName(task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.creator_id)}>{returnTaskAuthorName(task.creator_id)}</h3></div>)
                 return(<div className="project-tasks"><div className="task-header"><h3>Task</h3> <h3>Due Date</h3> <h3>Assigned To</h3> <h3>Assigned By</h3></div> <div className="project-tasks-list">{ tasks }</div></div>)
             } else {
                 return <div className='empty-tasks'>No Active Tasks</div>
@@ -129,26 +143,33 @@ const ActiveProjectContainer = (props) => {
     }
 
     function returnPrettyDate(time) {
-        let day = new Date(time).toLocaleDateString("en-US")
-        let date = new Date(time)
-        let hour = date.getHours()
-        let minutes = date.getMinutes()
+        if (time) {
+            let day = new Date(time).toLocaleDateString("en-US")
+            let date = new Date(time)
+            let hour = date.getHours()
+            let minutes = date.getMinutes()
 
-        if (minutes < 10) {
-            minutes = ':0' + minutes
-        } else if (minutes === 0) {
-            minutes = ''
+            if (minutes < 10) {
+                minutes = ':0' + minutes
+            } else if (minutes === 0) {
+                minutes = ''
+            } else {
+                minutes = ':' + minutes
+            }
+
+            let am_pm = 'AM'
+            if (hour > 12) {
+                hour -= 12
+                am_pm = 'PM'
+            }
+
+            return (<Fragment>{day} <span className='date'>{' by ' + hour + minutes + am_pm}</span></Fragment>)
         } else {
-            minutes = ':' + minutes
+            return (
+                <p className='grey'>N/A</p>
+            )
         }
-
-        let am_pm = 'AM'
-        if (hour > 12) {
-            hour -= 12
-            am_pm = 'PM'
-        }
-
-        return (<Fragment>{day} <span className='date'>{' by ' + hour + minutes + am_pm}</span></Fragment>)
+        
     }
 
     function determineButton(completed) {
@@ -184,14 +205,14 @@ const ActiveProjectContainer = (props) => {
                         <div className="detail-item">
                             <h2>Description</h2>
                             <div className="task-detail-item">
-                                {props.task.description}
+                                {props.task.description ? props.task.description : <p className='grey'>N/A</p>}
                             </div>
                         </div>
                         <div className="detail-item">
                             <h2>Assigned To</h2>
                             <div className="task-detail-item">
                                 <div className="member-container">
-                                    <div className="avatar">{returnTaskAssigneeInitials(props.task.assignee_id)}</div>
+                                    {props.task.assignee_id ? <div className="avatar">{returnTaskAssigneeInitials(props.task.assignee_id)}</div> : null}
                                     <div className='team-member'>{returnTaskAssigneeName(props.task.assignee_id)} <br /><span>{returnTaskAssigneeEmail(props.task.assignee_id)}</span></div>
                                 </div>
                             </div>

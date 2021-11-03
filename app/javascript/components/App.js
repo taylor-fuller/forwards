@@ -57,16 +57,16 @@ const App = (props) => {
 
         switch(type) {
             case 'createTask':
+                console.log(event.target.assignee_id.value)
                 props.createTask(
                     event.target.title.value,
-                    event.target.description.value,
+                    event.target.description.value === '' ? null : event.target.description.value,
                     props.UI.activeWorkspace.workspace_id,
                     props.UI.activeProject.project_id,
                     false,
-                    event.target.due_date.value,
-                    Number(event.target.assignee_id.value),
+                    event.target.due_date.value === '' ? null : event.target.due_date.value,
+                    event.target.assignee_id.value === '' ? null : event.target.assignee_id.value
                 )
-                props.toggleModal(false, null)
                 break;
             case 'createProject':
                 props.createProject(
@@ -74,17 +74,14 @@ const App = (props) => {
                     event.target.description.value,
                     props.UI.activeWorkspace.workspace_id
                 )
-                props.toggleModal(false, null)
                 break;
             case 'createTeam':
                 props.createTeam(
                     event.target.name.value,
                 )
-                props.toggleModal(false, null)
                 break;
             case 'addTeamMember':
                 props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.workspace_id)
-                props.toggleModal(false, null)
                 break;
             case 'patchTask':
                 console.log('patch task')
@@ -97,7 +94,6 @@ const App = (props) => {
                 //     event.target.due_date.value,
                 //     Number(event.target.assignee_id.value),
                 // )
-                props.toggleModal(false, null)
                 break;
             case 'patchProject':
                 props.patchProject({
@@ -106,7 +102,6 @@ const App = (props) => {
                     lead_id: Number(event.target.lead_id.value),
                     id: props.UI.activeProject.project_id
                 })
-                props.toggleModal(false, null)
                 break;
             case 'patchTeam':
                 console.log('patch team')
@@ -115,7 +110,6 @@ const App = (props) => {
                     lead_id: Number(event.target.lead_id.value),
                     id: props.UI.activeWorkspace.workspace_id
                 })
-                props.toggleModal(false, null)
                 break;
         }
     }
