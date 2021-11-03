@@ -103,7 +103,7 @@ const DashboardContainer = (props) => {
         }
     }
 
-    const Overdue = useMemo(() => renderOverdue(), [props.active])
+    const Overdue = useMemo(() => renderOverdue(), [props.tasks.overdue])
     const DueToday = useMemo(() => renderDueToday(), [props.tasks.due_today])
 
     return(

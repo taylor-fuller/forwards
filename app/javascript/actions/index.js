@@ -264,6 +264,7 @@ export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
     })
     .then(() => {
         dispatch(fetchAll())
+        dispatch(toggleModal(false, null))
     })
 }
 
