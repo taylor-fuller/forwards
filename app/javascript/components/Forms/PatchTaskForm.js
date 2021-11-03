@@ -9,7 +9,7 @@ const CreateTaskForm = (props) => {
     const [taskAssignee, setTaskAssignee] = useState(props.task.lead_id)
     const [taskTitle, setTaskTitle] = useState(props.task.title)
     const [taskDescription, setTaskDescription] = useState(props.task.description)
-    const [dueDate, setDueDate] = useState(new Date(props.task.due_date))
+    const [dueDate, setDueDate] = useState(props.task.due_date ? new Date(props.task.due_date) : null)
     const [errors, setErrors] = useState({})
 
     useEffect(() => {
@@ -24,6 +24,10 @@ const CreateTaskForm = (props) => {
         }
     }, [props.errors])
 
+    useEffect(() => {
+        console.log(dueDate)
+    }, [dueDate])
+
     function renderErrors(errors) {
         if (errors) {
             let Errors = errors.map((error, index) => <li key={index} className='error-text'>{error}</li> )
@@ -36,30 +40,6 @@ const CreateTaskForm = (props) => {
     function determineSelects() {
         let members = props.team.members.map(member => <option key={member.id} value={member.id} label={member.first_name + ' ' + member.last_name} id={member.id}>{ member.first_name + ' ' + member.last_name }</option>)
         return members
-    }
-
-    function returnPrettyDate(time) {
-        if (time) {
-            let day = time.toLocaleDateString("en-US")
-            let hour = time.getHours()
-            let minutes = time.getMinutes()
-
-            if (minutes < 10) {
-                minutes = ':0' + minutes
-            } else if (minutes === 0) {
-                minutes = ''
-            } else {
-                minutes = ':' + minutes
-            }
-
-            let am_pm = 'AM'
-            if (hour > 12) {
-                hour -= 12
-                am_pm = 'PM'
-            }
-
-            return day + ' by ' + hour + minutes + am_pm
-        }
     }
 
     return (
@@ -120,7 +100,8 @@ const CreateTaskForm = (props) => {
                         }}
                         id="due_date"
                         name="due_date"
-                        value={dueDate}
+                        value={dueDate ? dueDate : null}
+                        placeholder={dueDate ? null : 'N/A'}
                     />
                 </div>
                 <div className="button">
