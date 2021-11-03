@@ -73,6 +73,7 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
         team_id: team_id
     })
     .then( (data) => {
+        dispatch(toggleModal(false, null))
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(handleProjectCreation(data.data.id, data.data.name))
     })
@@ -149,6 +150,7 @@ export const createTask = (title, description, team_id, project_id, completed, d
     })
     .then((data) => {
         dispatch(handleTaskCreation(data.data.id, data.data.name))
+        dispatch(toggleModal(false, null))
     })
     .catch((error) => {
         if (error.response.data) {
@@ -187,6 +189,12 @@ export const patchTeam = (team) => async (dispatch) => {
     .then(() => {
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(handleTeamPatch(team.id, team.name))
+        dispatch(toggleModal(false, null))
+    })
+    .catch((error) => {
+        if (error.response.data) {
+            dispatch({type: 'CREATE_ERRORS', payload: error.response.data})
+        }
     })
 }
 
@@ -203,6 +211,12 @@ export const patchProject = (project) => async (dispatch) => {
     .then((data) => {
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(handleProjectPatch(project.id, project.name))
+        dispatch(toggleModal(false, null))
+    })
+    .catch((error) => {
+        if (error.response.data) {
+            dispatch({type: 'CREATE_ERRORS', payload: error.response.data})
+        }
     })
 }
 
@@ -216,6 +230,12 @@ export const patchTask = (task) => async (dispatch) => {
     .then(() => {
         dispatch({ type: 'SET_IS_LOADING' })
         dispatch(fetchAll())
+        dispatch(toggleModal(false, null))
+    })
+    .catch((error) => {
+        if (error.response.data) {
+            dispatch({type: 'CREATE_ERRORS', payload: error.response.data})
+        }
     })
 }
 

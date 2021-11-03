@@ -2,10 +2,33 @@ import React, { useState, useEffect } from 'react';
 import "flatpickr/dist/themes/material_orange.css";
 import Flatpickr from "react-flatpickr";
 import { connect } from 'react-redux';
+import { clearErrors } from '../../actions';
 
 const CreateTaskForm = (props) => {
     const [teamMember, setTeamMember] = useState('')
     const [dueDate, setDueDate] = useState(null)
+    const [errors, setErrors] = useState({})
+
+    useEffect(() => {
+        return () => {
+            props.clearErrors()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (props.errors) {
+            setErrors(props.errors)
+        }
+    }, [props.errors])
+
+    function renderErrors(errors) {
+        if (errors) {
+            let Errors = errors.map((error, index) => <li key={index} className='error-text'>{error}</li> )
+            return (<ul>{Errors}</ul>)
+        } else {
+            return null
+        }
+    }
 
     function determineSelects() {
         let team = props.teams.all_teams.filter((team) => team.id === props.UI.activeWorkspace.workspace_id)
@@ -31,7 +54,9 @@ const CreateTaskForm = (props) => {
                         placeholder="Task Title"
                         autoComplete="off"
                         autoFocus="autofocus"
+                        className={errors.title ? 'error' : null}
                     />
+                    { renderErrors(errors.title) }
                 </div>
                 <div className="form-group">
                     <label htmlFor="description"></label>
@@ -83,8 +108,9 @@ const CreateTaskForm = (props) => {
 const mapStateToProps = state => {
     return { 
         teams: state.teams,
-        UI: state.UI
+        UI: state.UI,
+        errors: state.errors
     }
 }
 
-export default connect(mapStateToProps)(CreateTaskForm);
+export default connect(mapStateToProps, {clearErrors})(CreateTaskForm);

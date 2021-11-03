@@ -1,7 +1,6 @@
 class Team < ApplicationRecord
-    validates :name, presence: { message: 'Please enter a team name' }
+    validates :name, presence: { message: 'Please enter a team name' }, uniqueness: { message: 'This team name is already taken' }
     validates :lead_id, presence: true
-    validates :name, uniqueness: { scope: :lead_id, message: 'This team name is already taken' }
 
     belongs_to :lead, class_name: :User
     has_many :user_teams, class_name: :UserTeam

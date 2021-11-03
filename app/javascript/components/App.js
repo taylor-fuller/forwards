@@ -57,7 +57,6 @@ const App = (props) => {
 
         switch(type) {
             case 'createTask':
-                console.log(event.target.assignee_id.value)
                 props.createTask(
                     event.target.title.value,
                     event.target.description.value === '' ? null : event.target.description.value,
@@ -104,7 +103,6 @@ const App = (props) => {
                 })
                 break;
             case 'patchTeam':
-                console.log('patch team')
                 props.patchTeam({
                     name: event.target.name.value,
                     lead_id: Number(event.target.lead_id.value),

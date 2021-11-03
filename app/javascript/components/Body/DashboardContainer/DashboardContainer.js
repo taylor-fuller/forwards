@@ -115,12 +115,12 @@ const DashboardContainer = (props) => {
                     { DueToday }
                 </div>
             </div>
-            <div className="dashboard-favorites">
+            {/* <div className="dashboard-favorites">
                 <h2>Favorite Projects</h2>
                 <div className="favorites">
                     
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

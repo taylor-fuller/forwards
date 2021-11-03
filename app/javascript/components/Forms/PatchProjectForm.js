@@ -1,11 +1,34 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectTeam } from '../../reducers';
+import { clearErrors } from '../../actions';
 
 const PatchProjectForm = (props) => {
     const [projectName, setProjectName] = useState(props.project.name)
     const [projectDescription, setProjectDescription] = useState(props.project.description)
     const [projectLead, setProjectLead] = useState(props.project.lead_id)
+    const [errors, setErrors] = useState({})
+
+    useEffect(() => {
+        return () => {
+            props.clearErrors()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (props.errors) {
+            setErrors(props.errors)
+        }
+    }, [props.errors])
+
+    function renderErrors(errors) {
+        if (errors) {
+            let Errors = errors.map((error, index) => <li key={index} className='error-text'>{error}</li> )
+            return (<ul>{Errors}</ul>)
+        } else {
+            return null
+        }
+    }
 
     function renderSelects() {
         if (props.team.members.length === 1) {
@@ -50,7 +73,9 @@ const PatchProjectForm = (props) => {
                         autoComplete="off"
                         autoFocus="autofocus"
                         onChange={(event) => setProjectName(event.target.value)}
+                        className={errors.name ? 'error' : null}
                     />
+                    { renderErrors(errors.name) }
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Project Description</label>
@@ -80,8 +105,9 @@ const mapStateToProps = state => {
     return { 
         team: Team,
         project: Project,
-        UI: state.UI
+        UI: state.UI,
+        errors: state.errors
     }
 }
 
-export default connect(mapStateToProps)(PatchProjectForm);
+export default connect(mapStateToProps, {clearErrors})(PatchProjectForm);

@@ -1,10 +1,33 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { selectTeam } from '../../reducers';
+import { clearErrors } from '../../actions';
 
 const PatchTeamForm = (props) => {
     const [teamName, setTeamName] = useState(props.team.name)
     const [teamLead, setTeamLead] = useState(props.team.lead_id)
+    const [errors, setErrors] = useState({})
+
+    useEffect(() => {
+        return () => {
+            props.clearErrors()
+        }
+    }, [])
+
+    useEffect(() => {
+        if (props.errors) {
+            setErrors(props.errors)
+        }
+    }, [props.errors])
+
+    function renderErrors(errors) {
+        if (errors) {
+            let Errors = errors.map((error, index) => <li key={index} className='error-text'>{error}</li> )
+            return (<ul>{Errors}</ul>)
+        } else {
+            return null
+        }
+    }
 
     function renderSelects() {
         if (props.team.members.length === 1) {
@@ -49,7 +72,9 @@ const PatchTeamForm = (props) => {
                         autoComplete="off"
                         autoFocus="autofocus"
                         onChange={(event) => setTeamName(event.target.value)}
+                        className={errors.name ? 'error' : null}
                     />
+                    { renderErrors(errors.name) }
                 </div>
                 { renderSelects() }
                 <div className="button">
@@ -65,8 +90,9 @@ const mapStateToProps = state => {
     
     return { 
         team: Team,
-        UI: state.UI
+        UI: state.UI,
+        errors: state.errors
     }
 }
 
-export default connect(mapStateToProps)(PatchTeamForm);
+export default connect(mapStateToProps, {clearErrors})(PatchTeamForm);
