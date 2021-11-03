@@ -224,12 +224,15 @@ export const patchTask = (task) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch(`http://localhost:3000/api/tasks/${data.id}`, { 
-        data: task
+    axios.patch(`http://localhost:3000/api/tasks/${task.id}`, { 
+        title: task.title,
+        description: task.description,
+        due_date: task.due_date, 
+        assignee_id: task.assignee_id
     })
-    .then(() => {
+    .then((data) => {
         dispatch({ type: 'SET_IS_LOADING' })
-        dispatch(fetchAll())
+        dispatch(handleTaskPatch(task.id, task.name))
         dispatch(toggleModal(false, null))
     })
     .catch((error) => {
@@ -328,7 +331,7 @@ export function handleProjectPatch(project_id, project_name) {
     }
 }
 
-export function handleTaskPatch() {
+export function handleTaskPatch(task_id, task_name) {
     return (dispatch) => {
         return dispatch(fetchTeams())
         .then(() => {
@@ -336,6 +339,7 @@ export function handleTaskPatch() {
                 dispatch(fetchProjects())
                 dispatch(fetchTasks())
                 dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+                dispatch({ type: 'UNSET_IS_LOADING' })
             })
         })
     }

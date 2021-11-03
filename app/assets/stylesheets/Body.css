@@ -41,7 +41,7 @@ header a:hover {
     text-decoration: underline;
 }
 
-header span {
+header span, .project-task-details-container h2 span {
     display: flex;
     width: auto;
     height: 30px;
@@ -49,12 +49,12 @@ header span {
     cursor: pointer;
 }
 
-header span svg {
+header span svg, .project-task-details-container h2 span svg {
     margin: auto;
     transition: .1s all ease-in-out;
 }
 
-header span:hover svg {
+header span:hover svg, .project-task-details-container h2 span:hover svg {
     transform: scale(1.2);
     fill: var(--accent0);
     transition: .1s all ease-in-out;
@@ -575,13 +575,15 @@ body .avatar-small {
 }
 
 .project-tasks-container-header h2, .projects-tasks-container-tasks h2, .project-task-details-container-header h2 {
-    padding: 2rem;
+    padding: 0 2rem;
     font-size: 1.2rem;
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
     background-color: var(--grey);
     border-bottom: 1px solid var(--darkGrey);
     height: 90px;
+    display: flex;
+    align-items: center;
 }
 
 .project-tasks-overview {

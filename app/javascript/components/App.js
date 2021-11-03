@@ -83,16 +83,13 @@ const App = (props) => {
                 props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.workspace_id)
                 break;
             case 'patchTask':
-                console.log('patch task')
-                // props.patchTask(
-                //     event.target.title.value,
-                //     event.target.description.value,
-                //     props.UI.activeWorkspace.workspace_id,
-                //     props.UI.activeProject.project_id,
-                //     false,
-                //     event.target.due_date.value,
-                //     Number(event.target.assignee_id.value),
-                // )
+                props.patchTask({
+                    title: event.target.title.value,
+                    description: event.target.description.value,
+                    id: props.UI.activeTask.task_id,
+                    due_date: event.target.due_date.value,
+                    assignee_id: event.target.assignee_id.value
+                })
                 break;
             case 'patchProject':
                 props.patchProject({

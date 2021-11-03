@@ -3,6 +3,7 @@ import { clearErrors } from '../../actions';
 import "flatpickr/dist/themes/material_orange.css";
 import Flatpickr from "react-flatpickr";
 import { connect } from 'react-redux';
+import { selectTeam } from '../../reducers';
 
 const CreateTaskForm = (props) => {
     const [teamMember, setTeamMember] = useState('')
@@ -31,16 +32,10 @@ const CreateTaskForm = (props) => {
     }
 
     function determineSelects() {
-        let team = props.teams.all_teams.filter((team) => team.id === props.UI.activeWorkspace.workspace_id)
-        let Members
-
-        if (team[0]) {
-            Members = team[0].members.map(member => <option key={member.id} value={member.id} label={member.first_name + ' ' + member.last_name} id={member.id}>{ member.first_name + ' ' + member.last_name }</option>)
-            return (
-                Members
-            )
-        }
+        let members = props.team.members.map(member => <option key={member.id} value={member.id} label={member.first_name + ' ' + member.last_name} id={member.id}>{ member.first_name + ' ' + member.last_name }</option>)
+        return members
     }
+    
     return (
         <div className="form">
             <h2>Create A Task</h2>
@@ -107,8 +102,10 @@ const CreateTaskForm = (props) => {
 }
 
 const mapStateToProps = state => {
+    let Team = selectTeam(state.teams.all_teams, state.UI.activeWorkspace.workspace_id) || null
+
     return { 
-        teams: state.teams,
+        team: Team,
         UI: state.UI,
         errors: state.errors
     }
