@@ -156,15 +156,33 @@ export const toggleModal = (bool, option) => async (dispatch) => {
     })
 }
 
+export const patchTeam = (team) => async (dispatch) => {
+    const csrfToken = document.querySelector('[name="csrf-token"]').content
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
+
+    axios.patch(`http://localhost:3000/api/teams/${team.id}`, { 
+        name: team.name,
+        lead_id: team.lead_id,
+    })
+    .then((data) => {
+        dispatch({ type: 'SET_IS_LOADING' })
+        dispatch(handleTeamPatch(team.id, team.name))
+    })
+}
+
 export const patchProject = (project) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch(`http://localhost:3000/api/projects/${data.id}`, { 
-        data: project
+    axios.patch(`http://localhost:3000/api/projects/${project.id}`, { 
+        name: project.name,
+        description: project.description,
+        lead_id: project.lead_id,
+        team_id: project.team_id,
     })
-    .then( () => {
-        dispatch(fetchAll())
+    .then((data) => {
+        dispatch({ type: 'SET_IS_LOADING' })
+        dispatch(handleProjectPatch(project.id, project.name))
     })
 }
 
@@ -176,6 +194,7 @@ export const patchTask = (task) => async (dispatch) => {
         data: task
     })
     .then( () => {
+        dispatch({ type: 'SET_IS_LOADING' })
         dispatch(fetchAll())
     })
 }
@@ -232,6 +251,44 @@ export function handleProjectCreation(project_id, project_name) {
 }
 
 export function handleTaskCreation(task_id, task_name) {
+    return (dispatch) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            return batch(() => {
+                dispatch(fetchProjects())
+                dispatch(fetchTasks())
+                dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+            })
+        })
+    }
+}
+
+export function handleTeamPatch(team_id, team_name) {
+    return (dispatch) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            return batch(() => {
+                dispatch(amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name}))
+                dispatch({ type: 'UNSET_IS_LOADING' })
+            })
+        })
+    }
+}
+
+export function handleProjectPatch(project_id, project_name) {
+    return (dispatch) => {
+        return dispatch(fetchTeams())
+        .then(() => {
+            return batch(() => {
+                dispatch(fetchProjects())
+                dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: { project_id: project_id, project_name: project_name }})
+                dispatch({ type: 'UNSET_IS_LOADING' })
+            })
+        })
+    }
+}
+
+export function handleTaskPatch() {
     return (dispatch) => {
         return dispatch(fetchTeams())
         .then(() => {

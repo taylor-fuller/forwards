@@ -3,7 +3,7 @@ import "../../assets/stylesheets/App.css"
 import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import { connect } from 'react-redux';
-import { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam } from '../actions';
+import { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam, patchProject, patchTeam } from '../actions';
 import Modal from 'react-modal';
 import CreateProjectForm from './Forms/CreateProjectForm';
 import CreateTeamForm from './Forms/CreateTeamForm';
@@ -41,7 +41,7 @@ const App = (props) => {
                 return <CreateTeamForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
             case 'addTeamMember':
                 return <AddTeamMemberForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
-            case 'patch task':
+            case 'patchTask':
                 return <PatchTaskForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
             case 'patchProject':
                 return <PatchProjectForm onSubmit={(event) => {handleFormSubmit(event, type)}}/>
@@ -86,8 +86,8 @@ const App = (props) => {
                 props.addUserToTeam(event.target.user_id.value, props.UI.activeWorkspace.workspace_id)
                 props.toggleModal(false, null)
                 break;
-            case 'patch task':
-                console.log()
+            case 'patchTask':
+                console.log('patch task')
                 // props.patchTask(
                 //     event.target.title.value,
                 //     event.target.description.value,
@@ -100,19 +100,21 @@ const App = (props) => {
                 props.toggleModal(false, null)
                 break;
             case 'patchProject':
-                console.log('patch project')
-                // props.patchProject(
-                //     event.target.name.value,
-                //     event.target.description.value,
-                //     props.UI.activeWorkspace.workspace_id
-                // )
+                props.patchProject({
+                    name: event.target.name.value,
+                    description: event.target.description.value,
+                    lead_id: Number(event.target.lead_id.value),
+                    id: props.UI.activeProject.project_id
+                })
                 props.toggleModal(false, null)
                 break;
             case 'patchTeam':
                 console.log('patch team')
-                // props.patchTeam(
-                //     event.target.name.value,
-                // )
+                props.patchTeam({
+                    name: event.target.name.value,
+                    lead_id: Number(event.target.lead_id.value),
+                    id: props.UI.activeWorkspace.workspace_id
+                })
                 props.toggleModal(false, null)
                 break;
         }
@@ -146,4 +148,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam })(App);
+export default connect(mapStateToProps, { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam, patchProject, patchTeam })(App);

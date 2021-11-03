@@ -26,6 +26,7 @@ header h2 {
     margin: auto 0;
     font-size: 1.5rem;
     font-family: 'Montserrat', sans-serif;
+    display: flex;
 }
 
 header a {
@@ -38,6 +39,25 @@ header a {
 header a:hover {
     color: var(--accent1);
     text-decoration: underline;
+}
+
+header span {
+    display: flex;
+    width: auto;
+    height: 30px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+header span svg {
+    margin: auto;
+    transition: .1s all ease-in-out;
+}
+
+header span:hover svg {
+    transform: scale(1.2);
+    fill: var(--accent0);
+    transition: .1s all ease-in-out;
 }
 
 .task-container, .projects-container, .teams-container {
@@ -711,4 +731,9 @@ body .avatar-small {
 
 .complete-button:active svg {
     fill: var(--fontBlack);
+}
+
+.small-red {
+    color: rgba(255, 0, 0, 0.7);
+    padding-bottom: .5rem;
 }

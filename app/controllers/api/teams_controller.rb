@@ -154,11 +154,11 @@ class Api::TeamsController < ApplicationController
     # PATCH/PUT /teams/1 or /teams/1.json
     def update
         respond_to do |format|
-        if @team.update(team_params)
-            format.json { render :show, status: :ok, location: @team }
-        else
-            format.json { render json: @team.errors, status: :unprocessable_entity }
-        end
+            if @team.update(team_params)
+                format.json { render json: @team, status: :ok }
+            else
+                format.json { render json: @team.errors, status: :unprocessable_entity }
+            end
         end
     end
 
@@ -178,6 +178,6 @@ class Api::TeamsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def team_params
-        params.require(:team).permit(:id, :name)
+        params.require(:team).permit(:id, :name, :lead_id)
     end
 end

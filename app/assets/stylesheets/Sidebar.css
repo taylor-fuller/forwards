@@ -117,9 +117,12 @@ h1 {
 
 .sidebar-workspace .text-item span.sub {
     display: flex;
+    justify-content: flex-start;
     align-content: center;
     line-height: normal;
+    white-space: nowrap;
     text-overflow: ellipsis;
+    overflow-x: hidden;
     font-family: 'Montserrat', sans-serif;
     font-size: 12px;
 }

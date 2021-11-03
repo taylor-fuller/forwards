@@ -94,7 +94,7 @@ class Api::ProjectsController < ApplicationController
     def update
         respond_to do |format|
         if @project.update(project_params)
-            format.json { render :show, status: :ok }
+            format.json { render json: @project, status: :ok }
         else
             format.json { render json: @project.errors, status: :unprocessable_entity }
         end

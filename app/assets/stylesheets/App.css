@@ -149,7 +149,7 @@ body {
     display: block;
 }
 
-.ReactModalPortal form input[name="name"], .ReactModalPortal form textarea[name="description"], .ReactModalPortal form input[name="title"], .ReactModalPortal form select[name="assignee_id"], .ReactModalPortal form .form-group-date input {
+.ReactModalPortal form input[name="name"], .ReactModalPortal form textarea[name="description"], .ReactModalPortal form input[name="title"], .ReactModalPortal form select[name="assignee_id"], .ReactModalPortal form .form-group-date input, .ReactModalPortal form select[name="lead_id"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;

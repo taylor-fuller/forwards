@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../../../assets/stylesheets/Body'
 import { connect } from 'react-redux';
-import { resetUI, resetLoad } from '../../actions';
+import { resetUI, resetLoad, toggleModal } from '../../actions';
 import MyTeamsContainer from './TeamsContainer/MyTeamsContainer';
 import MyProjectsContainer from './ProjectsContainer/MyProjectsContainer';
 import MyTasksContainer from './TasksContainer/MyTasksContainer';
@@ -62,12 +62,26 @@ const Body = (props) => {
         }
     }
 
+    function renderEditButton() {
+        if (props.activeSidebarOption === 'Dashboard' || props.activeSidebarOption === 'My Tasks' || props.activeSidebarOption === 'My Teams' || props.activeSidebarOption === 'My Projects') {
+            return null
+        } else {
+            if (props.UI.activeWorkspace && !props.UI.activeProject) {
+                let editIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)" onClick={() => props.toggleModal(true, 'patchTeam')}><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+                return editIcon
+            } else if (props.UI.activeProject) {
+                let editIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)" onClick={() => props.toggleModal(true, 'patchProject')}><path d="M0 0h24v24H0V0z" fill="none"/><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg>
+                return editIcon
+            }
+        }
+    }
+
     const Header = determineHeader(props.UI)
     const Body = determineRender()
 
     return (
         <div className="body-content">
-            <header className="header"><h2>{ Header }</h2><a href="http://localhost:3000/users/sign_out" onClick={() => { props.resetLoad(); props.resetUI();  }}>Logout</a> </header>
+            <header className="header"><h2>{ Header } <span>{renderEditButton()}</span></h2><a href="http://localhost:3000/users/sign_out" onClick={() => { props.resetLoad(); props.resetUI();  }}>Logout</a> </header>
             { Body }
         </div>
     )
@@ -79,4 +93,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { resetUI, resetLoad })(Body);
+export default connect(mapStateToProps, { resetUI, resetLoad, toggleModal })(Body);

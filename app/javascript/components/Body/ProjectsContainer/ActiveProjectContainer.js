@@ -99,8 +99,8 @@ const ActiveProjectContainer = (props) => {
 
     function renderTasks() {
         if (props.project) {
-            if (project.tasks.all_tasks.length >= 1) {
-                let tasks = project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.assignee_id)}>{returnTaskAssigneeName(task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.creator_id)}>{returnTaskAuthorName(task.creator_id)}</h3></div>)
+            if (props.project.tasks.all_tasks.length >= 1) {
+                let tasks = props.project.tasks.all_tasks.map(task => <div key={task.id} id={task.id} className={ (task.completed ? 'task-item completed' : 'task-item') + (task.id === props.UI.activeTask.task_id ? ' active' : '')} onClick={(event) => handleTaskSelect(event, task.id, task.title)} ref={props.UI.activeTask.task_id === task.id ? taskRef : null}><h3 title={task.title}>{task.title}</h3> <h3>{new Date(task.due_date).toLocaleDateString("en-US")}</h3> <h3 title={returnTaskAssigneeName(task.assignee_id)}>{returnTaskAssigneeName(task.assignee_id)}</h3> <h3 title={returnTaskAuthorName(task.creator_id)}>{returnTaskAuthorName(task.creator_id)}</h3></div>)
                 return(<div className="project-tasks"><div className="task-header"><h3>Task</h3> <h3>Due Date</h3> <h3>Assigned To</h3> <h3>Assigned By</h3></div> <div className="project-tasks-list">{ tasks }</div></div>)
             } else {
                 return <div className='empty-tasks'>No Active Tasks</div>
@@ -127,10 +127,6 @@ const ActiveProjectContainer = (props) => {
             props.amendActiveTask(task_id, task_name, props.UI.activeProject.project_id, props.UI.activeProject.project_name, {workspace_id: props.UI.activeWorkspace.workspace_id, workspace_name: props.UI.activeWorkspace.workspace_name})
         } 
     }
-
-    useEffect(() => {
-        console.log(props.task)
-    })
 
     function returnPrettyDate(time) {
         let day = new Date(time).toLocaleDateString("en-US")
@@ -224,9 +220,25 @@ const ActiveProjectContainer = (props) => {
         }
     }
 
-    let project = props.project
-    const Tasks = useMemo(() => renderTasks(), [props.project, props.UI.activeTask])
-    const TaskDetail = useMemo(() => renderTaskDetail(), [props.project, props.task])
+    function renderProject() {
+        return (
+            <div className="project-tasks-overview">
+                <div className="project-info">
+                    <div className="project-info-item"><div className="project-info-item-header">Overdue</div><h3 className={props.project.tasks.overdue.length === 0 ? "grey" : 'red'}>{props.project.tasks.overdue.length}</h3></div>
+                    <div className="project-info-item"><div className="project-info-item-header">Due Today</div><h3 className={props.project.tasks.due_today.length === 0 ? "grey" : 'red'}>{props.project.tasks.due_today.length}</h3></div>
+                    <div className="project-info-item"><div className="project-info-item-header">Due Soon</div><h3 className={props.project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{props.project.tasks.due_soon.length}</h3></div>
+                    <div className="project-info-item"><div className="project-info-item-header">Active Tasks</div><h3>{props.project.tasks.all_tasks.length}</h3></div>
+                    <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((props.project.tasks.completed.length/props.project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={(Math.round((props.project.tasks.completed.length/props.project.tasks.all_tasks.length)*100))} text={`${(Math.round((props.project.tasks.completed.length/props.project.tasks.all_tasks.length)*100))}%`} styles={buildStyles({rotation: 0.5})}/></div>}</h3></div>
+                    <div className="project-info-item"><div className="project-info-item-header">Project Lead</div><div className="lead">
+                    <div className="member-container"><div className="avatar">{returnProjectLeadInitials()}</div><div className='team-member'>{returnProjectLeadName()} <br /><span>{returnProjectLeadEmail()}</span></div></div></div></div>
+                </div>
+            </div>
+        )
+    }
+
+    const Project = useMemo(() => renderProject(), [props.team, props.UI.activeProject])
+    const Tasks = useMemo(() => renderTasks(), [props.team, props.UI.activeTask])
+    const TaskDetail = useMemo(() => renderTaskDetail(), [props.team, props.task])
     
     if (props.project) {
         return(
@@ -235,17 +247,7 @@ const ActiveProjectContainer = (props) => {
                     <div className="project-tasks-container-header">
                         <h2>Overview</h2>
                     </div>
-                    <div className="project-tasks-overview">
-                        <div className="project-info">
-                            <div className="project-info-item"><div className="project-info-item-header">Overdue</div><h3 className={project.tasks.overdue.length === 0 ? "grey" : 'red'}>{project.tasks.overdue.length}</h3></div>
-                            <div className="project-info-item"><div className="project-info-item-header">Due Today</div><h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3></div>
-                            <div className="project-info-item"><div className="project-info-item-header">Due Soon</div><h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3></div>
-                            <div className="project-info-item"><div className="project-info-item-header">Active Tasks</div><h3>{project.tasks.all_tasks.length}</h3></div>
-                            <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))} text={`${(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))}%`} styles={buildStyles({rotation: 0.5})}/></div>}</h3></div>
-                            <div className="project-info-item"><div className="project-info-item-header">Project Lead</div><div className="lead">
-                            <div className="member-container"><div className="avatar">{returnProjectLeadInitials()}</div><div className='team-member'>{returnProjectLeadName()} <br /><span>{returnProjectLeadEmail()}</span></div></div></div></div>
-                        </div>
-                    </div>
+                     { Project }
                     <div className="projects-tasks-container-tasks">
                         <h2>Tasks <span className='icon' onClick={() => props.toggleModal(true, 'createTask')}>{addIcon}</span></h2>
                             { Tasks }
