@@ -21,50 +21,50 @@ User.create!([
 ])
 
 Team.create!([
-  {name: "Engineering", lead_id: 1},
-  {name: "Marketing", lead_id: 1},
+  {name: "Engineering", lead_id: 5},
+  {name: "Marketing", lead_id: 3},
   {name: "Recruiting", lead_id: 1},
-  {name: "Sales", lead_id: 1}
+  {name: "Sales", lead_id: 4}
 ])
 
 Project.create!([
-  {name: "Engineering Project 1", description: "Description - Engineering Project 1", lead_id: 1, team_id: 1},
-  {name: "Engineering Project 2", description: "Description - Engineering Project 2", lead_id: 1, team_id: 1},
-  {name: "Engineering Project 3", description: "Description - Engineering Project 3", lead_id: 1, team_id: 1},
-  {name: "Engineering Project 4", description: "Description - Engineering Project 4", lead_id: 1, team_id: 1},
-  {name: "Engineering Project 5", description: "Description - Engineering Project 5", lead_id: 1, team_id: 1},
-  {name: "Engineering Project 6", description: "Description - Engineering Project 6", lead_id: 1, team_id: 1},
-  {name: "Engineering Project 7", description: "Description - Engineering Project 7", lead_id: 1, team_id: 1},
-  {name: "Marketing Project 1", description: "Description - Marketing Project 1", lead_id: 1, team_id: 2},
-  {name: "Marketing Project 2", description: "Description - Marketing Project 2", lead_id: 1, team_id: 2},
-  {name: "Marketing Project 3", description: "Description - Marketing Project 3", lead_id: 1, team_id: 2},
-  {name: "Recruiting Project 1", description: "Description - Recruiting Project 1", lead_id: 2, team_id: 3},
-  {name: "Recruiting Project 2", description: "Description - Recruiting Project 2", lead_id: 2, team_id: 3},
-  {name: "Recruiting Project 3", description: "Description - Recruiting Project 3", lead_id: 2, team_id: 3}
+  {name: "Engineering Project 1", description: "Description - Engineering Project 1", lead_id: 5, team_id: 1},
+  {name: "Engineering Project 2", description: "Description - Engineering Project 2", lead_id: 5, team_id: 1},
+  {name: "Engineering Project 3", description: "Description - Engineering Project 3", lead_id: 5, team_id: 1},
+  {name: "Engineering Project 4", description: "Description - Engineering Project 4", lead_id: 5, team_id: 1},
+  {name: "Engineering Project 5", description: "Description - Engineering Project 5", lead_id: 5, team_id: 1},
+  {name: "Engineering Project 6", description: "Description - Engineering Project 6", lead_id: 5, team_id: 1},
+  {name: "Engineering Project 7", description: "Description - Engineering Project 7", lead_id: 5, team_id: 1},
+  {name: "Marketing Project 1", description: "Description - Marketing Project 1", lead_id: 3, team_id: 2},
+  {name: "Marketing Project 2", description: "Description - Marketing Project 2", lead_id: 3, team_id: 2},
+  {name: "Marketing Project 3", description: "Description - Marketing Project 3", lead_id: 3, team_id: 2},
+  {name: "Recruiting Project 1", description: "Description - Recruiting Project 1", lead_id: 1, team_id: 3},
+  {name: "Recruiting Project 2", description: "Description - Recruiting Project 2", lead_id: 1, team_id: 3},
+  {name: "Recruiting Project 3", description: "Description - Recruiting Project 3", lead_id: 1, team_id: 3}
 ])
 
 Task.create!([
-  {title: "Engineering Project 1 Task 1", description: "Description - Engineering Project 1 Task 1", completed: false, due_date: "2021-10-22T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 1, team_id: 1},
-  {title: "Engineering Project 1 Task 2", description: "Description - Engineering Project 1 Task 2", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 1, team_id: 1},
-  {title: "Engineering Project 1 Task 3", description: "Description - Engineering Project 1 Task 3", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 1, team_id: 1},
-  {title: "Engineering Project 1 Task 4", description: "Description - Engineering Project 1 Task 4", completed: false, due_date: "2021-10-30T23:15:29.947Z", creator_id: 1, assignee_id: 2, project_id: 1, team_id: 1},
-  {title: "Engineering Project 1 Task 5", description: "Description - Engineering Project 1 Task 5", completed: false, due_date: "2021-10-19T23:15:29.947Z", creator_id: 1, assignee_id: 4, project_id: 1, team_id: 1},
-  {title: "Engineering Project 1 Task 6", description: "Description - Engineering Project 1 Task 6", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 1, assignee_id: 3, project_id: 1, team_id: 1},
-  {title: "Engineering Project 1 Task 7", description: "Description - Engineering Project 1 Task 7", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 1, team_id: 1},
-  {title: "Engineering Project 2 Task 1", description: "Description - Engineering Project 2 Task 1", completed: false, due_date: "2021-10-22T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 2, team_id: 1},
-  {title: "Engineering Project 2 Task 2", description: "Description - Engineering Project 2 Task 1", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 2, team_id: 1},
-  {title: "Engineering Project 2 Task 3", description: "Description - Engineering Project 2 Task 2", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 2, team_id: 1},
-  {title: "Engineering Project 2 Task 4", description: "Description - Engineering Project 2 Task 3", completed: false, due_date: "2021-10-30T23:15:29.947Z", creator_id: 1, assignee_id: 2, project_id: 2, team_id: 1},
-  {title: "Engineering Project 2 Task 5", description: "Description - Engineering Project 2 Task 4", completed: false, due_date: "2021-10-19T23:15:29.947Z", creator_id: 1, assignee_id: 4, project_id: 2, team_id: 1},
-  {title: "Engineering Project 2 Task 6", description: "Description - Engineering Project 2 Task 5", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 1, assignee_id: 3, project_id: 2, team_id: 1},
-  {title: "Engineering Project 2 Task 7", description: "Description - Engineering Project 2 Task 6", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 2, team_id: 1},
-  {title: "Engineering Project 3 Task 1", description: "Description - Engineering Project 3 Task 1", completed: false, due_date: "2021-10-22T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 3, team_id: 1},
-  {title: "Engineering Project 3 Task 2", description: "Description - Engineering Project 3 Task 2", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 3, team_id: 1},
-  {title: "Engineering Project 3 Task 3", description: "Description - Engineering Project 3 Task 3", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 3, team_id: 1},
-  {title: "Engineering Project 3 Task 4", description: "Description - Engineering Project 3 Task 4", completed: false, due_date: "2021-10-30T23:15:29.947Z", creator_id: 1, assignee_id: 2, project_id: 3, team_id: 1},
-  {title: "Engineering Project 3 Task 5", description: "Description - Engineering Project 3 Task 5", completed: false, due_date: "2021-10-19T23:15:29.947Z", creator_id: 1, assignee_id: 4, project_id: 3, team_id: 1},
-  {title: "Engineering Project 3 Task 6", description: "Description - Engineering Project 3 Task 6", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 1, assignee_id: 3, project_id: 3, team_id: 1},
-  {title: "Engineering Project 3 Task 7", description: "Description - Engineering Project 3 Task 7", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 1, assignee_id: 1, project_id: 3, team_id: 1},
+  {title: "Engineering Project 1 Task 1", description: "Description - Engineering Project 1 Task 1", completed: false, due_date: "2021-10-22T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 1, team_id: 1},
+  {title: "Engineering Project 1 Task 2", description: "Description - Engineering Project 1 Task 2", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 1, team_id: 1},
+  {title: "Engineering Project 1 Task 3", description: "Description - Engineering Project 1 Task 3", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 1, team_id: 1},
+  {title: "Engineering Project 1 Task 4", description: "Description - Engineering Project 1 Task 4", completed: false, due_date: "2021-10-30T23:15:29.947Z", creator_id: 5, assignee_id: 2, project_id: 1, team_id: 1},
+  {title: "Engineering Project 1 Task 5", description: "Description - Engineering Project 1 Task 5", completed: false, due_date: "2021-10-19T23:15:29.947Z", creator_id: 5, assignee_id: 4, project_id: 1, team_id: 1},
+  {title: "Engineering Project 1 Task 6", description: "Description - Engineering Project 1 Task 6", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 5, assignee_id: 3, project_id: 1, team_id: 1},
+  {title: "Engineering Project 1 Task 7", description: "Description - Engineering Project 1 Task 7", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 1, team_id: 1},
+  {title: "Engineering Project 2 Task 1", description: "Description - Engineering Project 2 Task 1", completed: false, due_date: "2021-10-22T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 2, team_id: 1},
+  {title: "Engineering Project 2 Task 2", description: "Description - Engineering Project 2 Task 1", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 2, team_id: 1},
+  {title: "Engineering Project 2 Task 3", description: "Description - Engineering Project 2 Task 2", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 2, team_id: 1},
+  {title: "Engineering Project 2 Task 4", description: "Description - Engineering Project 2 Task 3", completed: false, due_date: "2021-10-30T23:15:29.947Z", creator_id: 5, assignee_id: 2, project_id: 2, team_id: 1},
+  {title: "Engineering Project 2 Task 5", description: "Description - Engineering Project 2 Task 4", completed: false, due_date: "2021-10-19T23:15:29.947Z", creator_id: 5, assignee_id: 4, project_id: 2, team_id: 1},
+  {title: "Engineering Project 2 Task 6", description: "Description - Engineering Project 2 Task 5", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 5, assignee_id: 3, project_id: 2, team_id: 1},
+  {title: "Engineering Project 2 Task 7", description: "Description - Engineering Project 2 Task 6", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 2, team_id: 1},
+  {title: "Engineering Project 3 Task 1", description: "Description - Engineering Project 3 Task 1", completed: false, due_date: "2021-10-22T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 3, team_id: 1},
+  {title: "Engineering Project 3 Task 2", description: "Description - Engineering Project 3 Task 2", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 3, team_id: 1},
+  {title: "Engineering Project 3 Task 3", description: "Description - Engineering Project 3 Task 3", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 3, team_id: 1},
+  {title: "Engineering Project 3 Task 4", description: "Description - Engineering Project 3 Task 4", completed: false, due_date: "2021-10-30T23:15:29.947Z", creator_id: 5, assignee_id: 2, project_id: 3, team_id: 1},
+  {title: "Engineering Project 3 Task 5", description: "Description - Engineering Project 3 Task 5", completed: false, due_date: "2021-10-19T23:15:29.947Z", creator_id: 5, assignee_id: 4, project_id: 3, team_id: 1},
+  {title: "Engineering Project 3 Task 6", description: "Description - Engineering Project 3 Task 6", completed: false, due_date: "2021-10-25T23:15:29.947Z", creator_id: 5, assignee_id: 3, project_id: 3, team_id: 1},
+  {title: "Engineering Project 3 Task 7", description: "Description - Engineering Project 3 Task 7", completed: false, due_date: "2021-10-27T23:15:29.947Z", creator_id: 5, assignee_id: 1, project_id: 3, team_id: 1},
 ])
 
 add_user_to_team(1, 1)
