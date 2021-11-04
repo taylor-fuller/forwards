@@ -13,6 +13,11 @@ export function fetchInitial() {
         .then(() => {
             return dispatch(fetchUI())
         })
+        .catch(() => {
+            dispatch(fetchUI())
+            dispatch({ type: 'UNSET_IS_LOADING' })
+            throw new Error('API is unresponsive')
+        })
     }
 }
 
