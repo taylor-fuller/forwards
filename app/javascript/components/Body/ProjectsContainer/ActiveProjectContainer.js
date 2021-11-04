@@ -197,7 +197,7 @@ const ActiveProjectContainer = (props) => {
     function renderTaskDetail() {
         if (props.task) {
             return (
-                <div className="project-task-details-container">
+                <Fragment>
                     <div className="project-task-details-container-header">
                         <h2>{props.task.title} <span><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--fontBlack)" onClick={() => props.toggleModal(true, 'patchTask')}><path d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"/></svg></span></h2>
                     </div>
@@ -234,7 +234,7 @@ const ActiveProjectContainer = (props) => {
                         </div>
                         { determineButton(props.task.completed) }
                     </div>
-                </div>
+                </Fragment>
             )
         } else {
             return null
@@ -252,6 +252,10 @@ const ActiveProjectContainer = (props) => {
                     <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((props.project.tasks.completed.length/props.project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={(Math.round((props.project.tasks.completed.length/props.project.tasks.all_tasks.length)*100))} text={`${(Math.round((props.project.tasks.completed.length/props.project.tasks.all_tasks.length)*100))}%`} styles={buildStyles({rotation: 0.5})}/></div>}</h3></div>
                     <div className="project-info-item"><div className="project-info-item-header">Project Lead</div><div className="lead">
                     <div className="member-container"><div className="avatar">{returnProjectLeadInitials()}</div><div className='team-member'>{returnProjectLeadName()} <br /><span>{returnProjectLeadEmail()}</span></div></div></div></div>
+                </div>
+                <div className="description">
+                    <h2>Description</h2>
+                    <div>{props.project.description ? props.project.description : <p className='grey'>N/A</p>}</div>
                 </div>
             </div>
         )
@@ -274,7 +278,9 @@ const ActiveProjectContainer = (props) => {
                             { Tasks }
                     </div>
                 </div>
+                <div className="project-task-details-container">
                     { TaskDetail }
+                </div>
             </div>
         )
     } else {

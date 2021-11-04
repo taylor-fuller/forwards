@@ -60,7 +60,7 @@ h2 {
     }
 
     body {
-        background-image: -webkit-linear-gradient(-135deg,var(--accent0) 0%,var(--accent1) 100%);
+        background-image: -webkit-linear-gradient(-135deg,var(--base1) 0%,var(--base2) 100%);
     }
 
     .bottom-container {
@@ -110,18 +110,18 @@ form input[type="submit"] {
     border: 1px solid #f2f2f2b7;
     border-radius: .3rem;
     transition: all .1s ease-in-out;
-    background-color: var(--accent1);
+    background-color: var(--base2);
     color: var(--base0);
 }
 
 form input[type="submit"]:hover {
     transition: all .1s ease-in-out;
-    background-color: var(--accent0);
+    background-color: var(--accent1);
 }
 
 form input[type="submit"]:active {
     transition: all 0s ease-in-out;
-    background-color: var(--base0);
+    background-color: var(--base1);
 }
 
 form input[name="user[first_name]"], form input[name="user[last_name]"], form input[name="user[email]"], form input[name="user[password]"], form input[name="user[password_confirmation]"] {

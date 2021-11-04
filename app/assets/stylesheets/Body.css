@@ -361,6 +361,7 @@ header span:hover svg, .project-task-details-container h2 span:hover svg {
 
 .team-members, .lead {
     padding: 1rem;
+    margin: auto 0;
 }
 
 
@@ -513,11 +514,29 @@ body .avatar-small {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    min-height: 120px;
+    max-height: 150px;
     max-width: 900px;
+    height: 100%;
 }
 
-.project-info-item-header {
+.description {
+    margin: 0 auto;
+    align-self: flex-start;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    max-width: 900px;
+    height: 100%;
+    max-height: 100px;
+}
+
+.description div {
+    margin-left: 1rem;
+}
+
+.project-info-item-header, .description h2 {
     font-size: 1rem;
     font-weight: bold;
     padding-bottom: .5rem;
@@ -589,8 +608,9 @@ body .avatar-small {
 .project-tasks-overview {
     padding: 0 2rem;
     border-bottom: 1px solid var(--darkGrey);
-    height: 150px;
+    min-height: 250px;
     display: flex;
+    flex-flow: column;
     align-content: center;
 }
 
@@ -738,44 +758,4 @@ body .avatar-small {
 .small-red {
     color: rgba(255, 0, 0, 0.7);
     padding-bottom: .5rem;
-}
-
-#ErrorBoundary {
-    width: 600px;
-    margin: auto;
-    display: flex;
-    flex-flow: column;
-    text-align: center;
-}
-
-#ErrorBoundary p {
-    font-size: 1.3rem;
-    font-weight: bold;
-}
-
-#ErrorBoundary button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    margin-top: 1rem;
-    width: 150px;
-    display: block;
-    padding: .375rem .75rem;
-    background-clip: padding-box;
-    border: 1px solid #f2f2f2b7;
-    border-radius: .3rem;
-    transition: all .1s ease-in-out;
-    background-color: var(--base2);
-    color: var(--base0);
-    margin: 2rem auto;
-}
-
-#ErrorBoundary button:hover {
-    transition: all .1s ease-in-out;
-    background-color: var(--accent0);
-}
-
-#ErrorBoundary button button:active {
-    transition: all 0s ease-in-out;
-    background-color: var(--base0);
 }
