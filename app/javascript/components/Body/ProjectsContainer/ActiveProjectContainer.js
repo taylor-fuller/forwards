@@ -283,7 +283,7 @@ const ActiveProjectContainer = (props) => {
 }
 
 const mapStateToProps = state => {
-    let Team = selectTeam(state.teams.all_teams, state.UI.activeWorkspace.workspace_id) || null
+    let Team = selectTeam(state.teams.all_teams, state.UI.activeWorkspace.workspace_id)
     let Project = Team.projects.find((project) => project.id === state.UI.activeProject.project_id)
     let Task = Project.tasks.all_tasks.find((task) => task.id === state.UI.activeTask.task_id)
     

@@ -3,7 +3,7 @@ import "../../assets/stylesheets/App.css"
 import Sidebar from './Sidebar/Sidebar';
 import Body from './Body/Body'
 import { connect } from 'react-redux';
-import { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam, patchProject, patchTeam } from '../actions';
+import { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam, patchProject, patchTeam, resetUI, resetLoad } from '../actions';
 import Modal from 'react-modal';
 import CreateProjectForm from './Forms/CreateProjectForm';
 import CreateTeamForm from './Forms/CreateTeamForm';
@@ -12,6 +12,17 @@ import PatchProjectForm from './Forms/PatchProjectForm';
 import PatchTeamForm from './Forms/PatchTeamForm';
 import PatchTaskForm from './Forms/PatchTaskForm';
 import AddTeamMemberForm from './Forms/AddTeamMemberForm';
+import { ErrorBoundary } from 'react-error-boundary'
+
+function MyFallbackComponent({error, resetErrorBoundary}) {
+    return (
+        <div role="alert" id="ErrorBoundary">
+            <p>Oops... Something went wrong</p>
+            <pre>{error.message}</pre>
+            <button onClick={resetErrorBoundary}>Try again</button>
+        </div>
+    )
+}
 
 const customStyles = {
     content: {
@@ -23,6 +34,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 const App = (props) => {
+
     useEffect(() => {
         if (props.UI.initialLoad) {
             props.fetchInitial()
@@ -113,20 +125,29 @@ const App = (props) => {
 
     return (
         <div id="view">
-            <Sidebar/>
-            <div className="content-container">
-                <Body/>
-            </div>
-            <div className="modal">
-                <Modal
-                    isOpen={props.UI.isModalOpen}
-                    style={customStyles}
-                    contentLabel="Modal"
-                >
-                    <div className="button" onClick={() => props.toggleModal(false, null)}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg></div>
-                    { form }
-                </Modal>
-            </div>
+            <ErrorBoundary 
+                FallbackComponent={MyFallbackComponent}
+                onReset={() => {
+                    props.resetUI()
+                    props.toggleModal(false, null)
+                    props.fetchInitial()
+                }}
+            >
+                <Sidebar/>
+                <div className="content-container">
+                    <Body/>
+                </div>
+                <div className="modal">
+                    <Modal
+                        isOpen={props.UI.isModalOpen}
+                        style={customStyles}
+                        contentLabel="Modal"
+                    >
+                        <div className="button" onClick={() => props.toggleModal(false, null)}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg></div>
+                        { form }
+                    </Modal>
+                </div>
+            </ErrorBoundary>
         </div>
     )
 }
@@ -137,4 +158,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam, patchProject, patchTeam })(App);
+export default connect(mapStateToProps, { fetchAll, fetchUI, fetchInitial, createTeam, createProject, createTask, toggleModal, patchTask, addUserToTeam, patchProject, patchTeam, resetUI, resetLoad })(App);

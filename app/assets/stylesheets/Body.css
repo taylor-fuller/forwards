@@ -739,3 +739,43 @@ body .avatar-small {
     color: rgba(255, 0, 0, 0.7);
     padding-bottom: .5rem;
 }
+
+#ErrorBoundary {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}
+
+#ErrorBoundary p {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#ErrorBoundary button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-top: 1rem;
+    width: 150px;
+    display: block;
+    padding: .375rem .75rem;
+    background-clip: padding-box;
+    border: 1px solid #f2f2f2b7;
+    border-radius: .3rem;
+    transition: all .1s ease-in-out;
+    background-color: var(--base2);
+    color: var(--base0);
+    margin: 2rem auto;
+}
+
+#ErrorBoundary button:hover {
+    transition: all .1s ease-in-out;
+    background-color: var(--accent0);
+}
+
+#ErrorBoundary button button:active {
+    transition: all 0s ease-in-out;
+    background-color: var(--base0);
+}

@@ -28,11 +28,16 @@ export const fetchTeams = () => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    const response = await axios.get('http://localhost:3000/api/teams')
-    return batch(() => {
-        dispatch({ type: 'FETCH_TEAMS', payload: {all_teams: response.data.all_teams, others_teams: response.data.others_teams} })
-        dispatch({ type: 'FETCH_LED_TEAMS', payload: response.data })
-    })
+    try {
+        const response = await axios.get('http://localhost:3000/api/teams')
+        return batch(() => {
+            dispatch({ type: 'FETCH_TEAMS', payload: {all_teams: response.data.all_teams, others_teams: response.data.others_teams} })
+            dispatch({ type: 'FETCH_LED_TEAMS', payload: response.data })
+        })
+    }
+    catch {
+        throw new Error('API is unresponsive')
+    }
 }
 
 export const createTeam = (name) => async (dispatch) => {
@@ -56,11 +61,16 @@ export const fetchProjects = () => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    const response = await axios.get('http://localhost:3000/api/projects')
-    return batch(() => {
-        dispatch({ type: 'FETCH_PROJECTS', payload: {all_projects: response.data.all_projects, others_projects: response.data.others_projects} })
-        dispatch({ type: 'FETCH_LED_PROJECTS', payload: response.data })
-    })
+    try {
+        const response = await axios.get('http://localhost:3000/api/projects')
+        return batch(() => {
+            dispatch({ type: 'FETCH_PROJECTS', payload: {all_projects: response.data.all_projects, others_projects: response.data.others_projects} })
+            dispatch({ type: 'FETCH_LED_PROJECTS', payload: response.data })
+        })
+    }
+    catch {
+        throw new Error('API is unresponsive')
+    }
 }
 
 export const createProject = (name, description, team_id) => async (dispatch) => {
@@ -131,8 +141,13 @@ export const fetchTasks = () => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    const response = await axios.get('http://localhost:3000/api/tasks')
-    dispatch({ type: 'FETCH_TASKS', payload: response.data })
+    try {
+        const response = await axios.get('http://localhost:3000/api/tasks')
+        dispatch({ type: 'FETCH_TASKS', payload: response.data })
+    }
+    catch {
+        throw new Error('API is unresponsive')
+    }
 }
 
 export const createTask = (title, description, team_id, project_id, completed, due_date, assignee_id) => async (dispatch) => {
@@ -278,6 +293,14 @@ export function handleTeamCreation(team_id, team_name) {
                 dispatch(amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name}))
             })
         })
+        .catch(() => {
+            return batch(() => {
+                dispatch({ type: 'UNSET_IS_LOADING' })
+                dispatch({ type: 'RESET_UI' })
+                dispatch(amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name}))
+                throw new Error('Something went wrong')
+            })
+        })
     }
 }
 
@@ -289,6 +312,14 @@ export function handleProjectCreation(project_id, project_name) {
                 dispatch(fetchProjects())
                 dispatch({ type: 'UNSET_IS_LOADING' })
                 dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+                throw new Error('Something went wrong')
+            })
+        })
+        .catch(() => {
+            return batch(() => {
+                dispatch({ type: 'UNSET_IS_LOADING' })
+                dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
+                throw new Error('Something went wrong')
             })
         })
     }
@@ -304,6 +335,11 @@ export function handleTaskCreation(task_id, task_name) {
                 dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
             })
         })
+        .catch(() => {
+            dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+            dispatch({ type: 'UNSET_IS_LOADING' })
+            throw new Error('Something went wrong')
+        })
     }
 }
 
@@ -314,6 +350,13 @@ export function handleTeamPatch(team_id, team_name) {
             return batch(() => {
                 dispatch(amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name}))
                 dispatch({ type: 'UNSET_IS_LOADING' })
+            })
+        })
+        .catch(() => {
+            return batch(() => {
+                dispatch(amendActiveWorkspace({workspace_id: team_id, workspace_name: team_name}))
+                dispatch({ type: 'UNSET_IS_LOADING' })
+                throw new Error('Something went wrong')
             })
         })
     }
@@ -329,6 +372,13 @@ export function handleProjectPatch(project_id, project_name) {
                 dispatch({ type: 'UNSET_IS_LOADING' })
             })
         })
+        .catch(() => {
+            return batch(() => {
+                dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: { project_id: project_id, project_name: project_name }})
+                dispatch({ type: 'UNSET_IS_LOADING' })
+                throw new Error('Something went wrong')
+            })
+        })
     }
 }
 
@@ -341,6 +391,13 @@ export function handleTaskPatch(task_id, task_name) {
                 dispatch(fetchTasks())
                 dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
                 dispatch({ type: 'UNSET_IS_LOADING' })
+            })
+        })
+        .catch(() => {
+            return batch(() => {
+                dispatch({ type: 'AMEND_ACTIVE_TASK', payload: {task_id: task_id, task_name: task_name} })
+                dispatch({ type: 'UNSET_IS_LOADING' })
+                throw new Error('Something went wrong')
             })
         })
     }
