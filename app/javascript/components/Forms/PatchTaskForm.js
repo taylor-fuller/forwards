@@ -83,7 +83,7 @@ const CreateTaskForm = (props) => {
                             enableTime: true,
                             altInput: true,
                             altFormat: "F j, Y h:i K",
-                            minDate: new Date(dueDate),
+                            minDate: "today",
                             defaultHour: 17,
                             defaultMinute: 0,
                             dateFormat: "Z",
