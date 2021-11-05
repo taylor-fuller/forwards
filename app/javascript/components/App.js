@@ -134,9 +134,7 @@ const App = (props) => {
                 }}
             >
                 <Sidebar/>
-                <div className="content-container">
-                    <Body/>
-                </div>
+                <Body/>
                 <div className="modal">
                     <Modal
                         isOpen={props.UI.isModalOpen}
