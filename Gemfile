@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'devise'
 gem 'activeadmin'
 gem 'pry', '~> 0.13.1'
+gem 'database_cleaner-active_record'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
