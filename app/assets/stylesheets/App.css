@@ -319,3 +319,7 @@ span.emoji {
     transition: all 0s ease-in-out;
     background-color: var(--base0);
 }
+
+#view {
+    min-width: 800px;
+}

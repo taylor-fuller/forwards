@@ -188,6 +188,10 @@ export const amendActiveTask = (task_id, task_name, project_id, project_name, wo
     })
 }
 
+export const unsetActiveTask = () => async (dispatch) => {
+    dispatch({ type: 'AMEND_ACTIVE_TASK', payload: '' })
+}
+
 export const toggleModal = (bool, option) => async (dispatch) => {
     return batch(() => {
         if (bool === false) {

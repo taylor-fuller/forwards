@@ -759,3 +759,194 @@ body .avatar-small {
     color: rgba(255, 0, 0, 0.7);
     padding-bottom: .5rem;
 }
+
+.task-container h3:first-of-type {
+    min-width: 400px;
+}
+
+.back-button {
+    background-color: var(--darkGrey);
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+
+.back-button svg {
+    transition: .1s all ease-in-out;
+    cursor: pointer;
+}
+
+.back-button svg:hover {
+    fill: var(--accent0);
+    transform: scale(1.15);
+}
+
+.back-button svg:active {
+    fill: var(--base0);
+    transform: scale(1.15);
+}
+
+@media(max-width: 1600px) {
+    .active-team-container {
+        flex-flow: column;
+        overflow: auto;
+        justify-content: flex-start;
+        height: 100%;
+    }
+
+    .active-team-container .overview-item-container {
+        height: 175px;
+        flex-basis: 25%;
+    }
+
+    .team-members {
+        max-width: 1000px;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        overflow: hidden;
+        margin: auto;
+    }
+
+    .team-members .member-container {
+        padding: 1rem;
+        min-width: 300px;
+    }
+
+    .active-team-overview-and-members {
+        height: fit-content;
+        
+    }
+
+    .active-team-overview-and-members, .active-team-projects {
+        height: fit-content;
+        width: 100%;
+        max-width: 1300px;
+        padding: 0;
+        min-width: 0;
+    }
+
+    .active-team-projects > * {
+        min-width: 0;
+    }
+
+    .task-container, .projects-container, .teams-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .projects-container h3:last-of-type, .teams-container h3:last-of-type{
+        display: none;
+    }
+
+    .project-info-item .team-member {
+        display: none;
+    }
+
+    .project-info-item .lead, .project-info-item .member-container {
+        padding: 0;
+        margin: auto;
+    }
+
+    .project-info-item .avatar {
+        margin: auto;
+    }
+
+    .project-tasks-overview .project-info .project-info-item:last-of-type .project-info-item-header {
+        padding: 0;
+    }
+
+    .active-project-container {
+        overflow: auto;
+    }
+
+    .project-tasks-overview {
+        height: auto;
+        display: block;
+    }
+
+    .empty-tasks {
+        height: 100%;
+    }
+}
+
+@media(max-width: 1400px) {
+    .active-project-container {
+        flex-flow: column;
+        overflow: auto;
+        justify-content: flex-start;
+        height: 100%;
+        display: flex;
+    }
+
+    .active-project-container .project-task-details-container, .active-project-container .project-tasks-container {
+        flex-basis: unset;
+        width: 100%;
+        height: fit-content;
+        box-shadow: none;
+        overflow: unset;
+    }
+
+    .project-tasks-overview {
+        min-height: 0;
+        min-height: 250px;
+    }
+
+}
+
+@media(max-width: 1250px) {
+    .active-team-project-item {
+        min-width: 0;
+        width: 100%;
+        align-self: center;
+    }
+
+    .active-team-project-item .project-info-item:last-of-type {
+        display: none;
+    }
+
+    .projects-container h3:nth-of-type(5), .teams-container h3:nth-of-type(5) {
+        display: none;
+    }
+
+    .task-container h3:nth-of-type(4) {
+        display: none;
+    }
+
+    .project-tasks h3:first-of-type {
+        min-width: 300px;
+    }
+}
+
+@media(max-width: 1100px) {
+    .projects-container h3:nth-of-type(6), .teams-container h3:nth-of-type(6) {
+        display: none;
+    }
+
+    .task-container h3:nth-of-type(3) {
+        display: none;
+    }
+
+    .task-container h3:first-of-type {
+        min-width: 200px;
+    }
+
+    .project-tasks h3:last-of-type {
+        display: none;
+    }
+}
+
+@media(max-width: 900px) {
+    .project-tasks-overview {
+        height: 500px;
+    }
+
+    .project-info {
+        flex-flow: row wrap;
+        min-height: 300px;
+        padding-bottom: 0;
+    }
+
+    .project-info .project-info-item {
+        padding: 1rem 0;
+        flex-basis: 33.3333%;
+    }
+}

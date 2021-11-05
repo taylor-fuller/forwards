@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useMemo, Fragment } from 'react';
+import React, { useState, useEffect, useRef, useMemo, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { toggleModal, amendActiveTask, toggleTaskComplete } from '../../../actions';
+import { toggleModal, amendActiveTask, toggleTaskComplete, unsetActiveTask } from '../../../actions';
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { css } from "@emotion/react";
@@ -13,14 +13,24 @@ const override = css`
 `;
 
 const ActiveProjectContainer = (props) => {
+    const [screenSmallSize, setScreenSmallSize] = useState(window.matchMedia('(max-width: 1400px)').matches)
+
     let taskRef = useRef(null)
     const addIcon = <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base0)"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
 
     useEffect(() => {
-        if (props.UI.activeTask) {
+        if (props.UI.activeTask && taskRef.current) {
             taskRef.current.scrollIntoView() 
         }
+
+        window.matchMedia("(max-width: 1400px)").addEventListener('change', () => {
+            setScreenSmallSize(window.matchMedia('(max-width: 1400px)').matches)
+        });
     }, [])
+
+    useEffect(() => {
+        console.log(screenSmallSize)
+    }, [screenSmallSize])
 
     function returnProjectLeadName() {
         let team = props.team
@@ -266,23 +276,51 @@ const ActiveProjectContainer = (props) => {
     const TaskDetail = useMemo(() => renderTaskDetail(), [props.team, props.task])
     
     if (props.project) {
-        return(
-            <div className="active-project-container">
-                <div className="project-tasks-container">
-                    <div className="project-tasks-container-header">
-                        <h2>Overview</h2>
+        if (screenSmallSize) {
+            if (props.task) {
+                return(
+                    <Fragment>
+                        <div className="back-button"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="var(--base2)" onClick={() => props.unsetActiveTask()}><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></div>
+                        <div className="project-task-details-container">
+                            { TaskDetail }
+                        </div>
+                    </Fragment>
+                )
+            } else {
+                return (
+                    <div className="active-project-container">
+                        <div className="project-tasks-container">
+                            <div className="project-tasks-container-header">
+                                <h2>Overview</h2>
+                            </div>
+                             { Project }
+                            <div className="projects-tasks-container-tasks">
+                                <h2>Tasks <span className='icon' onClick={() => props.toggleModal(true, 'createTask')}>{addIcon}</span></h2>
+                                    { Tasks }
+                            </div>
+                        </div>
                     </div>
-                     { Project }
-                    <div className="projects-tasks-container-tasks">
-                        <h2>Tasks <span className='icon' onClick={() => props.toggleModal(true, 'createTask')}>{addIcon}</span></h2>
-                            { Tasks }
+                )
+            }
+        } else {
+            return (
+                <div className="active-project-container">
+                    <div className="project-tasks-container">
+                        <div className="project-tasks-container-header">
+                            <h2>Overview</h2>
+                        </div>
+                            { Project }
+                        <div className="projects-tasks-container-tasks">
+                            <h2>Tasks <span className='icon' onClick={() => props.toggleModal(true, 'createTask')}>{addIcon}</span></h2>
+                                { Tasks }
+                        </div>
+                    </div>
+                    <div className="project-task-details-container">
+                        { TaskDetail }
                     </div>
                 </div>
-                <div className="project-task-details-container">
-                    { TaskDetail }
-                </div>
-            </div>
-        )
+            )
+        }
     } else {
         return <ClipLoader color={'#ff8851'} loading={true} css={override} size={50} />
     }
@@ -301,4 +339,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { toggleModal, amendActiveTask, toggleTaskComplete })(ActiveProjectContainer);
+export default connect(mapStateToProps, { toggleModal, amendActiveTask, toggleTaskComplete, unsetActiveTask })(ActiveProjectContainer);
