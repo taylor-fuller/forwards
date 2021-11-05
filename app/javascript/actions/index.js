@@ -34,7 +34,7 @@ export const fetchTeams = () => async (dispatch) => {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
     try {
-        const response = await axios.get('https://forwards-app.herokuapp/api/teams')
+        const response = await axios.get('https://forwards-app.herokuapp.com/api/teams')
         return batch(() => {
             dispatch({ type: 'FETCH_TEAMS', payload: {all_teams: response.data.all_teams, others_teams: response.data.others_teams} })
             dispatch({ type: 'FETCH_LED_TEAMS', payload: response.data })
@@ -49,7 +49,7 @@ export const createTeam = (name) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.post('https://forwards-app.herokuapp/api/teams', { name: name })
+    axios.post('https://forwards-app.herokuapp.com/api/teams', { name: name })
     .then((data) => {
         dispatch(toggleModal(false, null))
         dispatch({ type: 'SET_IS_LOADING' })
@@ -67,7 +67,7 @@ export const fetchProjects = () => async (dispatch) => {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
     try {
-        const response = await axios.get('https://forwards-app.herokuapp/api/projects')
+        const response = await axios.get('https://forwards-app.herokuapp.com/api/projects')
         return batch(() => {
             dispatch({ type: 'FETCH_PROJECTS', payload: {all_projects: response.data.all_projects, others_projects: response.data.others_projects} })
             dispatch({ type: 'FETCH_LED_PROJECTS', payload: response.data })
@@ -82,7 +82,7 @@ export const createProject = (name, description, team_id) => async (dispatch) =>
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.post('https://forwards-app.herokuapp/api/projects', { 
+    axios.post('https://forwards-app.herokuapp.com/api/projects', { 
         name: name,
         description: description,
         team_id: team_id
@@ -147,7 +147,7 @@ export const fetchTasks = () => async (dispatch) => {
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
     try {
-        const response = await axios.get('https://forwards-app.herokuapp/api/tasks')
+        const response = await axios.get('https://forwards-app.herokuapp.com/api/tasks')
         dispatch({ type: 'FETCH_TASKS', payload: response.data })
     }
     catch {
@@ -159,7 +159,7 @@ export const createTask = (title, description, team_id, project_id, completed, d
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.post('https://forwards-app.herokuapp/api/tasks', { 
+    axios.post('https://forwards-app.herokuapp.com/api/tasks', { 
         title: title,
         description: description,
         team_id: team_id,
@@ -206,7 +206,7 @@ export const patchTeam = (team) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch(`https://forwards-app.herokuapp/api/teams/${team.id}`, { 
+    axios.patch(`https://forwards-app.herokuapp.com/api/teams/${team.id}`, { 
         name: team.name,
         lead_id: team.lead_id,
     })
@@ -226,7 +226,7 @@ export const patchProject = (project) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch(`https://forwards-app.herokuapp/api/projects/${project.id}`, { 
+    axios.patch(`https://forwards-app.herokuapp.com/api/projects/${project.id}`, { 
         name: project.name,
         description: project.description,
         lead_id: project.lead_id,
@@ -248,7 +248,7 @@ export const patchTask = (task) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch(`https://forwards-app.herokuapp/api/tasks/${task.id}`, { 
+    axios.patch(`https://forwards-app.herokuapp.com/api/tasks/${task.id}`, { 
         title: task.title,
         description: task.description,
         due_date: task.due_date, 
@@ -270,7 +270,7 @@ export const toggleTaskComplete = (task_id, bool) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.patch(`https://forwards-app.herokuapp/api/tasks/${task_id}`, { 
+    axios.patch(`https://forwards-app.herokuapp.com/api/tasks/${task_id}`, { 
         completed: bool
     })
     .then(() => {
@@ -282,7 +282,7 @@ export const addUserToTeam = (user_id, team_id) => async (dispatch) => {
     const csrfToken = document.querySelector('[name="csrf-token"]').content
     axios.defaults.headers.common['X-CSRF-TOKEN'] = csrfToken
 
-    axios.post('https://forwards-app.herokuapp/api/add_user_to_team', { 
+    axios.post('https://forwards-app.herokuapp.com/api/add_user_to_team', { 
         id: team_id,
         user_id: user_id
     })
