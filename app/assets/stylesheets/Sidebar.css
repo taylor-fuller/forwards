@@ -19,6 +19,7 @@ h1 {
     max-height: 100vh;
     overflow-y: auto;
     z-index: 0;
+    width: 270px;
 }
 
 #view .pro-sidebar-inner, .pro-sidebar-layout {
