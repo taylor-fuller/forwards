@@ -82,7 +82,7 @@ const Body = (props) => {
 
     return (
         <div className="body-content">
-            <header className="header"><h2>{ Header } <span>{renderEditButton()}</span></h2><a href="http://localhost:3000/users/sign_out" onClick={() => { props.resetLoad(); props.resetUI();  }}>Logout</a> </header>
+            <header className="header"><h2>{ Header } <span>{renderEditButton()}</span></h2><a href="https://forwards-app.herokuapp.com/users/sign_out" onClick={() => { props.resetLoad(); props.resetUI();  }}>Logout</a> </header>
             { Body }
         </div>
     )
