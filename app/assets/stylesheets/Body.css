@@ -550,6 +550,7 @@ body .avatar-small {
 #view .CircularProgressbar-text {
     font-family: 'Montserrat', sans-serif;
     fill: var(--fontBlack);
+    font-size: 2rem;
 }
 
 .project-info-item {
