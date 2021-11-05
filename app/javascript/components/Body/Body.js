@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../../../assets/stylesheets/Body'
+import '../../stylesheets/Body.css'
 import { connect } from 'react-redux';
 import { resetUI, resetLoad, toggleModal } from '../../actions';
 import MyTeamsContainer from './TeamsContainer/MyTeamsContainer';
