@@ -28,10 +28,6 @@ const ActiveProjectContainer = (props) => {
         });
     }, [])
 
-    useEffect(() => {
-        console.log(screenSmallSize)
-    }, [screenSmallSize])
-
     function returnProjectLeadName() {
         let team = props.team
         let project = props.project
