@@ -1,17 +1,1485 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- *= stub "active_admin"
- *= stub "user-actions"
- */
+body * {
+	font-family: 'Lato', sans-serif;
+	font-size: 14px;
+}
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+    box-sizing: border-box;
+	color: var(--fontBlack);
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+ol, ul, li {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+:root {
+	--base0: #F2F2F2;
+    --base1: #23292e;
+	--base2: #343D46;
+	--accent0: #ff8851;
+	--accent0Tint: #ff88519f;
+    --accent1: #ff3c00;
+    --fontBlack: rgb(80,80,80);
+    --grey: rgb(230,230,230);
+    --darkGrey: rgb(200,200,200);
+    --darkdarkGrey: rgb(150, 150, 150);
+    --lightGrey: rgb(240,240,240);
+    --redTint: #e91010c2;
+}
+
+a:hover {
+	color: blue;
+}
+
+body {
+	background-color: var(--base0);
+}
+
+#view {
+    display: flex;
+    flex-direction: row;
+	min-height: 100vh;
+    color: var(--base0);
+	max-height: 100vh;
+	overflow: auto;
+}
+
+.ReactModal__Content {
+	margin: auto;
+	width: 600px;
+	height: fit-content;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.ReactModalPortal h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--base0);
+    text-align: center;
+    vertical-align: center;
+    margin: auto;
+    padding-bottom: 24px;
+    font-weight: bold;
+}
+
+.ReactModalPortal label {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--base0);
+    padding-bottom: .5rem;
+    font-weight: bold;
+    display: block;
+}
+
+.ReactModalPortal label.small {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.ReactModalPortal .empty {
+    font-size: 1.2rem;
+    margin: auto;
+}
+
+.ReactModalPortal form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.ReactModalPortal .form-group, .ReactModalPortal .form-group-date {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    margin: 0 auto;
+}
+
+form input {
+    outline: none;
+}
+
+.ReactModalPortal form select[name="user_id"]  {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 300px;
+    border: none;
+    box-sizing: border-box;
+    padding: .375rem .5rem;
+    margin: 0 auto;
+    font-size: 1rem;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    border: 1px solid rgba(80, 80, 80, 0.25);
+    border-radius: .3rem;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+    display: block;
+}
+
+.ReactModalPortal form input[name="name"], .ReactModalPortal form textarea[name="description"], .ReactModalPortal form input[name="title"], .ReactModalPortal form select[name="assignee_id"], .ReactModalPortal form .form-group-date input, .ReactModalPortal form select[name="lead_id"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    border: none;
+    box-sizing: border-box;
+    padding: .375rem .5rem;
+    margin: 0 auto;
+    font-size: 1rem;
+    font-weight: normal;
+    font-family: 'Lato', sans-serif;
+    border: 1px solid rgba(80, 80, 80, 0.25);
+    border-radius: .3rem;
+    overflow: hidden;
+    transition: all .2s ease-in-out;
+    display: block;
+    outline: none;
+}
+
+.ReactModalPortal form input:focus, .ReactModalPortal form textarea:focus, .ReactModalPortal form select:focus {
+    box-shadow: 0 0 0px 4px var(--accent0Tint);
+}
+
+.ReactModalPortal form .form-group-date input {
+    cursor: pointer;
+}
+
+.ReactModalPortal form textarea[name="description"] {
+    height: 100px;
+}
+
+.ReactModalPortal form .button {
+    margin: 0 auto;
+    height: fit-content;
+}
+
+.ReactModalPortal form button[type="submit"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-top: 1rem;
+    width: 150px;
+    display: block;
+    padding: .375rem .75rem;
+    background-clip: padding-box;
+    border: 1px solid #f2f2f2b7;
+    border-radius: .3rem;
+    transition: all .1s ease-in-out;
+    background-color: var(--base2);
+    color: var(--base0);
+    margin: 0 auto;
+}
+
+.ReactModalPortal form button[type="submit"]:hover {
+    transition: all .1s ease-in-out;
+    background-color: var(--accent0);
+}
+
+.ReactModalPortal form button[type="submit"]:active {
+    transition: all 0s ease-in-out;
+    background-color: var(--base0);
+}
+
+body .ReactModalPortal form input.error, body .ReactModalPortal form textarea.error, body .ReactModalPortal form select.error {
+    border: 1px solid red;
+}
+
+body .ReactModalPortal form input.error:focus, body .ReactModalPortal form textarea.error:focus, body .ReactModalPortal form select.error:focus {
+    box-shadow: 0 0 0px 4px rgba(255, 0, 0, 0.4);
+}
+
+.ReactModalPortal form ul {
+    width: 100%;
+    margin-left: 1.5rem;
+    padding-top: .5rem;
+}
+
+li.error-text {
+    list-style-type: disc;
+    font-size: .8rem;
+    color: red;
+}
+
+.ReactModalPortal .form-group, .ReactModalPortal .form-group-date {
+    padding-bottom: 1.5rem;
+}
+
+.button {
+    height: 24px;
+	cursor: pointer;
+    margin-left: auto;
+    transition: .1s all ease-in-out;
+}
+
+.button:hover svg {
+	fill: var(--darkGrey);
+    transition: .1s all ease-in-out;
+}
+
+.content-container {
+	display: flex;
+	flex-flow: column;
+	width: 100%;
+}
+
+img.emojione {
+	margin: 0px !important;
+	display: inline !important;
+	height: auto;
+	width: 50px;
+}
+
+span.emoji {
+	font-size: 30px;
+	vertical-align: middle;
+	line-height: 2;
+}
+
+.loading {
+    position: absolute;
+    top:50%;
+    right:0px;
+    width:100%;
+    height:100%;
+}
+
+#ErrorBoundary {
+    width: 600px;
+    margin: auto;
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}
+
+#ErrorBoundary p {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#ErrorBoundary button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-top: 1rem;
+    width: 150px;
+    display: block;
+    padding: .375rem .75rem;
+    background-clip: padding-box;
+    border: 1px solid #f2f2f2b7;
+    border-radius: .3rem;
+    transition: all .1s ease-in-out;
+    background-color: var(--base2);
+    color: var(--base0);
+    margin: 2rem auto;
+}
+
+#ErrorBoundary button:hover {
+    transition: all .1s ease-in-out;
+    background-color: var(--accent0);
+}
+
+#ErrorBoundary button button:active {
+    transition: all 0s ease-in-out;
+    background-color: var(--base0);
+}
+
+#view {
+    min-width: 800px;
+}
+
+.body-content  {
+    position: absolute;
+    top: 0;
+    bottom: 0px;
+    left: 270px;
+    right: 0px;
+    display: flex;
+    align-content: flex-start;
+    flex-flow: column nowrap;
+    background-image: linear-gradient(135deg, var(--lightGrey), var(--grey));
+    overflow: hidden;
+}
+
+header {
+    box-sizing: border-box;
+    padding: 0 2rem;
+    min-height: 91px;
+    background-color: var(--base2);
+    display: flex;
+    border-left: 1px solid var(--accent1);
+    justify-content: space-between;
+}
+
+header h2 {
+    color: var(--base0);
+    margin: auto 0;
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+}
+
+header a {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--accent1);
+    margin: auto 0;
+    text-decoration: none;
+}
+
+header a:hover {
+    color: var(--accent1);
+    text-decoration: underline;
+}
+
+header span, .project-task-details-container h2 span {
+    display: flex;
+    width: auto;
+    height: 30px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+header span svg, .project-task-details-container h2 span svg {
+    margin: auto;
+    transition: .1s all ease-in-out;
+}
+
+header span:hover svg, .project-task-details-container h2 span:hover svg {
+    transform: scale(1.2);
+    fill: var(--accent0);
+    transition: .1s all ease-in-out;
+}
+
+.task-container, .projects-container, .teams-container {
+    margin: auto;
+    margin-top: 0;
+    padding: 5rem;
+    width: 100%;
+    overflow-y: auto;
+}
+
+.tasks, .dashboard-favorites, .task-list, .projects, .teams {
+    max-width: 1200px;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+.dashboard-favorites {
+    margin: 3rem auto;
+}
+
+.due-today, .overdue, .recently-assigned, .due-soon, .upcoming, .completed-tasks, .projects-led, .all-projects, .teams-led, .all-teams {
+    margin: auto;
+    min-height: 200px;
+    background-color: var(--base0);
+    border-radius: 1rem;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border: 2px solid var(--darkGrey);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.favorites {
+    margin: auto;
+    min-height: 200px;
+    border-top: 1px solid var(--darkGrey);
+    padding-top: 3rem;
+}
+
+.tasks h2, .dashboard-favorites h2, .projects h2, .teams h2 {
+    padding: 2rem 0;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.task-container h2, .projects-container h2, .teams-container h2 {
+    padding-top: 4rem;
+    font-size: 1.2rem;
+}
+
+.task-container h2:first-of-type, .projects-container h2:first-of-type, .teams-container h2:first-of-type {
+    padding-top: 0;
+}
+
+.task-item, .project-item, .team-item {
+    cursor: pointer;
+}
+
+.task-item.completed h3 {
+    font-style: italic;
+    color: rgba(150, 150, 150, 0.5);
+    text-align: center;
+}
+
+.task-item, .task-header {
+    text-align: center;
+    padding-left: 1rem;
+    padding-right: 3rem;
+    min-height: 50px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+    border-bottom: 1px solid var(--darkGrey);
+    box-sizing: border-box;
+}
+
+.project-item, .project-header, .team-item, .team-header {
+    text-align: center;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    min-height: 50px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: center;
+    width: 100%;
+    border-bottom: 1px solid var(--darkGrey);
+    box-sizing: border-box;
+}
+
+.due-today .task-item:last-of-type, .overdue .task-item:last-of-type, .recently-assigned .task-item:last-of-type, .due-soon .task-item:last-of-type, .upcoming .task-item:last-of-type, .completed-tasks .task-item:last-of-type, .projects-led  .project-item:last-of-type, .all-projects .project-item:last-of-type, .teams-led .team-item:last-of-type, .all-teams .team-item:last-of-type  {
+    border-bottom: 1px solid var(--base0);
+}
+
+.due-today .task-item:nth-child(2), .overdue .task-item:nth-child(2), .recently-assigned .task-item:nth-child(2), .due-soon .task-item:nth-child(2), .upcoming .task-item:nth-child(2), .completed-tasks .task-item:nth-child(2), .projects-led  .project-item:nth-child(2), .all-projects .project-item:nth-child(2), .teams-led .team-item:nth-child(2), .all-teams .team-item:nth-child(2)  {
+    border-bottom: 1px solid var(--darkGrey);
+}
+
+.due-today .task-item:nth-child(3), .overdue .task-item:nth-child(3), .recently-assigned .task-item:nth-child(3), .due-soon .task-item:nth-child(3), .upcoming .task-item:nth-child(3), .completed-tasks .task-item:nth-child(3), .projects-led  .project-item:nth-child(3), .all-projects .project-item:nth-child(3), .teams-led .team-item:nth-child(3), .all-teams .team-item:nth-child(3)  {
+    border-bottom: 1px solid var(--darkGrey);
+}
+
+.task-item:hover, .project-item:hover, .team-item:hover {
+    background-color: var(--grey);
+}
+
+.tasks .task-item h3:first-of-type, .tasks .task-header h3:first-of-type, .projects .project-item h3:first-of-type, .projects-led .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-projects .project-header h3:first-of-type, .all-teams .team-item h3:first-of-type, .teams-led .team-item h3:first-of-type, .all-teams .team-header h3:first-of-type, .teams-led .team-header h3:first-of-type, .project-tasks .task-item h3:first-of-type, .project-tasks .task-header h3:first-of-type {
+    text-align: left;
+}
+
+.tasks .task-item h3:last-of-type, .tasks .task-header h3:last-of-type, .projects .project-item h3:last-of-type, .projects-led .project-header h3:last-of-type, .all-projects .project-header h3:last-of-type, .all-teams .team-item h3:last-of-type, .teams-led .team-item h3:last-of-type, .all-teams .team-header h3:last-of-type, .teams-led .team-header h3:last-of-type, .project-tasks .task-item h3:last-of-type, .project-tasks .task-header h3:last-of-type {
+    text-align: right;
+}
+
+.tasks .task-item h3, .tasks .task-header h3, .projects .project-item h3, .projects .project-header h3, .teams .team-header h3, .teams .team-item h3, .project-tasks .task-item h3, .project-tasks .task-header h3 {
+    width: 200px;
+    max-width: 200px;
+    margin: auto;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tasks .task-header, .projects .project-header, .teams .team-header {
+    border-bottom-color: var(--fontBlack);
+}
+
+.tasks .task-header h3, .projects .project-header h3, .teams .team-header h3, .project-tasks .task-header h3 {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.complete-checkbox {
+    min-width: 50px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.complete-checkbox svg {
+    margin: auto;
+    transition: transform .1s ease-in-out;
+}
+
+.tasks .complete-checkbox:hover svg {
+    transform: scale(1.2);
+}
+
+.tasks .complete-checkbox:active svg {
+    fill: var(--base2);
+}
+
+.tasks .empty, .projects .empty, .teams .empty {
+    font-size: 1.5rem;
+    min-height: 140px;
+    width: 100%;
+    text-align: center;
+    line-height: 200px;
+}
+
+.grey {
+    color: var(--darkGrey);
+}
+
+.red {
+    font-size: 1.1rem;
+    color: red;
+}
+
+.orange {
+    font-size: 1.1rem;
+    color: var(--accent0);
+}
+
+.active-team-container {
+    padding: 0 2rem;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+}
+
+.active-team-overview-and-members {
+    padding: 2rem;
+    padding-bottom: 0;
+    flex-basis: 25%;
+    min-width: 400px;
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto;
+}
+
+.active-team-projects {
+    min-width: 75%;
+    padding: 2rem;
+    padding-bottom: 0;
+    flex-basis: 75%;
+}
+
+.active-team-container h2, .project-tasks-container-header h2, .projects-tasks-container-tasks h2 {
+    padding: 2rem 0;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    border-bottom: 1px solid var(--darkGrey);
+    height: 90px;
+}
+
+.active-team-container .overview, .active-team-container .active-team-members, .team-lead {
+    min-height: 150px;
+}
+
+.active-team-container .overview {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.active-team-container .icon, .active-project-container .icon {
+    margin-left: 1rem;
+}
+
+.active-team-container .icon svg, .active-project-container .icon svg {
+    margin: auto;
+    fill: var(--darkGrey);
+    transition: .1s all ease-in-out;
+    cursor: pointer;
+}
+
+.active-team-container .icon svg:hover, .active-project-container .icon svg:hover {
+    fill: var(--fontBlack);
+    transform: scale(1.15);
+}
+
+.active-team-container .overview-header, .active-team-container .overview {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.active-team-container .overview-container h3, .active-team-container .overview-container .overview-item {
+    width: 125px;
+    margin-top: 2rem;
+    font-size: 1rem;
+    height: auto;
+}
+
+.active-team-container .overview-container .overview-item {
+    width: 75px;
+    height: 75px;
+    margin: 0 25px;
+    margin-top: 2rem;
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.active-team-container .overview-item-container {
+    flex-basis: 50%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    min-width: 125px;
+    margin: auto;
+}
+
+.active-team-container .overview-container .overview-item h4 {
+    margin: auto;
+    font-size: 2rem;
+    line-height: 75px;
+}
+
+.active-team-container .overview-container .overview-item .red, .project-info-item .red {
+    background-color: var(--redTint);
+    color: white;
+}
+
+.active-team-container .overview-container .overview-item .orange, .project-info-item .orange {
+    background-color: var(--accent0);
+    color: white;
+}
+
+.active-team-container .overview-container .overview-item .grey, .project-info-item .grey {
+    background-color: var(--darkGrey);
+    color: var(--base0);
+}
+
+.active-team-container .overview-container .overview-item .active-grey, .project-info-item .active-grey {
+    background-color: var(--darkGrey);
+    color: var(--fontBlack);
+}
+
+.team-members, .lead {
+    padding: 1rem;
+    margin: auto 0;
+}
+
+
+.team-members div, .lead div {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.member-container {
+    display: flex;
+    padding: .5rem 0;
+}
+
+body .avatar {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 1.3rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--base2);
+    color: var(--base0);
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-right: 2rem;
+    flex-shrink: 0;
+}
+
+body .avatar-small {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--base2);
+    color: var(--base0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.member-container span {
+    color: var(--darkGrey);
+}
+
+.team-member {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+
+.active-team-projects {
+    display: flex;
+    flex-flow: column;
+    min-width: 900px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.team-projects-container, .team-members, .project-tasks-list {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column;
+}
+
+.team-projects-container .empty-projects, .projects-tasks-container-tasks .empty-tasks {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 3rem;
+}
+
+.active-team-project-item {
+    display: flex;
+    min-height: 175px;
+    box-sizing: border-box;
+    background-color: var(--base0);
+    border-radius: 1rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    margin: 2rem auto;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-flow: column;
+    cursor: pointer;
+    transition: .1s all ease-in-out;
+}
+
+.active-team-project-item:hover {
+    transition: .1s all ease-in-out;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.active-team-project-item h2 {
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+    padding: 0;
+    border-bottom: none;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--base2);
+    color: var(--base0);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    height: auto;
+    transition: .1s all ease-in-out;
+}
+
+.active-team-project-item:hover h2 {
+    transition: .1s all ease-in-out;
+    background-color: #4f5d6b;
+}
+
+.active-team-members {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+.avatar-name-container {
+    padding-top: .5rem;
+    display: flex;
+}
+
+.active-team-project-item .member-container {
+    margin-left: 1rem;
+    display: flex;
+    flex-flow: column;
+}
+
+.active-team-project-item .member-container .team-member {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.dark-grey {
+    color: var(--darkGrey);
+}
+
+.project-info {
+    margin: 0 auto;
+    align-self: flex-start;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    max-height: 150px;
+    max-width: 900px;
+    height: 100%;
+}
+
+.description {
+    margin: 0 auto;
+    align-self: flex-start;
+    padding: 1rem;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    max-width: 900px;
+    height: 100%;
+    max-height: 100px;
+}
+
+.description div {
+    margin-left: 1rem;
+}
+
+.project-info-item-header, .description h2 {
+    font-size: 1rem;
+    font-weight: bold;
+    padding-bottom: .5rem;
+    text-align: center;
+}
+
+#view .CircularProgressbar-path {
+    stroke: var(--base2);
+}
+
+#view .CircularProgressbar-text {
+    font-family: 'Montserrat', sans-serif;
+    fill: var(--fontBlack);
+    font-size: 2rem;
+}
+
+.project-info-item {
+    display: flex;
+    flex-flow: column;
+}
+
+.project-info-item h3 {
+    border-radius: 50%;
+    margin: auto;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.active-project-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+}
+
+.active-project-container .project-tasks-container, .active-project-container .project-task-details-container {
+    flex-basis: 50%;
+    width: 50%;
+}
+
+.active-project-container .project-tasks-container {
+    background-color: var(--base0);
+    flex-basis: 60%;
+    width: 60%;
+}
+
+.active-project-container .project-task-details-container {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: var(--base0);
+    flex-basis: 40%;
+    width: 40%;
+}
+
+.project-tasks-container-header h2, .projects-tasks-container-tasks h2, .project-task-details-container-header h2 {
+    padding: 0 2rem;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--grey);
+    border-bottom: 1px solid var(--darkGrey);
+    height: 90px;
+    display: flex;
+    align-items: center;
+}
+
+.project-tasks-overview {
+    padding: 0 2rem;
+    border-bottom: 1px solid var(--darkGrey);
+    min-height: 250px;
+    display: flex;
+    flex-flow: column;
+    align-content: center;
+}
+
+.project-tasks-overview .project-lead {
+    margin: auto;
+}
+
+.project-tasks-overview .project-info .project-info-item:last-of-type .project-info-item-header {
+    padding-left: 1rem;
+    text-align: left;
+}
+
+.project-tasks-overview .avatar {
+    margin-right: 1rem;
+}
+
+.project-tasks .task-item, .project-tasks .task-header {
+    padding: 0 1rem;
+}
+
+.task-item.active {
+    background-color: var(--accent0);
+}
+
+.task-item.active svg {
+    fill: var(--base0);
+}
+
+.active-project-container, .project-tasks-container, .projects-tasks-container-tasks, .project-tasks {
+    height:100%;
+    overflow: hidden;
+}
+
+.project-tasks-container, .projects-tasks-container-tasks, .project-tasks {
+    display: flex;
+    flex-flow: column;
+}
+
+.projects-tasks-container-tasks .empty {
+    padding: 2rem;
+    font-size: 1.2rem;
+}
+
+.project-task-details-container-header h2 {
+    background-color: var(--darkGrey);
+    /* border-bottom: none;
+    margin-top: 90px; */
+}
+
+.project-task-details-body {
+    display: flex;
+    flex-flow: column;
+}
+
+.detail-item {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    padding: 0 2rem;
+    margin: 2rem 0;
+    min-height: 75px;
+}
+
+.detail-item-complete {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 0 2rem;
+    margin: 2rem 0;
+    min-height: 75px;
+}
+
+.detail-item h2, .detail-item-complete h2 {
+    margin: auto;
+    min-width: 100px;
+    font-weight: normal;
+    font-size: 1rem;
+    color: var(--darkdarkGrey);
+}
+
+.detail-item-complete h2 {
+    margin: auto 0;
+}
+
+.task-detail-item {
+    margin: auto;
+    margin-left: 2rem;
+    width: 100%;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.task-detail-item span.date {
+    margin-left: 1rem;
+    color: var(--darkdarkGrey);
+    font-weight: normal;
+}
+
+.detail-item-complete svg {
+    margin: 0;
+    margin-right: 15px;
+}
+
+.complete-button h2 {
+    text-align: center;
+}
+
+.complete-button {
+    cursor: pointer;
+    display: flex;
+    width: 200px;
+    justify-content: flex-start;
+    padding: .5rem 1rem;
+    border: 1px solid var(--darkdarkGrey);
+    border-radius: .4rem;
+    transition: .1s all ease-in-out;
+}
+
+.complete-button:hover {
+    border: 1px solid var(--accent0);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.complete-button:hover h2 {
+    color: var(--accent0);
+}
+
+.complete-button:hover svg {
+    fill: var(--accent0);
+}
+
+.complete-button:active {
+    border: 1px solid var(--fontBlack);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.complete-button:active h2 {
+    color: var(--fontBlack);
+}
+
+.complete-button:active svg {
+    fill: var(--fontBlack);
+}
+
+.small-red {
+    color: rgba(255, 0, 0, 0.7);
+    padding-bottom: .5rem;
+}
+
+.task-container h3:first-of-type {
+    min-width: 400px;
+}
+
+.back-button {
+    background-color: var(--darkGrey);
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+
+.back-button svg {
+    transition: .1s all ease-in-out;
+    cursor: pointer;
+}
+
+.back-button svg:hover {
+    fill: var(--accent0);
+    transform: scale(1.15);
+}
+
+.back-button svg:active {
+    fill: var(--base0);
+    transform: scale(1.15);
+}
+
+@media(max-width: 1600px) {
+    .active-team-container {
+        flex-flow: column;
+        overflow: auto;
+        justify-content: flex-start;
+        height: 100%;
+    }
+
+    .active-team-container .overview-item-container {
+        height: 175px;
+        flex-basis: 25%;
+    }
+
+    .team-members {
+        max-width: 1000px;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        overflow: hidden;
+        margin: auto;
+    }
+
+    .team-members .member-container {
+        padding: 1rem;
+        min-width: 300px;
+    }
+
+    .active-team-overview-and-members {
+        height: fit-content;
+        
+    }
+
+    .active-team-overview-and-members, .active-team-projects {
+        height: fit-content;
+        width: 100%;
+        max-width: 1300px;
+        padding: 0;
+        min-width: 0;
+    }
+
+    .active-team-projects > * {
+        min-width: 0;
+    }
+
+    .task-container, .projects-container, .teams-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+
+    .projects-container h3:last-of-type, .teams-container h3:last-of-type{
+        display: none;
+    }
+
+    .project-info-item .team-member {
+        display: none;
+    }
+
+    .project-info-item .lead, .project-info-item .member-container {
+        padding: 0;
+        margin: auto;
+    }
+
+    .project-info-item .avatar {
+        margin: auto;
+    }
+
+    .project-tasks-overview .project-info .project-info-item:last-of-type .project-info-item-header {
+        padding: 0;
+    }
+
+    .active-project-container {
+        overflow: auto;
+    }
+
+    .project-tasks-overview {
+        height: auto;
+        display: block;
+    }
+
+    .empty-tasks {
+        height: 100%;
+    }
+}
+
+@media(max-width: 1400px) {
+    .active-project-container {
+        flex-flow: column;
+        overflow: auto;
+        justify-content: flex-start;
+        height: 100%;
+        display: flex;
+    }
+
+    .active-project-container .project-task-details-container, .active-project-container .project-tasks-container {
+        flex-basis: unset;
+        width: 100%;
+        height: fit-content;
+        box-shadow: none;
+        overflow: unset;
+    }
+
+    .project-tasks-overview {
+        min-height: 0;
+        min-height: 250px;
+    }
+
+}
+
+@media(max-width: 1250px) {
+    .active-team-project-item {
+        min-width: 0;
+        width: 100%;
+        align-self: center;
+    }
+
+    .active-team-project-item .project-info-item:last-of-type {
+        display: none;
+    }
+
+    .projects-container h3:nth-of-type(5), .teams-container h3:nth-of-type(5) {
+        display: none;
+    }
+
+    .task-container h3:nth-of-type(4) {
+        display: none;
+    }
+
+    .project-tasks h3:first-of-type {
+        min-width: 300px;
+    }
+}
+
+@media(max-width: 1100px) {
+    .projects-container h3:nth-of-type(6), .teams-container h3:nth-of-type(6) {
+        display: none;
+    }
+
+    .task-container h3:nth-of-type(3) {
+        display: none;
+    }
+
+    .task-container h3:first-of-type {
+        min-width: 200px;
+    }
+
+    .project-tasks h3:last-of-type {
+        display: none;
+    }
+}
+
+@media(max-width: 900px) {
+    .project-tasks-overview {
+        height: 500px;
+    }
+
+    .project-info {
+        flex-flow: row wrap;
+        min-height: 300px;
+        padding-bottom: 0;
+    }
+
+    .project-info .project-info-item {
+        padding: 1rem 0;
+        flex-basis: 33.3333%;
+    }
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+	color: white;
+	margin: auto;
+	font-size: 3rem;
+    font-style: italic;
+	font-weight: bold;
+	letter-spacing: -1px;
+    text-align: center;
+    padding: 1rem 0;
+}
+
+#view .pro-sidebar {
+    background-color: var(--base2);
+	position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow-y: auto;
+    z-index: 0;
+    width: 270px;
+}
+
+#view .pro-sidebar-inner, .pro-sidebar-layout {
+    background-color: var(--base2);
+}
+
+.sidebar-container * {
+    color: var(--base0);
+}
+
+.sidebar-container {
+	background-color: var(--base2);
+	color: var(--base0);
+}
+
+.sidebar-home, .sidebar-workspace {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #4f5d6b;
+}
+
+.sidebar-item {
+    padding: 25px 0;
+    border-bottom: 1px solid #4f5d6b;
+}
+
+.sidebar-sub-item {
+	background-color: var(--base2);
+}
+
+.sidebar-container h2 {
+    color: #708396;
+    font-size: 1.1rem;
+    padding: 0 2rem;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: center;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.text-item {
+    text-align: center;
+    padding: 0 3rem;
+    min-height: 50px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-content: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.sidebar-home .text-item {
+    text-align: center;
+    padding: 0 3rem;
+    min-height: 50px;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.text-item:hover  {
+    background-color: #4f5d6b;
+}
+
+.sidebar-home .text-item span {
+    padding-right: 2rem;
+}
+
+.sidebar-container .sidebar-home .text-item {
+    min-height: 50px;
+    line-height: 50px;
+}
+
+.sidebar-container .sidebar-workspace .text-item {
+    min-height: 50px;
+    display: flex;
+    flex-flow: column;
+    text-align: left;
+    justify-content: center;
+}
+
+.sidebar-container .sidebar-workspace .text-item.active {
+    max-height: 50px;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    cursor: pointer;
+}
+
+.sidebar-workspace .text-item span.sub {
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    line-height: normal;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+}
+
+.sidebar-workspace .text-item span.sub svg {
+    transform: translateY(-2px);
+    margin-right: 5px;
+}
+
+.sidebar-container .text-item h4 {
+    background-color: var(--base2);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+}
+
+
+.sidebar-container .text-item.active, .sidebar-container .text-item.active h4, .sidebar-container .text-item.active:hover h4 {
+    background-color: var(--base1);
+}
+
+.sidebar-container .text-item:hover h4 {
+    background-color: #4f5d6b;
+}
+
+.sidebar-container .text-item span {
+    display: flex;
+    margin: auto 0;
+}
+
+.text-item {
+    cursor: pointer;
+}
+
+.text-item.active {
+    cursor: default;
+    background-color: var(--base1);
+}
+
+.sidebar-workspace form {
+    margin: 0 2rem;
+}
+
+#view select, #view select option {
+    width: 100%;
+    color: var(--base2);
+}
+
+.icon {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.icon svg {
+    margin: auto;
+    fill: #708396;
+    transition: .1s all ease-in-out;
+    cursor: pointer;
+}
+
+.icon svg:hover {
+    fill: var(--base0);
+    transform: scale(1.15);
+}
+
+.empty {
+    padding: 0 3rem;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.sidebar-container .text-item h3, .sidebar-container .text-item h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+}
