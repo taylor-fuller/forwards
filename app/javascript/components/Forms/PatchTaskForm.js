@@ -24,9 +24,6 @@ const CreateTaskForm = (props) => {
         }
     }, [props.errors])
 
-    useEffect(() => {
-        console.log(dueDate)
-    }, [dueDate])
 
     function renderErrors(errors) {
         if (errors) {

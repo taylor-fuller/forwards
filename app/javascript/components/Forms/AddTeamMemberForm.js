@@ -18,7 +18,7 @@ const AddTeamMemberForm = (props) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        axios.post('http://localhost:3000/api/users', {
+        axios.post('https://forwards-app.herokuapp.com//api/users', {
             team_id: props.UI.activeWorkspace.workspace_id
         })
         .then((data) => {
