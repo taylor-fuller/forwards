@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { toggleModal, amendActiveProject } from '../../../actions';
-import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { selectTeam } from '../../../reducers';
