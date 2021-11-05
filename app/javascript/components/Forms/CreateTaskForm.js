@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { clearErrors } from '../../actions';
-import "flatpickr/dist/themes/material_orange.css";
 import Flatpickr from "react-flatpickr";
 import { connect } from 'react-redux';
 import { selectTeam } from '../../reducers';

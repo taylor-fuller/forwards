@@ -10,7 +10,6 @@ import ActiveTeamContainer from './TeamsContainer/ActiveTeamContainer';
 import ActiveProjectContainer from './ProjectsContainer/ActiveProjectContainer';
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
-import { Switch, Route } from 'react-router'
 
 const override = css`
   display: block;

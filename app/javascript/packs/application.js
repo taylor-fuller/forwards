@@ -12,4 +12,8 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
+
+import "flatpickr/dist/themes/material_orange.css";
+import 'react-pro-sidebar/dist/css/styles.css';
 import "../stylesheets/application.css"
+import 'react-circular-progressbar/dist/styles.css';
