@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { toggleModal, amendActiveProject } from '../../../actions';
-import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
+import { buildStyles, CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { css } from "@emotion/react";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -90,7 +90,7 @@ const ActiveTeamContainer = (props) => {
                     <div className="project-info-item"><div className="project-info-item-header">Due Today</div><h3 className={project.tasks.due_today.length === 0 ? "grey" : 'red'}>{project.tasks.due_today.length}</h3></div>
                     <div className="project-info-item"><div className="project-info-item-header">Due Soon</div><h3 className={project.tasks.due_soon.length === 0 ? "grey" : 'orange'}>{project.tasks.due_soon.length}</h3></div>
                     <div className="project-info-item"><div className="project-info-item-header">Active Tasks</div><h3>{project.tasks.all_tasks.length}</h3></div>
-                    <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbar value={(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))} text={`${(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))}%`} styles={buildStyles({rotation: 0.5})}/></div>}</h3></div>
+                    <div className="project-info-item"><div className="project-info-item-header">Completion</div><h3>{isNaN(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100)) ? <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbarWithChildren value={0} text={'0%'} /></div> : <div style={{ width: 50, height: 50, margin: 'auto' }}><CircularProgressbarWithChildren value={(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))} styles={buildStyles({rotation: 0.5})}>{(Math.round((project.tasks.completed.length/project.tasks.all_tasks.length)*100))}%</CircularProgressbarWithChildren></div>}</h3></div>
                     <div className="project-info-item"><div className="project-info-item-header">Lead</div><h3 className="avatar" title={returnProjectLeadName(project.lead_id)}>{returnProjectLeadInitials(project.lead_id)}</h3></div>
                 </div>
             </div>
