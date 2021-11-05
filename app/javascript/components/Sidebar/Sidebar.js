@@ -1,6 +1,6 @@
 import { ProSidebar, SidebarHeader, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import 'react-pro-sidebar/dist/css/styles.css';
-import '../../../assets/stylesheets/Sidebar';
+// import '../../../assets/stylesheets/Sidebar';
 import { connect } from 'react-redux';
 import { amendActiveSidebar, amendActiveWorkspace, toggleModal } from '../../actions';
 import React, { useState, useEffect } from 'react';
