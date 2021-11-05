@@ -68,7 +68,7 @@ development:
     quiet: false
     pretty: false
     headers:
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': 'forwards-app.herokuapp'
     watch_options:
       ignored: '**/node_modules/**'
       poll: 100
