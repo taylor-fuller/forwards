@@ -321,7 +321,6 @@ export function handleProjectCreation(project_id, project_name) {
                 dispatch(fetchProjects())
                 dispatch({ type: 'UNSET_IS_LOADING' })
                 dispatch({ type: 'AMEND_ACTIVE_PROJECT', payload: {project_id: project_id, project_name: project_name} })
-                throw new Error('Something went wrong')
             })
         })
         .catch(() => {
